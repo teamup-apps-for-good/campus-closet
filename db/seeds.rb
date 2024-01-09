@@ -7,3 +7,14 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# more_items = [
+#   {:color => Color, :type => '',
+#     :gender => '', :description => 'Nice shirt',
+#     :status => '', :size => '', :condition => ''},
+  
+# ]
+
+# more_items.each do |item|
+#   Item.create!(item)
+# end
