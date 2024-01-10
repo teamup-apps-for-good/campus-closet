@@ -32,11 +32,6 @@
   </div>
 
   <div>
-    <%= form.label :brand, style: "display: block" %>
-    <%= form.text_field :brand %>
-  </div>
-
-  <div>
     <%= form.label :status_id, style: "display: block" %>
     <%= form.collection_select :status_id, Status.all, :id, :name, prompt: true %>
   </div>
