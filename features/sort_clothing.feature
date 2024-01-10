@@ -6,7 +6,7 @@ So I can easily view only the types of clothes I want.
 
 Background: clothing in database
 
-  Given the following movies exist:
+  Given the following items exist:
   | name        | condition | color     | type         |
   | t-shirt-5   | Good      | White     | shirt        |
   | sweater-1   | Great     | Gray      | sweater      |
@@ -14,7 +14,7 @@ Background: clothing in database
   | hat-0       | Poor      | Pink      | accessory    |
 
 Scenario: filter by condition
-  When I go to the homepage
-  And  I press "shirts"
+  Given I am to the homepage
+  When  I press "shirts"
   And  I press "filter by condition" and "Poor"
   Then I should see "shorts-2" and "hat-0"
