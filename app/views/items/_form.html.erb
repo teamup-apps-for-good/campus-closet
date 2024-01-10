@@ -13,17 +13,17 @@
 
   <div>
     <%= form.label :color_id, style: "display: block" %>
-    <%= form.text_field :color_id %>
+    <%= form.collection_select :color_id, Color.all, :id, :name, prompt: true %>
   </div>
 
   <div>
     <%= form.label :type_id, style: "display: block" %>
-    <%= form.text_field :type_id %>
+    <%= form.collection_select :type_id, Type.all, :id, :name, prompt: true %>
   </div>
 
   <div>
     <%= form.label :gender_id, style: "display: block" %>
-    <%= form.text_field :gender_id %>
+    <%= form.collection_select :gender_id, Gender.all, :id, :name, prompt: true %>
   </div>
 
   <div>
@@ -32,18 +32,23 @@
   </div>
 
   <div>
+    <%= form.label :brand, style: "display: block" %>
+    <%= form.text_field :brand %>
+  </div>
+
+  <div>
     <%= form.label :status_id, style: "display: block" %>
-    <%= form.text_field :status_id %>
+    <%= form.collection_select :status_id, Status.all, :id, :name, prompt: true %>
   </div>
 
   <div>
     <%= form.label :size_id, style: "display: block" %>
-    <%= form.text_field :size_id %>
+    <%= form.collection_select :size_id, Size.all, :id, :name, prompt: true %>
   </div>
 
   <div>
     <%= form.label :condition_id, style: "display: block" %>
-    <%= form.text_field :condition_id %>
+    <%= form.collection_select :condition_id, Condition.all, :id, :name, prompt: true %>
   </div>
 
   <div>
