@@ -5,7 +5,7 @@
 <div id="items">
   <% @items.each do |item| %>
     <% if item.image_url.present? %>
-  <%= image_tag item.image_url, class: "item-image" %>
+  <%= image_tag item.image_url, :style => "width: 20vw", class: "item-image" %>
 <% else %>
   <p>No image available</p>
 <% end %>
