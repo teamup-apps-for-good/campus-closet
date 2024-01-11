@@ -17,6 +17,7 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    @item = Item.find(params[:id])
   end
 
   # POST /items or /items.json
@@ -35,26 +36,40 @@ class ItemsController < ApplicationController
   end
 
   # PATCH/PUT /items/1 or /items/1.json
+  # def update
+  #   respond_to do |format|
+  #     if @item.update(item_params)
+  #       format.html { redirect_to item_url(@item), notice: "Item was successfully updated." }
+  #       format.json { render :show, status: :ok, location: @item }
+  #     else
+  #       format.html { render :edit, status: :unprocessable_entity }
+  #       format.json { render json: @item.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
   def update
-    respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to item_url(@item), notice: "Item was successfully updated." }
-        format.json { render :show, status: :ok, location: @item }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
+    @item = Item.find params[:id]
+    @item.update!(item_params)
+    flash[:notice] = "#{@item.type.name} was successfully updated."
+    redirect_to item_path(@item)
   end
 
   # DELETE /items/1 or /items/1.json
-  def destroy
-    @item.destroy!
+  # def destroy
+  #   @item.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to items_url, notice: "Item was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  #   respond_to do |format|
+  #     format.html { redirect_to items_url, notice: "Item was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    flash[:notice] = "'#{@item.type.name}' deleted successfully."
+    redirect_to items_path
   end
 
   private
