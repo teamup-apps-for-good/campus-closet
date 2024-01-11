@@ -1,0 +1,114 @@
+[33mcommit bd85f5b66b1c4442ba49bed3313afb3b9fa4b863[m[33m ([m[1;36mHEAD -> [m[1;32mfeat/cucumber-tests[m[33m, [m[1;31morigin/feat/cucumber-tests[m[33m)[m
+Author: James Nolan <jamesn8391@gmail.com>
+Date:   Thu Jan 11 23:26:04 2024 +0800
+
+    added new scenario for upload clothing
+
+[33mcommit 2c81356475048a9b8b766fd285ab6c558e18e829[m
+Author: James Nolan <jamesn8391@gmail.com>
+Date:   Thu Jan 11 10:45:44 2024 +0800
+
+    display clothing on homepage cucumber tests
+
+[33mcommit e40a3c0b7061a50e2bd2a6523a7ad914f4cdbcd5[m
+Author: James Nolan <jamesn8391@gmail.com>
+Date:   Thu Jan 11 10:29:49 2024 +0800
+
+    added two cucumber scenarios for upload clothing
+
+[33mcommit c252c923dea2fcee68d6805b53ede672d070193f[m
+Merge: a07f106 d414813
+Author: James Nolan <jamesn8391@gmail.com>
+Date:   Thu Jan 11 08:54:14 2024 +0800
+
+    added rspec for merge conflict problem
+
+[33mcommit d41481306a26cd1b363f6d312880cfc2711b5d42[m
+Merge: f665651 b69aeed
+Author: James Nolan <112498082+jamesn8391@users.noreply.github.com>
+Date:   Thu Jan 11 08:39:33 2024 +0800
+
+    Merge pull request #3 from teamup-apps-for-good/upload
+    
+    Added additional fields for item, change model, view, controller for upload
+
+[33mcommit b69aeedbd08cc6cd63ce81a14b793eae23de7b53[m
+Author: hunterpearson36 <hunterpearson36@gmail.com>
+Date:   Thu Jan 11 08:31:04 2024 +0800
+
+    attempting to verify commit
+
+[33mcommit 68ebd6638bd39461bc2102f883460148056edf21[m
+Author: hunterpearson36 <hunterpearson36@gmail.com>
+Date:   Wed Jan 10 10:20:59 2024 +0800
+
+    removed brand for now
+
+[33mcommit da2c8a95f5381756ec887ce5de2bd61ea58f163b[m
+Author: hunterpearson36 <hunterpearson36@gmail.com>
+Date:   Wed Jan 10 09:50:24 2024 +0800
+
+    Added additional fields to item, changed model, view, controller
+
+[33mcommit f6656516f1c4a7273395b06f1de212ddc902d27b[m
+Merge: 5df9423 9b7be04
+Author: James Nolan <112498082+jamesn8391@users.noreply.github.com>
+Date:   Wed Jan 10 09:14:47 2024 +0800
+
+    Merge pull request #1 from teamup-apps-for-good/seed
+    
+    Seed
+
+[33mcommit a07f10610b55933b2e892d6ec3f00dbaad49788b[m
+Author: James Nolan <jamesn8391@gmail.com>
+Date:   Wed Jan 10 09:00:44 2024 +0800
+
+    cucumber test 1 fix
+
+[33mcommit 9b7be04ce50220d8c792c065073cd875d1ff06c1[m
+Author: Ethan <elang70>
+Date:   Wed Jan 10 07:43:18 2024 +0800
+
+    seeded data for attribute tables and  created 3 Items
+
+[33mcommit 93da0b557ef6e92faa40ef5267e9c06b469a55ac[m
+Author: Ethan <elang70>
+Date:   Tue Jan 9 10:57:22 2024 +0800
+
+    scaffolded all necessary attributes/tables for Item
+
+[33mcommit 5df94230ce9f60adb19b1f6e29f084f931f03cb5[m
+Author: nitinpendekanti1 <nitinpendekanti1@github.com>
+Date:   Mon Jan 8 12:06:15 2024 +0800
+
+    changed project sprint planning document
+
+[33mcommit 028e76b5733f97cfcfae31e36cf41156fc73ccaa[m
+Author: James Nolan <jamesn8391@gmail.com>
+Date:   Fri Jan 5 12:02:28 2024 +0800
+
+    added first cucumber test
+
+[33mcommit 9f7d57078191164dbebaaa940bef70e1110e207c[m
+Author: James Nolan <jamesn8391@gmail.com>
+Date:   Fri Jan 5 11:51:36 2024 +0800
+
+    added cucumber gem
+
+[33mcommit beabb025df66c47251f2ba336ca6a450ae3490bd[m
+Author: nitinpendekanti1 <nitinpendekanti1@github.com>
+Date:   Fri Jan 5 11:27:39 2024 +0800
+
+    Modified sprint planning documentation to include story points
+
+[33mcommit 51d1f4414d0f5863a5829710e26758e1302e2656[m
+Author: nitinpendekanti1 <nitinpendekanti1@github.com>
+Date:   Fri Jan 5 11:05:32 2024 +0800
+
+    Added Initial Sprint Planning Documentation
+
+[33mcommit 8fc9e5a2950e6dfd7427d04ed3bc1e667edebb01[m
+Author: nitinpendekanti1 <nitinpendekanti1@github.com>
+Date:   Fri Jan 5 10:37:49 2024 +0800
+
+    initial commit
