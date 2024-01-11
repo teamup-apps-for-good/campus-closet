@@ -67,3 +67,9 @@ group :test do
   gem "rspec-rails"
   gem "cucumber-rails"
 end
+
+# AWS SDK gem
+gem 'aws-sdk-s3'
+
+#setup .env file
+gem 'dotenv-rails', groups: [:development, :test]

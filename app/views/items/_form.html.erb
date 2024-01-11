@@ -1,4 +1,4 @@
-<%= form_with(model: item) do |form| %>
+<%= form_with(model: @item, local: true, multipart: true) do |form| %>
   <% if item.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
@@ -46,7 +46,10 @@
     <%= form.collection_select :condition_id, Condition.all, :id, :name, prompt: true %>
   </div>
 
-  
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.file_field :image %>
+  </div>
 
   <div>
     <%= form.submit %>
