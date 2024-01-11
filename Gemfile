@@ -72,3 +72,6 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
 end
+
+# AWS SDK gem
+gem 'aws-sdk-s3'

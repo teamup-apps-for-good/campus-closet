@@ -4,6 +4,11 @@
 
 <div id="items">
   <% @items.each do |item| %>
+    <% if item.photo_link.present? %>
+  <%= image_tag item.photo_link, class: "item-image" %>
+<% else %>
+  <p>No image available</p>
+<% end %>
     <%= render item %>
     <p>
       <%= link_to "Show this item", item %>

@@ -1,5 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
+<p>Image URL: <%= @item.image_url.inspect %></p>
+
+<% if @item.photo_link.present? %>
+  <%= image_tag @item.image_url, class: "item-image" %>
+<% else %>
+  <p>No image available</p>
+<% end %>
+
 <%= render @item %>
 
 <div>
