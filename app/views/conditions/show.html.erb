@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @condition %>
+
+<div>
+  <%= link_to "Edit this condition", edit_condition_path(@condition) %> |
+  <%= link_to "Back to conditions", conditions_path %>
+
+  <%= button_to "Destroy this condition", @condition, method: :delete %>
+</div>

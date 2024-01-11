@@ -1,0 +1,54 @@
+<%= form_with(model: item) do |form| %>
+  <% if item.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :color_id, style: "display: block" %>
+    <%= form.collection_select :color_id, Color.all, :id, :name, prompt: true %>
+  </div>
+
+  <div>
+    <%= form.label :type_id, style: "display: block" %>
+    <%= form.collection_select :type_id, Type.all, :id, :name, prompt: true %>
+  </div>
+
+  <div>
+    <%= form.label :gender_id, style: "display: block" %>
+    <%= form.collection_select :gender_id, Gender.all, :id, :name, prompt: true %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :status_id, style: "display: block" %>
+    <%= form.collection_select :status_id, Status.all, :id, :name, prompt: true %>
+  </div>
+
+  <div>
+    <%= form.label :size_id, style: "display: block" %>
+    <%= form.collection_select :size_id, Size.all, :id, :name, prompt: true %>
+  </div>
+
+  <div>
+    <%= form.label :condition_id, style: "display: block" %>
+    <%= form.collection_select :condition_id, Condition.all, :id, :name, prompt: true %>
+  </div>
+
+  
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

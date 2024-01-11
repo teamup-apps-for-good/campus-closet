@@ -7,3 +7,40 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Color.create(name: 'Red')
+Color.create(name: 'Blue')
+
+Type.create(name: 'Pants')
+Type.create(name: 'Shirt')
+
+Gender.create(name: 'Male')
+Gender.create(name: 'Female')
+
+Status.create(name: 'Available')
+Status.create(name: 'Unavailable')
+
+Size.create(name: 'L')
+Size.create(name: 'M')
+Size.create(name: 'S')
+
+Condition.create(name: 'Used')
+Condition.create(name: 'Unused')
+
+Item.create(color: Color.first, type: Type.first, gender: Gender.first, description: 'Sample description', status: Status.first, size: Size.first, condition: Condition.first)
+
+Item.create(color: Color.second, type: Type.second, gender: Gender.second, description: 'Sample description 2', status: Status.second, size: Size.second, condition: Condition.second)
+
+Item.create(color: Color.first, type: Type.second, gender: Gender.first, description: 'Sample description 3', status: Status.first, size: Size.second, condition: Condition.first)
+
+
+# more_items = [
+#   {:color => Color, :type => '',
+#     :gender => '', :description => 'Nice shirt',
+#     :status => '', :size => '', :condition => ''},
+  
+# ]
+
+# more_items.each do |item|
+#   Item.create!(item)
+# end
