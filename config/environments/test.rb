@@ -63,4 +63,7 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # set active storage as amazon s3 for photo links
+  config.active_storage.service = :amazon
 end

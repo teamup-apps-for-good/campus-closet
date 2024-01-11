@@ -34,4 +34,9 @@
     <%= item.condition.name %>
   </p>
 
+  <p>
+    <strong>Photo:</strong><br>
+    <%= image_tag item.photo_link if item.photo_link.attached? %>
+  </p>
+
 </div>
