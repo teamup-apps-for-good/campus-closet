@@ -23,28 +23,19 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     @item = Item.new(item_params)
-
+  
     if params[:item][:image].present?
       upload_to_s3(params[:item][:image])
     end
-
+  
     if @item.save
       # Handle the image upload here if necessary
       redirect_to @item, notice: 'Item was successfully created.'
     else
       render :new
     end
-
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
   end
+  
 
   # PATCH/PUT /items/1 or /items/1.json
   # def update
@@ -95,9 +86,13 @@ class ItemsController < ApplicationController
     end
 
     def upload_to_s3(image)
-      s3 = Aws::S3::Resource.new(region: 'us-east-1')
+      s3 = Aws::S3::Resource.new(region: 'us-east-1',
+                                  credentials: Aws::Credentials.new(
+                                  ENV['AWS_ACCESS_KEY_ID'],
+                                  ENV['AWS_SECRET_ACCESS_KEY']
+                                 ))
       obj = s3.bucket('campuscloset').object("uploads/items/#{SecureRandom.uuid}/#{image.original_filename}")
-      obj.upload_file(image.tempfile, acl:'public-read')
+      obj.upload_file(image.tempfile)
       @item.image_url = obj.public_url
     end
 end
