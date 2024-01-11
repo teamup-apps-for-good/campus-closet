@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class SizesController < ApplicationController
-  before_action :set_size, only: %i[ show edit update destroy ]
+  before_action :set_size, only: %i[show edit update destroy]
 
   # GET /sizes or /sizes.json
   def index
@@ -7,8 +9,7 @@ class SizesController < ApplicationController
   end
 
   # GET /sizes/1 or /sizes/1.json
-  def show
-  end
+  def show; end
 
   # GET /sizes/new
   def new
@@ -16,8 +17,7 @@ class SizesController < ApplicationController
   end
 
   # GET /sizes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /sizes or /sizes.json
   def create
@@ -25,7 +25,7 @@ class SizesController < ApplicationController
 
     respond_to do |format|
       if @size.save
-        format.html { redirect_to size_url(@size), notice: "Size was successfully created." }
+        format.html { redirect_to size_url(@size), notice: 'Size was successfully created.' }
         format.json { render :show, status: :created, location: @size }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class SizesController < ApplicationController
   def update
     respond_to do |format|
       if @size.update(size_params)
-        format.html { redirect_to size_url(@size), notice: "Size was successfully updated." }
+        format.html { redirect_to size_url(@size), notice: 'Size was successfully updated.' }
         format.json { render :show, status: :ok, location: @size }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class SizesController < ApplicationController
     @size.destroy!
 
     respond_to do |format|
-      format.html { redirect_to sizes_url, notice: "Size was successfully destroyed." }
+      format.html { redirect_to sizes_url, notice: 'Size was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_size
-      @size = Size.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def size_params
-      params.require(:size).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_size
+    @size = Size.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def size_params
+    params.require(:size).permit(:name)
+  end
 end

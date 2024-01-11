@@ -1,1 +1,3 @@
-json.partial! "genders/gender", gender: @gender
+# frozen_string_literal: true
+
+json.partial! 'genders/gender', gender: @gender
