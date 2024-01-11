@@ -9,7 +9,9 @@ RSpec.describe "items/new", type: :view do
       description: "MyText",
       status: nil,
       size: nil,
-      condition: nil
+      condition: nil,
+      brand: nil,
+      photo_link: nil
     ))
   end
 
@@ -18,19 +20,21 @@ RSpec.describe "items/new", type: :view do
 
     assert_select "form[action=?][method=?]", items_path, "post" do
 
-      assert_select "input[name=?]", "item[color_id]"
+      assert_select "select[name=?]", "item[color_id]"
 
-      assert_select "input[name=?]", "item[type_id]"
+      assert_select "select[name=?]", "item[type_id]"
 
-      assert_select "input[name=?]", "item[gender_id]"
+      assert_select "select[name=?]", "item[gender_id]"
 
       assert_select "textarea[name=?]", "item[description]"
 
-      assert_select "input[name=?]", "item[status_id]"
+      assert_select "select[name=?]", "item[status_id]"
 
-      assert_select "input[name=?]", "item[size_id]"
+      assert_select "select[name=?]", "item[size_id]"
 
-      assert_select "input[name=?]", "item[condition_id]"
+      assert_select "select[name=?]", "item[condition_id]"
+
+      assert_select "input[type=file][name=?]", "item[photo_link]"
     end
   end
 end

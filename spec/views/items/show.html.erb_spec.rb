@@ -2,14 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "items/show", type: :view do
   before(:each) do
-    assign(:item, Item.create!(
+    assign(:item, Item.new(
       color: nil,
       type: nil,
       gender: nil,
       description: "MyText",
       status: nil,
       size: nil,
-      condition: nil
+      condition: nil,
+      brand: nil,
+      photo_link: nil
     ))
   end
 

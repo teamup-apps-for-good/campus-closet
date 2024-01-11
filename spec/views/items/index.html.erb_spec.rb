@@ -10,7 +10,9 @@ RSpec.describe "items/index", type: :view do
         description: "MyText",
         status: nil,
         size: nil,
-        condition: nil
+        condition: nil,
+        brand: nil,
+        photo_link: nil
       ),
       Item.create!(
         color: nil,
@@ -19,7 +21,9 @@ RSpec.describe "items/index", type: :view do
         description: "MyText",
         status: nil,
         size: nil,
-        condition: nil
+        condition: nil,
+        brand: nil,
+        photo_link: nil
       )
     ])
   end
