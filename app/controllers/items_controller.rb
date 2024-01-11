@@ -23,6 +23,17 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
 
+    if params[:item][:image].present?
+      upload_to_s3(params[:item][:image])
+    end
+
+    if @item.save
+      # Handle the image upload here if necessary
+      redirect_to @item, notice: 'Item was successfully created.'
+    else
+      render :new
+    end
+
     respond_to do |format|
       if @item.save
         format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
@@ -66,5 +77,12 @@ class ItemsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def item_params
       params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :brand, :status_id, :size_id, :condition_id, :image_url)
+    end
+
+    def upload_to_s3(image)
+      s3 = Aws::S3::Resource.new(region: 'us-east-1')
+      obj = s3.bucket('campuscloset').object("uploads/items/#{SecureRandom.uuid}/#{image.original_filename}")
+      obj.upload_file(image.tempfile, acl:'public-read')
+      @item.image_url = obj.public_url
     end
 end

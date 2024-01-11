@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   root 'items#index'
 
+  resources :items
+
   resources :items do
     member do
       patch :image_upload
