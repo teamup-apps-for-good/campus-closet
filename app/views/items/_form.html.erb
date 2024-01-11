@@ -46,7 +46,10 @@
     <%= form.collection_select :condition_id, Condition.all, :id, :name, prompt: true %>
   </div>
 
-  
+  <div>
+    <%= form.label :photo, style: "display: block" %>
+    <%= form.file_field :photo_link %>
+  </div>
 
   <div>
     <%= form.submit %>
