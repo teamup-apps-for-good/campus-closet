@@ -17,17 +17,26 @@ RSpec.describe "/items", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
+  # let(:color) { FactoryGirl.create(:color) }
+  # let(:type) { FactoryGirl.create(:type) }
+  # let(:gender) { FactoryGirl.create(:anaesthetist)}
+  # let(:status) { FactoryGirl.create(:hospital) }
+  # let(:size) { FactoryGirl.create(:hospital) }
+  # let(:condition) { FactoryGirl.create(:condition) }
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {color: Color.create(name: "temp_color"), type: Type.create(name: "temp_type"), gender: Gender.create(name: "temp_gender"), status: Status.create(name: "temp_status"), size: Size.create(name: "temp_size"), condition: Condition.create(name: "temp_condition")}
+    # skip("Add a hash of attributes valid for your model")
+  #   # {"color" => Color.find(1).id, "type" => 1, "gender" => 1, "status" => 1, "size" => 1, "condition" => 1}
+  #   # FactoryBot.attributes_for(:item)
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  # let(:invalid_attributes) {
+  #   skip("Add a hash of attributes invalid for your model")
+  # }
 
   describe "GET /index" do
     it "renders a successful response" do
-      Item.create! valid_attributes
+      Item.create(color: Color.create(name: "temp_color"), type: Type.create(name: "temp_type"), gender: Gender.create(name: "temp_gender"), status: Status.create(name: "temp_status"), size: Size.create(name: "temp_size"), condition: Condition.create(name: "temp_condition"))
       get items_url
       expect(response).to be_successful
     end
@@ -35,7 +44,7 @@ RSpec.describe "/items", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      item = Item.create! valid_attributes
+      item = Item.create(color: Color.create(name: "temp_color"), type: Type.create(name: "temp_type"), gender: Gender.create(name: "temp_gender"), status: Status.create(name: "temp_status"), size: Size.create(name: "temp_size"), condition: Condition.create(name: "temp_condition"))
       get item_url(item)
       expect(response).to be_successful
     end
@@ -50,7 +59,7 @@ RSpec.describe "/items", type: :request do
 
   describe "GET /edit" do
     it "renders a successful response" do
-      item = Item.create! valid_attributes
+      item = Item.create(color: Color.create(name: "temp_color"), type: Type.create(name: "temp_type"), gender: Gender.create(name: "temp_gender"), status: Status.create(name: "temp_status"), size: Size.create(name: "temp_size"), condition: Condition.create(name: "temp_condition"))
       get edit_item_url(item)
       expect(response).to be_successful
     end
@@ -59,8 +68,9 @@ RSpec.describe "/items", type: :request do
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new Item" do
+        item = Item.create(color: Color.create(name: "temp_color"), type: Type.create(name: "temp_type"), gender: Gender.create(name: "temp_gender"), status: Status.create(name: "temp_status"), size: Size.create(name: "temp_size"), condition: Condition.create(name: "temp_condition"))
         expect {
-          post items_url, params: { item: valid_attributes }
+          post items_url, params: { item: item }
         }.to change(Item, :count).by(1)
       end
 
