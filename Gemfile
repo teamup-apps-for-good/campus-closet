@@ -65,6 +65,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "rspec-rails"
+  gem "database_cleaner"
+  gem "simplecov", require: false
 end
 
 # AWS SDK gem
