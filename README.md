@@ -1,24 +1,53 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Campus Closet - Student based clothing donatin system
 
-Things you may want to cover:
+# Getting Started
 
-* Ruby version
+To get started follow the steps below to install ruby gems and set up the database.
 
-* System dependencies
+$ **bundle install**
 
-* Configuration
+$ **rails db:create**
 
-* Database creation
+To seed the database use the following commands.
 
-* Database initialization
+$ **rake db:migrate**
 
-* How to run the test suite
+$ **rake db:seed**
 
-* Services (job queues, cache servers, search engines, etc.)
+# Runing Tests
 
-* Deployment instructions
+Below are the steps to run rspec and cucumber tests.
 
-* ...
+$ **bundle exec rspec**
+
+$ **rails cucumber**
+
+# How to deploy
+
+To run the project locally use rails as below.
+
+$ **rails s**
+
+To deploy the project to heroku use the following steps.
+
+$ **heroku login**
+
+$ **heroku create -a <name>**
+
+$ **git push heroku main**
+
+$ **heroku run rails db:migrate**
+
+$ **heroku run rails db:seed**
+
+If you would like to see the running website the link is below.
+
+https://bespoke-campus-closet-3461b1a0aab9.herokuapp.com/
+
+# Contact
+
+To contact our team reach out to our current Product Owner
+
+hunter-pearson_36@tamu.edu
