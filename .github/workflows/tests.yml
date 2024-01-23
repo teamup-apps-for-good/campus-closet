@@ -1,0 +1,64 @@
+name: Run Tests and Check Coverage
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
+
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+
+    - name: Run Cucumber and RSpec
+      run: |
+        bundle exec cucumber
+        bundle exec rspec
+
+    - name: Set up SimpleCov
+      run: gem install simplecov
+
+    - name: Extract coverage information
+      run: simplecov merge coverage/.resultset.json
+
+    - name: Set coverage environment variable
+      run: echo "COVERAGE=$(tail -n 1 coverage/coverage.txt | awk '{print $1}')" >> $GITHUB_ENV
+
+  check-coverage:
+    runs-on: ubuntu-latest
+
+    needs: test
+
+    steps:
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
+
+    - name: Install SimpleCov
+      run: gem install simplecov
+
+    - name: Check coverage
+      run: |
+        COVERAGE_THRESHOLD=90
+        coverage=$COVERAGE
+        echo "Code coverage is $coverage%."
+        if (( $(echo "$coverage >= $COVERAGE_THRESHOLD" | bc -l) )); then
+          echo "Code coverage is over 90%."
+        else
+          echo "Code coverage is below 90%."
+          exit 1
+        fi
