@@ -1,0 +1,29 @@
+name: RuboCop Check
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
+
+    - name: Install dependencies
+      run: |
+        gem install rubocop
+
+    - name: Run RuboCop
+      run: rubocop --format offenses --out rubocop_output.txt
+
+    - name: Display offenses
+      run: cat rubocop_output.txt
