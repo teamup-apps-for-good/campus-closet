@@ -8,77 +8,10 @@ class ItemsController < ApplicationController
 
   # GET /items or /items.json
   def index
-    cookies_color_list = []
-    cookies_type_list = []
-    cookies_gender_list = []
-    cookies_status_list = []
-    cookies_size_list = []
-    cookies_condition_list = []
-
-    params.each_key do |key|
-      if key.include?('color_')
-        start = 'color_'.length
-        id = params[key][start..key.length].to_i
-        color = Color.find(id)
-        cookies_color_list.append(color)
-      end
-      if key.include?('type_')
-        start = 'type_'.length
-        id = params[key][start..key.length].to_i
-        type = Type.find(id)
-        cookies_type_list.append(type)
-      end
-      if key.include?('gender_')
-        start = 'gender_'.length
-        id = params[key][start..key.length].to_i
-        gender = Gender.find(id)
-        cookies_gender_list.append(gender)
-      end
-      if key.include?('status_')
-        start = 'status_'.length
-        id = params[key][start..key.length].to_i
-        status = Status.find(id)
-        cookies_status_list.append(status)
-      end
-      if key.include?('size_')
-        start = 'size_'.length
-        id = params[key][start..key.length].to_i
-        size = Size.find(id)
-        cookies_size_list.append(size)
-      end
-      next unless key.include?('condition_')
-
-      start = 'condition_'.length
-      id = params[key][start..key.length].to_i
-      condition = Condition.find(id)
-      cookies_condition_list.append(condition)
-    end
-
-    cookies[:color] = cookies_color_list.empty? ? nil : cookies_color_list
-
-    cookies[:type] = cookies_type_list.empty? ? nil : cookies_type_list
-
-    cookies[:gender] = cookies_gender_list.empty? ? nil : cookies_gender_list
-
-    cookies[:status] = cookies_status_list.empty? ? nil : cookies_status_list
-
-    cookies[:size] = cookies_size_list.empty? ? nil : cookies_size_list
-
-    cookies[:condition] = cookies_condition_list.empty? ? nil : cookies_condition_list
+    process_cookie_params
 
     @items = Item.all
-
-    @items = @items.where(color: cookies[:color]) unless cookies[:color].nil?
-
-    @items = @items.where(type: cookies[:type]) unless cookies[:type].nil?
-
-    @items = @items.where(gender: cookies[:gender]) unless cookies[:gender].nil?
-
-    @items = @items.where(status: cookies[:status]) unless cookies[:status].nil?
-
-    @items = @items.where(size: cookies[:size]) unless cookies[:size].nil?
-
-    @items = @items.where(condition: cookies[:condition]) unless cookies[:condition].nil?
+    filter_items_by_cookies
 
     @cookies = cookies
   end
@@ -162,5 +95,33 @@ class ItemsController < ApplicationController
     obj = s3.bucket('campuscloset').object("uploads/items/#{SecureRandom.uuid}/#{image.original_filename}")
     obj.upload_file(image.tempfile)
     @item.image_url = obj.public_url
+  end
+
+  def process_params_with_prefix(params, prefix, model_class)
+    items_list = []
+
+    params.each_key do |key|
+      next unless key.start_with?(prefix)
+
+      start = prefix.length
+      id = params[key][start..].to_i
+      item = model_class.find(id)
+      items_list.append(item)
+    end
+
+    items_list
+  end
+
+  def process_cookie_params
+    %w[color type gender status size condition].each do |prefix|
+      cookie_list = process_params_with_prefix(params, "#{prefix}_", prefix.capitalize.constantize)
+      cookies[prefix.to_sym] = cookie_list.empty? ? nil : cookie_list
+    end
+  end
+
+  def filter_items_by_cookies
+    %i[color type gender status size condition].each do |cookie_name|
+      @items = @items.where(cookie_name => cookies[cookie_name]) unless cookies[cookie_name].nil?
+    end
   end
 end
