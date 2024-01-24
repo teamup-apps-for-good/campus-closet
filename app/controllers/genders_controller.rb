@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class GendersController < ApplicationController
-  before_action :set_gender, only: %i[ show edit update destroy ]
+  before_action :set_gender, only: %i[show edit update destroy]
 
   # GET /genders or /genders.json
   def index
@@ -7,8 +9,7 @@ class GendersController < ApplicationController
   end
 
   # GET /genders/1 or /genders/1.json
-  def show
-  end
+  def show; end
 
   # GET /genders/new
   def new
@@ -16,8 +17,7 @@ class GendersController < ApplicationController
   end
 
   # GET /genders/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /genders or /genders.json
   def create
@@ -25,7 +25,7 @@ class GendersController < ApplicationController
 
     respond_to do |format|
       if @gender.save
-        format.html { redirect_to gender_url(@gender), notice: "Gender was successfully created." }
+        format.html { redirect_to gender_url(@gender), notice: 'Gender was successfully created.' }
         format.json { render :show, status: :created, location: @gender }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class GendersController < ApplicationController
   def update
     respond_to do |format|
       if @gender.update(gender_params)
-        format.html { redirect_to gender_url(@gender), notice: "Gender was successfully updated." }
+        format.html { redirect_to gender_url(@gender), notice: 'Gender was successfully updated.' }
         format.json { render :show, status: :ok, location: @gender }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class GendersController < ApplicationController
     @gender.destroy!
 
     respond_to do |format|
-      format.html { redirect_to genders_url, notice: "Gender was successfully destroyed." }
+      format.html { redirect_to genders_url, notice: 'Gender was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_gender
-      @gender = Gender.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def gender_params
-      params.require(:gender).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_gender
+    @gender = Gender.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def gender_params
+    params.require(:gender).permit(:name)
+  end
 end
