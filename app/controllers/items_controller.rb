@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# /app/controllers
 class ItemsController < ApplicationController
   include ActionController::Cookies
 
@@ -155,8 +156,8 @@ class ItemsController < ApplicationController
   def upload_to_s3(image)
     s3 = Aws::S3::Resource.new(region: 'us-east-1',
                                credentials: Aws::Credentials.new(
-                                 ENV['AWS_ACCESS_KEY_ID'],
-                                 ENV['AWS_SECRET_ACCESS_KEY']
+                                 ENV.fetch('AWS_ACCESS_KEY_ID', nil),
+                                 ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
                                ))
     obj = s3.bucket('campuscloset').object("uploads/items/#{SecureRandom.uuid}/#{image.original_filename}")
     obj.upload_file(image.tempfile)

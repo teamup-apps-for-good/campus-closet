@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# /app/controllers
 class ConditionsController < ApplicationController
   before_action :set_condition, only: %i[show edit update destroy]
 

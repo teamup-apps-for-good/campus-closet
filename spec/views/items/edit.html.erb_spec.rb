@@ -5,12 +5,9 @@ require 'rails_helper'
 RSpec.describe 'items/edit', type: :view do
   let(:item) do
     Item.create!(
-      color: nil,
-      type: nil,
-      gender: nil,
-      description: 'MyText',
-      status: nil,
-      size: nil,
+      color: nil, type: nil,
+      gender: nil, description: 'MyText',
+      status: nil, size: nil,
       condition: nil
     )
   end

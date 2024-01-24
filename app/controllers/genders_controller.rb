@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# /app/controllers
 class GendersController < ApplicationController
   before_action :set_gender, only: %i[show edit update destroy]
 

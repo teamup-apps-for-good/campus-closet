@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# /app/controllers
 class StatusesController < ApplicationController
   before_action :set_status, only: %i[show edit update destroy]
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# /app/controllers
 class SizesController < ApplicationController
   before_action :set_size, only: %i[show edit update destroy]
 

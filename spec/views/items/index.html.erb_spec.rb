@@ -6,22 +6,12 @@ RSpec.describe 'items/index', type: :view do
   before(:each) do
     assign(:items, [
              Item.create!(
-               color: nil,
-               type: nil,
-               gender: nil,
-               description: 'MyText',
-               status: nil,
-               size: nil,
-               condition: nil
+               color: nil, type: nil, gender: nil, description: 'MyText',
+               status: nil, size: nil, condition: nil
              ),
              Item.create!(
-               color: nil,
-               type: nil,
-               gender: nil,
-               description: 'MyText',
-               status: nil,
-               size: nil,
-               condition: nil
+               color: nil, type: nil, gender: nil, description: 'MyText',
+               status: nil, size: nil, condition: nil
              )
            ])
   end
