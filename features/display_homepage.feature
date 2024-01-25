@@ -19,14 +19,14 @@ Scenario: show all the items
 
 Scenario: show items and they are different
     Given I am on the homepage
-    Then I should see one item with the description "black shirt"
-    And I should see one item with the description "red pants"
-    And I should see one item with the description "blue sweater"
-    And I should see one item with the description "brown belt"
+    Then I should see an item with the description "black shirt"
+    And I should see an item with the description "red pants"
+    And I should see an item with the description "blue sweater"
+    And I should see an item with the description "brown belt"
 
 Scenario: show item details
     Given I am on the homepage
-    And I see an item with the description "red pants"
+    And I should see an item with the description "red pants"
     And I click on "Show this item"
     Then I should be on an item description
     And the "Type" should be "pants"

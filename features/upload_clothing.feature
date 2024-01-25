@@ -15,8 +15,8 @@ Background: clothing in database
 
 Scenario: upload new item with all categories
     Given I am on the items page
-    And I click on "New Item"
-    And I fill in the fields with  "black", "shirt", "black shirt", "Male", "M", "Used", "Available"
+    When I click on "New Item"
+    And I fill in the fields with "black", "shirt", "black shirt", "Male", "M", "Used", "Available"
     And I include a picture
     And I click on "Create Item"
     Then there should be a new item in the items page
@@ -24,15 +24,15 @@ Scenario: upload new item with all categories
 
 Scenario: upload new item with only one category
     Given I am on the items page
-    And I click on "New Item"
+    When I click on "New Item"
     And I fill in "Type" with "Pants"
     And I click on "Create Item"
     Then I should still be on the New Item page
 
 Scenario: upload new item without image
   Given I am on the items page
-  And I click on "New Item"
-  And I fill in the fields with  "black", "shirt", "black shirt", "Male", "M", "Used", "Available"
+  When I click on "New Item"
+  And I fill in the fields with "black", "shirt", "black shirt", "Male", "M", "Used", "Available"
   And I click on "Create Item"
   Then there should be a new item in the items page
   But there should not be a picture

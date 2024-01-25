@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddBrandAndPhotoLinkToItems < ActiveRecord::Migration[7.1]
   def change
     add_column :items, :brand, :text

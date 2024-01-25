@@ -1,101 +1,23 @@
+# frozen_string_literal: true
+
+# /app/controllers
 class ItemsController < ApplicationController
   include ActionController::Cookies
 
-  before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :set_item, only: %i[show edit update destroy]
 
   # GET /items or /items.json
   def index
-    cookies_color_list = []
-    cookies_type_list = []
-    cookies_gender_list = []
-    cookies_status_list = []
-    cookies_size_list = []
-    cookies_condition_list = []
+    process_cookie_params
 
-    params.each do |key, value|
-      if key.include?("color_")
-        start = "color_".length()
-        id = params[key][start..key.length()].to_i
-        color = Color.find(id)
-        cookies_color_list.append(color)
-      end
-      if key.include?("type_")
-        start = "type_".length()
-        id = params[key][start..key.length()].to_i
-        type = Type.find(id)
-        cookies_type_list.append(type)
-      end
-      if key.include?("gender_")
-        start = "gender_".length()
-        id = params[key][start..key.length()].to_i
-        gender = Gender.find(id)
-        cookies_gender_list.append(gender)
-      end
-      if key.include?("status_")
-        start = "status_".length()
-        id = params[key][start..key.length()].to_i
-        status = Status.find(id)
-        cookies_status_list.append(status)
-      end
-      if key.include?("size_")
-        start = "size_".length()
-        id = params[key][start..key.length()].to_i
-        size = Size.find(id)
-        cookies_size_list.append(size)
-      end
-      if key.include?("condition_")
-        start = "condition_".length()
-        id = params[key][start..key.length()].to_i
-        condition = Condition.find(id)
-        cookies_condition_list.append(condition)
-      end
-    end
-
-    
-    cookies[:color] = cookies_color_list.empty? ? nil : cookies_color_list
-  
-    cookies[:type] = cookies_type_list.empty? ? nil : cookies_type_list
-  
-    cookies[:gender] = cookies_gender_list.empty? ? nil : cookies_gender_list
-  
-    cookies[:status] = cookies_status_list.empty? ? nil : cookies_status_list
-  
-    cookies[:size] = cookies_size_list.empty? ? nil : cookies_size_list
-  
-    cookies[:condition] = cookies_condition_list.empty? ? nil : cookies_condition_list
-  
     @items = Item.all
-
-    if not cookies[:color].nil?
-      @items = @items.where(color: cookies[:color])
-    end
-
-    if not cookies[:type].nil?
-      @items = @items.where(type: cookies[:type])
-    end
-
-    if not cookies[:gender].nil?
-      @items = @items.where(gender: cookies[:gender])
-    end
-
-    if not cookies[:status].nil?
-      @items = @items.where(status: cookies[:status])
-    end
-
-    if not cookies[:size].nil?
-      @items = @items.where(size: cookies[:size])
-    end
-
-    if not cookies[:condition].nil?
-      @items = @items.where(condition: cookies[:condition])
-    end
+    filter_items_by_cookies
 
     @cookies = cookies
   end
 
   # GET /items/1 or /items/1.json
-  def show
-  end
+  def show; end
 
   # GET /items/new
   def new
@@ -103,17 +25,14 @@ class ItemsController < ApplicationController
   end
 
   # GET /items/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /items or /items.json
   def create
     @item = Item.new(item_params)
-  
-    if params[:item][:image].present?
-      upload_to_s3(params[:item][:image])
-    end
-  
+
+    upload_to_s3(params[:item][:image]) if params[:item][:image].present?
+
     if @item.save
       # Handle the image upload here if necessary
       redirect_to @item, notice: 'Item was successfully created.'
@@ -121,13 +40,12 @@ class ItemsController < ApplicationController
       render :new
     end
   end
-  
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to item_url(@item), notice: "Item was successfully updated." }
+        format.html { redirect_to item_url(@item), notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -141,7 +59,7 @@ class ItemsController < ApplicationController
     @item.destroy!
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: "Item was successfully destroyed." }
+      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -153,29 +71,57 @@ class ItemsController < ApplicationController
   end
 
   # GET /items/filter
-  def filter
-    
-  end
+  def filter; end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find(params[:id])
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def item_params
+    params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :brand, :status_id, :size_id,
+                                 :condition_id, :image_url)
+  end
+
+  def upload_to_s3(image)
+    s3 = Aws::S3::Resource.new(region: 'us-east-1',
+                               credentials: Aws::Credentials.new(
+                                 ENV.fetch('AWS_ACCESS_KEY_ID', nil),
+                                 ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
+                               ))
+    obj = s3.bucket('campuscloset').object("uploads/items/#{SecureRandom.uuid}/#{image.original_filename}")
+    obj.upload_file(image.tempfile)
+    @item.image_url = obj.public_url
+  end
+
+  def process_params_with_prefix(params, prefix, model_class)
+    items_list = []
+
+    params.each_key do |key|
+      next unless key.start_with?(prefix)
+
+      start = prefix.length
+      id = params[key][start..].to_i
+      item = model_class.find(id)
+      items_list.append(item)
     end
 
-    # Only allow a list of trusted parameters through.
-    def item_params
-      params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :brand, :status_id, :size_id, :condition_id, :image_url)
-    end
+    items_list
+  end
 
-    def upload_to_s3(image)
-      s3 = Aws::S3::Resource.new(region: 'us-east-1',
-                                  credentials: Aws::Credentials.new(
-                                  ENV['AWS_ACCESS_KEY_ID'],
-                                  ENV['AWS_SECRET_ACCESS_KEY']
-                                 ))
-      obj = s3.bucket('campuscloset').object("uploads/items/#{SecureRandom.uuid}/#{image.original_filename}")
-      obj.upload_file(image.tempfile)
-      @item.image_url = obj.public_url
+  def process_cookie_params
+    %w[color type gender status size condition].each do |prefix|
+      cookie_list = process_params_with_prefix(params, "#{prefix}_", prefix.capitalize.constantize)
+      cookies[prefix.to_sym] = cookie_list.empty? ? nil : cookie_list
     end
+  end
+
+  def filter_items_by_cookies
+    %i[color type gender status size condition].each do |cookie_name|
+      @items = @items.where(cookie_name => cookies[cookie_name]) unless cookies[cookie_name].nil?
+    end
+  end
 end

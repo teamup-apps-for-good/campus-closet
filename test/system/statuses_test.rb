@@ -1,41 +1,43 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class StatusesTest < ApplicationSystemTestCase
   setup do
     @status = statuses(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit statuses_url
-    assert_selector "h1", text: "Statuses"
+    assert_selector 'h1', text: 'Statuses'
   end
 
-  test "should create status" do
+  test 'should create status' do
     visit statuses_url
-    click_on "New status"
+    click_on 'New status'
 
-    fill_in "Name", with: @status.name
-    click_on "Create Status"
+    fill_in 'Name', with: @status.name
+    click_on 'Create Status'
 
-    assert_text "Status was successfully created"
-    click_on "Back"
+    assert_text 'Status was successfully created'
+    click_on 'Back'
   end
 
-  test "should update Status" do
+  test 'should update Status' do
     visit status_url(@status)
-    click_on "Edit this status", match: :first
+    click_on 'Edit this status', match: :first
 
-    fill_in "Name", with: @status.name
-    click_on "Update Status"
+    fill_in 'Name', with: @status.name
+    click_on 'Update Status'
 
-    assert_text "Status was successfully updated"
-    click_on "Back"
+    assert_text 'Status was successfully updated'
+    click_on 'Back'
   end
 
-  test "should destroy Status" do
+  test 'should destroy Status' do
     visit status_url(@status)
-    click_on "Destroy this status", match: :first
+    click_on 'Destroy this status', match: :first
 
-    assert_text "Status was successfully destroyed"
+    assert_text 'Status was successfully destroyed'
   end
 end
