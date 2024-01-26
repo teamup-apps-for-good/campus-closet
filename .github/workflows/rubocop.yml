@@ -23,7 +23,7 @@ jobs:
         gem install rubocop
 
     - name: Run RuboCop
-      run: rubocop --format offenses --out rubocop_output.txt
+      run: bundle exec rubocop --format offenses --out rubocop_output.txt
 
     - name: Display offenses
       run: cat rubocop_output.txt

@@ -22,10 +22,4 @@ jobs:
       run: gem install rubycritic
 
     - name: Run RubyCritic
-      run: rubycritic --format html
-
-    - name: Display RubyCritic score
-      run: |
-        RUBYCRITIC_SCORE=$(cat tmp/rubycritic/overview.html | grep 'summary rating' | sed -n -e 's/^.*<span class="rating">\([^<]*\)<\/span>.*$/\1/p')
-        echo "RubyCritic Score: $RUBYCRITIC_SCORE%"
-        echo "::set-output name=rubycritic_score::$RUBYCRITIC_SCORE%"
+      run: bundle exec rubycritic
