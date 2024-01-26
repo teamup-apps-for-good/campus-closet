@@ -77,11 +77,24 @@ RSpec.describe '/items', type: :request do
   describe 'POST /create' do
     context 'with valid parameters' do
       it 'creates a new Item' do
-        item = Item.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
-                           gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                           size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
+        color = Color.create(name: 'temp_color')
+        type = Type.create(name: 'temp_type')
+        gender = Gender.create(name: 'temp_gender')
+        status = Status.create(name: 'temp_status')
+        size = Size.create(name: 'temp_size')
+        condition = Condition.create(name: 'temp_condition')
+
         expect do
-          post items_url, params: { item: }
+          post items_url, params: { item: {
+            color_id: color.id,
+            type_id: type.id,
+            gender_id: gender.id,
+            status_id: status.id,
+            size_id: size.id,
+            condition_id: condition.id,
+            description: 'Item Description',
+            image_url: 'https://example.com/image.jpg'
+          } }
         end.to change(Item, :count).by(1)
       end
 

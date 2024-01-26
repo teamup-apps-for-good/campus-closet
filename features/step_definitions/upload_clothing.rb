@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Given('I am on the items page') do
-  pending # TODO
+  visit('/items')
 end
 
 When('I click on {string}') do |_button_text|

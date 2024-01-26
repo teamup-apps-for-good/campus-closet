@@ -4,23 +4,26 @@ require_relative '../../config/environment'
 
 Given('the following items exist:') do |table|
   table.hashes.each do |item_params|
-    # Convert string values to corresponding objects if needed
-    color = Color.find_by(name: item_params['color'])
-    type = Type.find_by(name: item_params['type'])
-    gender = Gender.find_by(name: item_params['gender'])
-    status = Status.find_by(name: item_params['status'])
-    size = Size.find_by(name: item_params['size'])
-    condition = Condition.find_by(name: item_params['condition'])
+    # DOESN'T CURRENTLY CREATE AN ITEM LIKE INTENDED
+    # NEED TO TRY TO FIND A WAY TO SEARCH FOR THE ID
+    # FOR THE OBJECT IN ORDER TO CREATE THE ITEM
+    color = Color.find_by(Name: item_params['color'])
+    type = Type.find_by(Name: item_params['type'])
+    gender = Gender.find_by(Name: item_params['gender'])
+    status = Status.find_by(Name: item_params['status'])
+    size = Size.find_by(Name: item_params['size'])
+    condition = Condition.find_by(Name: item_params['condition'])
 
     # Create the item
     Item.create(
-      color:,
-      type:,
-      gender:,
-      status:,
-      size:,
-      condition:,
-      description: item_params['description']
+      color_id: color&.id,
+      type_id: type&.id,
+      gender_id: gender&.id,
+      status_id: status&.id,
+      size_id: size&.id,
+      condition_id: condition&.id,
+      description: item_params['description'],
+      image_url: 'https://pangaia.com/cdn/shop/files/Wool-Jersey-Oversized-Crew-Neck-Black-1.png?v=1694601739'
     )
   end
 end
@@ -39,18 +42,17 @@ Then(/I should see all the items/) do
 end
 
 Given('I am on the homepage') do
-  pending # TODO: (same test in sort_clothing.rb)
+  visit('/')
 end
 
 Then('I should see {int} items') do |_item_count|
-  pending # TODO
+  pending
+  # items = Item.count
+  # puts "Actual item count: #{items}"
+  # expect(items).to eq(_item_count)
 end
 
 And('I should see an item with the description {string}') do |_description|
-  pending # TODO
-end
-
-And('I click on {string}') do |_button_text|
   pending # TODO
 end
 
