@@ -1,2 +1,4 @@
 # frozen_string_literal: true
-# ENV file for tests
+
+require 'cucumber/rails'
+require 'capybara/cucumber'

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-When('I press {string}') do |_string|
-  pending # Write code here that turns the phrase above into concrete actions
+When('I press {string}') do |string|
+  find('label', text: string).click(wait: 10)
 end

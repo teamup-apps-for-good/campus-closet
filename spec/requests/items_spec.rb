@@ -33,9 +33,11 @@ RSpec.describe '/items', type: :request do
     #   # FactoryBot.attributes_for(:item)
   end
 
-  # let(:invalid_attributes) {
-  #   skip("Add a hash of attributes invalid for your model")
-  # }
+  let(:invalid_attributes) do
+    { color: 'green', type: 'bad',
+      gender: 'none', status: 'not sure',
+      size: 'extra small', condition: 'awful' }
+  end
 
   describe 'GET /index' do
     it 'renders a successful response' do
@@ -77,17 +79,30 @@ RSpec.describe '/items', type: :request do
   describe 'POST /create' do
     context 'with valid parameters' do
       it 'creates a new Item' do
-        item = Item.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
-                           gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                           size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
+        color = Color.create(name: 'temp_color')
+        type = Type.create(name: 'temp_type')
+        gender = Gender.create(name: 'temp_gender')
+        status = Status.create(name: 'temp_status')
+        size = Size.create(name: 'temp_size')
+        condition = Condition.create(name: 'temp_condition')
+
         expect do
-          post items_url, params: { item: }
+          post items_url, params: { item: {
+            color_id: color.id,
+            type_id: type.id,
+            gender_id: gender.id,
+            status_id: status.id,
+            size_id: size.id,
+            condition_id: condition.id,
+            description: 'Item Description',
+            image_url: 'https://example.com/image.jpg'
+          } }
         end.to change(Item, :count).by(1)
       end
 
-      it 'redirects to the created item' do
+      it 'redirects to the item page' do
         post items_url, params: { item: valid_attributes }
-        expect(response).to redirect_to(item_url(Item.last))
+        expect(response).to redirect_to('/items')
       end
     end
 
@@ -127,6 +142,10 @@ RSpec.describe '/items', type: :request do
     end
 
     context 'with invalid parameters' do
+      let(:invalid_attributes) do
+        { color_id: 5 }
+      end
+
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         item = Item.create! valid_attributes
         patch item_url(item), params: { item: invalid_attributes }

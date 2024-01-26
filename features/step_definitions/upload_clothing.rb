@@ -1,38 +1,38 @@
 # frozen_string_literal: true
 
 Given('I am on the items page') do
-  pending # TODO
+  visit('/items')
 end
 
-When('I click on {string}') do |_button_text|
-  pending # TODO
+When('I click on {string}') do |button_text|
+  click_on button_text
 end
 
-And('I fill in the fields with {string}, {string}, {string}, {string}, {string}, {string}, {string}') do
-    |_color, _type, _description, _gender, _size, _condition, _status| # rubocop:disable Layout/ParameterLists
-  pending # TODO
+When('I am on the new item page') do
+  expect(page).to have_current_path('/items/new')
+end
+
+Then('there should be a new item in the items page, {int}') do |int|
+  items = Item.count + 1
+  expect(items).to eq(int)
 end
 
 And('I include a picture') do
-  pending # TODO
+  attach_file('item_image', Rails.root.join('features', 'test_image', 'shirt.jpg'))
 end
 
-Then('there should be a new item in the items page') do
-  pending # TODO
+When('I fill in {string} with {string}') do |cat, value|
+  select(value, from: "item_#{cat}_id")
 end
 
-And('there should be an image') do
-  pending # TODO
-end
-
-When('I fill in {string} with {string}') do |_string, _string2|
-  pending # TODO
-end
-
-Then('I should still be on the New Item page') do
-  pending # TODO
+Then('type should still be {string}') do |type|
+  expect(page).to have_select('item_type_id', selected: type)
 end
 
 But('there should not be a picture') do
-  pending # TODO
+  expect(page).to have_content('No image available')
+end
+
+When('I fill in description with {string}') do |desc|
+  fill_in 'item_description', with: desc
 end
