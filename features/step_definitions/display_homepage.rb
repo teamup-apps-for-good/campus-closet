@@ -7,12 +7,12 @@ Given('the following items exist:') do |table|
     # DOESN'T CURRENTLY CREATE AN ITEM LIKE INTENDED
     # NEED TO TRY TO FIND A WAY TO SEARCH FOR THE ID
     # FOR THE OBJECT IN ORDER TO CREATE THE ITEM
-    color = Color.find_by(Name: item_params['color'])
-    type = Type.find_by(Name: item_params['type'])
-    gender = Gender.find_by(Name: item_params['gender'])
-    status = Status.find_by(Name: item_params['status'])
-    size = Size.find_by(Name: item_params['size'])
-    condition = Condition.find_by(Name: item_params['condition'])
+    color = Color.create(name: item_params['color'])
+    type = Type.create(name: item_params['type'])
+    gender = Gender.create(name: item_params['gender'])
+    status = Status.create(name: item_params['status'])
+    size = Size.create(name: item_params['size'])
+    condition = Condition.create(name: item_params['condition'])
 
     # Create the item
     Item.create(
@@ -46,10 +46,8 @@ Given('I am on the homepage') do
 end
 
 Then('I should see {int} items') do |_item_count|
-  pending
-  # items = Item.count
-  # puts "Actual item count: #{items}"
-  # expect(items).to eq(_item_count)
+  items = Item.count
+  expect(items).to eq(_item_count)
 end
 
 And('I should see an item with the description {string}') do |_description|

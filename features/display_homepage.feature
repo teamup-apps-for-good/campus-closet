@@ -9,7 +9,7 @@ Background: clothing in database
   Given the following items exist:
   | color     | type       | Description         | Gender       | Size  | Condition  | Status       | 
   | black     | shirt      | black shirt         | Male         | M     | Used       | Available    | 
-  | Red       | pants      | red pants           | Female       | L     | Unused     | Unavailable  |
+  | red       | pants      | red pants           | Female       | L     | Unused     | Unavailable  |
   | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available    |
   | brown     | belt       | brown belt          | Female       | M     | Unused     | Unavailable  |
 
