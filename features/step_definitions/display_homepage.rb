@@ -4,15 +4,13 @@ require_relative '../../config/environment'
 
 Given('the following items exist:') do |table|
   table.hashes.each do |item_params|
-    # DOESN'T CURRENTLY CREATE AN ITEM LIKE INTENDED
-    # NEED TO TRY TO FIND A WAY TO SEARCH FOR THE ID
-    # FOR THE OBJECT IN ORDER TO CREATE THE ITEM
-    color = Color.create(name: item_params['color'])
-    type = Type.create(name: item_params['type'])
-    gender = Gender.create(name: item_params['gender'])
-    status = Status.create(name: item_params['status'])
-    size = Size.create(name: item_params['size'])
-    condition = Condition.create(name: item_params['condition'])
+    # find the object if it exists, otherwise create a new object
+    color = Color.find_by(name: item_params['color']) || Color.create(name: item_params['color'])
+    type = Type.find_by(name: item_params['type']) || Type.create(name: item_params['type'])
+    gender = Gender.find_by(name: item_params['Gender']) || Gender.create(name: item_params['Gender'])
+    status = Status.find_by(name: item_params['Status']) || Status.create(name: item_params['Status'])
+    size = Size.find_by(name: item_params['Size']) || Size.create(name: item_params['Size'])
+    condition = Condition.find_by(name: item_params['Condition']) || Condition.create(name: item_params['Condition'])
 
     # Create the item
     Item.create(
@@ -22,7 +20,7 @@ Given('the following items exist:') do |table|
       status_id: status&.id,
       size_id: size&.id,
       condition_id: condition&.id,
-      description: item_params['description'],
+      description: item_params['Description'],
       image_url: 'https://pangaia.com/cdn/shop/files/Wool-Jersey-Oversized-Crew-Neck-Black-1.png?v=1694601739'
     )
   end
@@ -45,19 +43,25 @@ Given('I am on the homepage') do
   visit('/')
 end
 
-Then('I should see {int} items') do |_item_count|
+Then('I should see {int} items') do |item_count|
   items = Item.count
-  expect(items).to eq(_item_count)
+  expect(items).to eq(item_count)
 end
 
-And('I should see an item with the description {string}') do |_description|
-  pending # TODO
+And('I should see an item with the description {string}') do |description|
+  expect(page).to have_content(description)
 end
 
-Then('I should be on an item description') do
-  pending # TODO
+When('I click on {string} for {string}') do |_button_text, description|
+  item = Item.find_by(description:)
+  visit(item_path(item))
 end
 
-And('the {string} should be {string}') do |_category, _expected_cat|
-  pending # TODO
+Then('I should be on an item description for {string}') do |description|
+  item = Item.find_by(description:)
+  expect(page).to have_current_path(item_path(item))
+end
+
+And('the type should be {string}') do |expected_cat|
+  expect(page).to have_content(expected_cat)
 end

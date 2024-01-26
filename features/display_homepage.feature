@@ -27,8 +27,8 @@ Scenario: show items and they are different
 Scenario: show item details
     Given I am on the homepage
     And I should see an item with the description "red pants"
-    And I click on "Show this item"
-    Then I should be on an item description
-    And the "Type" should be "pants"
+    And I click on "Show this item" for "red pants"
+    Then I should be on an item description for "red pants"
+    And the type should be "pants"
 
     
