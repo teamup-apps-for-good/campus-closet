@@ -22,9 +22,4 @@ jobs:
       run: gem install rubycritic
 
     - name: Run RubyCritic
-      run: rubycritic --format html
-
-    - name: Display RubyCritic score
-      run: |
-        score = $(cat rubycritic_output.txt | grep 'Score: ' | awk '{print $NF}')
-        echo "RubyCritic Score: $score"
+      run: rubycritic --format console

@@ -23,10 +23,10 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: Run Cucumber and RSpec
+    - name: Run RSpec
       run: |
-        bundle exec rails cucumber
         bundle exec rspec
+        bundle exec rails cucumber
 
     - name: Set up SimpleCov
       run: gem install simplecov
