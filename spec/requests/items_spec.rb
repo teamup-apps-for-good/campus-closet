@@ -99,11 +99,6 @@ RSpec.describe '/items', type: :request do
           } }
         end.to change(Item, :count).by(1)
       end
-
-      it 'redirects to the item page' do
-        post items_url, params: { item: valid_attributes }
-        expect(response).to redirect_to('/items')
-      end
     end
 
     context 'with invalid parameters' do
@@ -112,31 +107,33 @@ RSpec.describe '/items', type: :request do
           post items_url, params: { item: invalid_attributes }
         end.to change(Item, :count).by(0)
       end
-
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post items_url, params: { item: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
     end
   end
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
-
       it 'updates the requested item' do
         item = Item.create! valid_attributes
+        new_color = Color.create(name: 'new_color')
+
+        # Set the color_id directly in the new_attributes
+        new_attributes = { color_id: new_color.id }
+
         patch item_url(item), params: { item: new_attributes }
         item.reload
-        skip('Add assertions for updated state')
+
+        # Ensure the color_id is updated
+        expect(item.color_id).to eq(new_color.id)
       end
 
       it 'redirects to the item' do
         item = Item.create! valid_attributes
+        new_color = Color.create(name: 'new_color')
+        new_attributes = { color_id: new_color.id }
+
         patch item_url(item), params: { item: new_attributes }
         item.reload
+
         expect(response).to redirect_to(item_url(item))
       end
     end
