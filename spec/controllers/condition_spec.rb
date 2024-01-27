@@ -94,4 +94,37 @@ RSpec.describe ConditionsController, type: :controller do
       expect(response).to redirect_to(conditions_url)
     end
   end
+  describe 'POST #create' do
+    context 'with invalid parameters' do
+      it 'renders the new template with unprocessable_entity status (HTML)' do
+        post :create, params: { condition: { name: nil } }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'renders a JSON response with unprocessable_entity status (JSON)' do
+        post :create, params: { condition: { name: nil } }, format: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    let(:condition) { Condition.create(name: 'Initial Condition') }
+
+    context 'with invalid parameters' do
+      it 'renders the edit template with unprocessable_entity status (HTML)' do
+        patch :update, params: { id: condition.id, condition: { name: nil } }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'renders a JSON response with unprocessable_entity status (JSON)' do
+        patch :update, params: { id: condition.id, condition: { name: nil } }, format: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end

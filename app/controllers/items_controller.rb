@@ -64,15 +64,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  # GET /items/color/1 or /items/color/1.json
-  def show_by_color
-    @color = Color.find(params[:color_id])
-    @items = Item.where(color: @color)
-  end
-
-  # GET /items/filter
-  def filter; end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
