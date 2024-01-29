@@ -9,38 +9,52 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+if Color.count == 0
+  Color.create(name: 'Red')
+  Color.create(name: 'Blue')
+end
 
-Color.create(name: 'Red')
-Color.create(name: 'Blue')
+if Type.count == 0
+  Type.create(name: 'Pants')
+  Type.create(name: 'Shirt')
+end
 
-Type.create(name: 'Pants')
-Type.create(name: 'Shirt')
+if Gender.count == 0
+  Gender.create(name: 'Male')
+  Gender.create(name: 'Female')
+end
 
-Gender.create(name: 'Male')
-Gender.create(name: 'Female')
+if Status.count == 0
+  Status.create(name: 'Available')
+  Status.create(name: 'Unavailable')
+end
 
-Status.create(name: 'Available')
-Status.create(name: 'Unavailable')
+if Size.count == 0
+  Size.create(name: 'L')
+  Size.create(name: 'M')
+  Size.create(name: 'S')
+end
 
-Size.create(name: 'L')
-Size.create(name: 'M')
-Size.create(name: 'S')
+if Condition.count == 0
+  Condition.create(name: 'Used')
+  Condition.create(name: 'Unused')
+end
 
-Condition.create(name: 'Used')
-Condition.create(name: 'Unused')
+if Item.count == 0
+  Item.create(color: Color.first, type: Type.first, gender: Gender.first, description: 'Sample description',
+              status: Status.first, size: Size.first, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redpants.jpg')
 
-Item.create(color: Color.first, type: Type.first, gender: Gender.first, description: 'Sample description',
-            status: Status.first, size: Size.first, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redpants.jpg')
+  Item.create(color: Color.second, type: Type.second, gender: Gender.second, description: 'Sample description 2',
+              status: Status.second, size: Size.second, condition: Condition.second, image_url: 'https://campuscloset.s3.amazonaws.com/blueshirt.jpg')
 
-Item.create(color: Color.second, type: Type.second, gender: Gender.second, description: 'Sample description 2',
-            status: Status.second, size: Size.second, condition: Condition.second, image_url: 'https://campuscloset.s3.amazonaws.com/blueshirt.jpg')
+  Item.create(color: Color.first, type: Type.second, gender: Gender.first, description: 'Sample description 3',
+              status: Status.first, size: Size.second, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redshirt.jpg')
+end
 
-Item.create(color: Color.first, type: Type.second, gender: Gender.first, description: 'Sample description 3',
-            status: Status.first, size: Size.second, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redshirt.jpg')
-
-User.create(first: "Test", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "College Station, TX", student: false)
-User.create(first: "Test", last: "Student", email: "teststudent@tamu.edu", phone: "0987654321", address: "College Station, TX", student: true)
-
+if User.count == 0
+  User.create(first: "Test", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "College Station, TX", student: false)
+  User.create(first: "Test", last: "Student", email: "teststudent@tamu.edu", phone: "0987654321", address: "College Station, TX", student: true)
+end
 # more_items = [
 #   {:color => Color, :type => '',
 #     :gender => '', :description => 'Nice shirt',
