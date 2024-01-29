@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# /app/controllers
+# controller for the items
 class ItemsController < ApplicationController
   include ActionController::Cookies
 
@@ -43,25 +43,12 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
-    respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to item_url(@item), notice: 'Item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @item }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
+    update_and_respond(@item, :item_params)
   end
 
   # DELETE /items/1 or /items/1.json
   def destroy
-    @item.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@item, :items_url, Item.model_name)
   end
 
   private

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# /app/controllers
+# controller for the types
 class TypesController < ApplicationController
   before_action :set_type, only: %i[show edit update destroy]
 
@@ -22,40 +22,17 @@ class TypesController < ApplicationController
 
   # POST /types or /types.json
   def create
-    @type = Type.new(type_params)
-
-    respond_to do |format|
-      if @type.save
-        format.html { redirect_to type_url(@type), notice: 'Type was successfully created.' }
-        format.json { render :show, status: :created, location: @type }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @type.errors, status: :unprocessable_entity }
-      end
-    end
+    create_and_respond(Type, :type_url, :type_params)
   end
 
   # PATCH/PUT /types/1 or /types/1.json
   def update
-    respond_to do |format|
-      if @type.update(type_params)
-        format.html { redirect_to type_url(@type), notice: 'Type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @type }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @type.errors, status: :unprocessable_entity }
-      end
-    end
+    update_and_respond(@type, :type_params)
   end
 
   # DELETE /types/1 or /types/1.json
   def destroy
-    @type.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to types_url, notice: 'Type was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@type, :types_url, Type.model_name)
   end
 
   private

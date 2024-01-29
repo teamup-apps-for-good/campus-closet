@@ -5,12 +5,13 @@ require_relative '../../config/environment'
 Given('the following items exist:') do |table|
   table.hashes.each do |item_params|
     # find the object if it exists, otherwise create a new object
-    color = Color.find_by(name: item_params['color']) || Color.create(name: item_params['color'])
-    type = Type.find_by(name: item_params['type']) || Type.create(name: item_params['type'])
-    gender = Gender.find_by(name: item_params['Gender']) || Gender.create(name: item_params['Gender'])
-    status = Status.find_by(name: item_params['Status']) || Status.create(name: item_params['Status'])
-    size = Size.find_by(name: item_params['Size']) || Size.create(name: item_params['Size'])
-    condition = Condition.find_by(name: item_params['Condition']) || Condition.create(name: item_params['Condition'])
+
+    color = find_or_create(Color, item_params['color'])
+    type = find_or_create(Type, item_params['type'])
+    gender = find_or_create(Gender, item_params['Gender'])
+    status = find_or_create(Status, item_params['Status'])
+    size = find_or_create(Size, item_params['Size'])
+    condition = find_or_create(Condition, item_params['Condition'])
 
     # Create the item
     Item.create(

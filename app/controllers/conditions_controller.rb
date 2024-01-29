@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# /app/controllers
+# controller for the conditions
 class ConditionsController < ApplicationController
   before_action :set_condition, only: %i[show edit update destroy]
 
@@ -22,40 +22,17 @@ class ConditionsController < ApplicationController
 
   # POST /conditions or /conditions.json
   def create
-    @condition = Condition.new(condition_params)
-
-    respond_to do |format|
-      if @condition.save
-        format.html { redirect_to condition_url(@condition), notice: 'Condition was successfully created.' }
-        format.json { render :show, status: :created, location: @condition }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @condition.errors, status: :unprocessable_entity }
-      end
-    end
+    create_and_respond(Condition, :condition_url, :condition_params)
   end
 
   # PATCH/PUT /conditions/1 or /conditions/1.json
   def update
-    respond_to do |format|
-      if @condition.update(condition_params)
-        format.html { redirect_to condition_url(@condition), notice: 'Condition was successfully updated.' }
-        format.json { render :show, status: :ok, location: @condition }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @condition.errors, status: :unprocessable_entity }
-      end
-    end
+    update_and_respond(@condition, :condition_params)
   end
 
   # DELETE /conditions/1 or /conditions/1.json
   def destroy
-    @condition.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to conditions_url, notice: 'Condition was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@condition, :conditions_url, Condition.model_name)
   end
 
   private

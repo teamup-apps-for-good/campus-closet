@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# /app/controllers
+# controller for the statuses
 class StatusesController < ApplicationController
   before_action :set_status, only: %i[show edit update destroy]
 
@@ -22,40 +22,17 @@ class StatusesController < ApplicationController
 
   # POST /statuses or /statuses.json
   def create
-    @status = Status.new(status_params)
-
-    respond_to do |format|
-      if @status.save
-        format.html { redirect_to status_url(@status), notice: 'Status was successfully created.' }
-        format.json { render :show, status: :created, location: @status }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @status.errors, status: :unprocessable_entity }
-      end
-    end
+    create_and_respond(Status, :status_url, :status_params)
   end
 
   # PATCH/PUT /statuses/1 or /statuses/1.json
   def update
-    respond_to do |format|
-      if @status.update(status_params)
-        format.html { redirect_to status_url(@status), notice: 'Status was successfully updated.' }
-        format.json { render :show, status: :ok, location: @status }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @status.errors, status: :unprocessable_entity }
-      end
-    end
+    update_and_respond(@status, :status_params)
   end
 
   # DELETE /statuses/1 or /statuses/1.json
   def destroy
-    @status.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@status, :statuses_url, Status.model_name)
   end
 
   private
