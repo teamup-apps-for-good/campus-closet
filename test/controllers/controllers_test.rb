@@ -27,6 +27,12 @@ module CommonControllerTests
 
       assert_redirected_to send("#{resource_name}_url", resource_name.camelize.to_s.constantize.last)
     end
+  end
+
+  included do
+    setup do
+      @resource = send("#{resource_name}s", :one)
+    end
 
     test 'should show resource' do
       get send("#{resource_name}_url", @resource)
