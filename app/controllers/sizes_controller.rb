@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# /app/controllers
+# controller for the sizes
 class SizesController < ApplicationController
   before_action :set_size, only: %i[show edit update destroy]
 
@@ -22,30 +22,12 @@ class SizesController < ApplicationController
 
   # POST /sizes or /sizes.json
   def create
-    @size = Size.new(size_params)
-
-    respond_to do |format|
-      if @size.save
-        format.html { redirect_to size_url(@size), notice: 'Size was successfully created.' }
-        format.json { render :show, status: :created, location: @size }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @size.errors, status: :unprocessable_entity }
-      end
-    end
+    create_and_respond(Size, :size_url, :size_params)
   end
 
   # PATCH/PUT /sizes/1 or /sizes/1.json
   def update
-    respond_to do |format|
-      if @size.update(size_params)
-        format.html { redirect_to size_url(@size), notice: 'Size was successfully updated.' }
-        format.json { render :show, status: :ok, location: @size }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @size.errors, status: :unprocessable_entity }
-      end
-    end
+    update_and_respond(@size, :size_url, :size_params)
   end
 
   # DELETE /sizes/1 or /sizes/1.json

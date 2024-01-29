@@ -1,5 +1,34 @@
 # frozen_string_literal: true
 
-# /app/controllers
+# controller for the application
 class ApplicationController < ActionController::Base
+  private
+
+  def create_and_respond(model, redirect_url, params_method)
+    instance_variable = instance_variable_set("@#{model.name.downcase}", model.new(send(params_method)))
+
+    respond_to do |format|
+      if instance_variable.save
+        format.html do
+          redirect_to send(redirect_url, instance_variable), notice: "#{model.name} was successfully created."
+        end
+        format.json { render :show, status: :created, location: instance_variable }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: instance_variable.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_and_respond(instance_variable, redirect_url, params_method)
+    respond_to do |format|
+      if instance_variable.update(send(params_method))
+        format.html { redirect_to instance_variable, notice: "#{instance_variable.model_name.human} was successfully updated." }
+        format.json { render :show, status: :ok, location: instance_variable }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: instance_variable.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
