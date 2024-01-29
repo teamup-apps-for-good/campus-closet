@@ -93,3 +93,10 @@ class ConditionControllerTest < ActionDispatch::IntegrationTest
 
   self.resource_name = 'condition'
 end
+
+# controller for the users
+class UserControllerTest < ActionDispatch::IntegrationTest
+  include CommonControllerTests
+
+  self.resource_name = 'user'
+end
