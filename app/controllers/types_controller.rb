@@ -27,17 +27,12 @@ class TypesController < ApplicationController
 
   # PATCH/PUT /types/1 or /types/1.json
   def update
-    update_and_respond(@type, :type_url, :type_params)
+    update_and_respond(@type, :type_params)
   end
 
   # DELETE /types/1 or /types/1.json
   def destroy
-    @type.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to types_url, notice: 'Type was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@type, :types_url, Type.model_name)
   end
 
   private

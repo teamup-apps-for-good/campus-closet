@@ -27,17 +27,12 @@ class ConditionsController < ApplicationController
 
   # PATCH/PUT /conditions/1 or /conditions/1.json
   def update
-    update_and_respond(@condition, :condition_url, :condition_params)
+    update_and_respond(@condition, :condition_params)
   end
 
   # DELETE /conditions/1 or /conditions/1.json
   def destroy
-    @condition.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to conditions_url, notice: 'Condition was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@condition, :conditions_url, Condition.model_name)
   end
 
   private

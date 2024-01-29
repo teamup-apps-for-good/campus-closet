@@ -10,3 +10,9 @@ AllCops:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 12
+
+Metrics/AbcSize:
+  Max: 20

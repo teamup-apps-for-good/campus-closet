@@ -20,15 +20,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def update_and_respond(instance_variable, redirect_url, params_method)
+  def update_and_respond(instance_variable, params_method)
     respond_to do |format|
       if instance_variable.update(send(params_method))
-        format.html { redirect_to instance_variable, notice: "#{instance_variable.model_name.human} was successfully updated." }
+        format.html do
+          redirect_to instance_variable, notice: "#{instance_variable.model_name.human} was successfully updated."
+        end
         format.json { render :show, status: :ok, location: instance_variable }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: instance_variable.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy_and_respond(instance_variable, redirect_url, model_name)
+    instance_variable.destroy!
+
+    respond_to do |format|
+      format.html { redirect_to send(redirect_url), notice: "#{model_name.human} was successfully destroyed." }
+      format.json { head :no_content }
     end
   end
 end

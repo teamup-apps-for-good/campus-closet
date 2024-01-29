@@ -43,17 +43,12 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
-    update_and_respond(@item, :item_url, :item_params)
+    update_and_respond(@item, :item_params)
   end
 
   # DELETE /items/1 or /items/1.json
   def destroy
-    @item.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@item, :items_url, Item.model_name)
   end
 
   private

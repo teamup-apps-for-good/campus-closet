@@ -27,17 +27,12 @@ class GendersController < ApplicationController
 
   # PATCH/PUT /genders/1 or /genders/1.json
   def update
-    update_and_respond(@gender, :gender_url, :gender_params)
+    update_and_respond(@gender, :gender_params)
   end
 
   # DELETE /genders/1 or /genders/1.json
   def destroy
-    @gender.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to genders_url, notice: 'Gender was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@gender, :genders_url, Gender.model_name)
   end
 
   private
