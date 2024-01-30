@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def destroy
     destroy_and_respond(@user, :users_url, User.model_name)
   end
-  
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
