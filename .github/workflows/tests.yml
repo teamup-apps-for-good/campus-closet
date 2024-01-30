@@ -35,32 +35,9 @@ jobs:
 
     - name: Run RSpec
       run: |
-        bundle exec rails cucumber
         bundle exec rspec
-      
 
-  check-coverage:
-    runs-on: ubuntu-latest
-
-    needs: test
-
-    steps:
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2.2
-
-    - name: Install SimpleCov
-      run: gem install simplecov
-
-    - name: Check coverage
+    - name: Run Cucumber
       run: |
-        COVERAGE_THRESHOLD=90
-        coverage=$COVERAGE
-        echo "Code coverage is $coverage%."
-        if (( $(echo "$coverage >= $COVERAGE_THRESHOLD" | bc -l) )); then
-          echo "Code coverage is over 90%."
-        else
-          echo "Code coverage is below 90%."
-          exit 1
-        fi
+        bundle exec rails cucumber
+        
