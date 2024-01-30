@@ -26,4 +26,5 @@ Rails.application.routes.draw do
       patch :image_upload
     end
   end
+
 end

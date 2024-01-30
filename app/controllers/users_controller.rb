@@ -10,7 +10,13 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    if @user.student?
+      render 'show_student'
+    else
+      render 'show_donor'
+    end
+  end
 
   # GET /users/new
   def new
@@ -34,7 +40,7 @@ class UsersController < ApplicationController
   def destroy
     destroy_and_respond(@user, :users_url, User.model_name)
   end
-
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
