@@ -30,19 +30,14 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Run RSpec
-      run: |
-        bundle exec rspec
-        bundle exec rails cucumber
-
     - name: Set up SimpleCov
       run: gem install simplecov
 
-    - name: Extract coverage information
-      run: simplecov merge coverage/.resultset.json
-
-    - name: Set coverage environment variable
-      run: echo "COVERAGE=$(tail -n 1 coverage/coverage.txt | awk '{print $1}')" >> $GITHUB_ENV
+    - name: Run RSpec
+      run: |
+        bundle exec rails cucumber
+        bundle exec rspec
+      
 
   check-coverage:
     runs-on: ubuntu-latest
