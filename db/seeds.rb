@@ -57,11 +57,11 @@ if User.count == 0
 end
 
 if Pickup.count == 0
-  Pickup.create(donator: User.first, receiver: User.second, item: Item.first)
+  Pickup.create(donator_id: User.first, receiver_id: User.second, item_id: Item.first)
 end
 
 if Request.count == 0
-  Request.create(donator: User.first, receiver: User.second, item: Item.second)
+  Request.create(donator_id: User.first, receiver_id: User.second, item_id: Item.second)
 end
 # more_items = [
 #   {:color => Color, :type => '',
