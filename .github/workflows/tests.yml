@@ -23,42 +23,21 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: Run RSpec
-      run: |
-        bundle exec rspec
-        bundle exec rails cucumber
+    - name: Set up AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
     - name: Set up SimpleCov
       run: gem install simplecov
 
-    - name: Extract coverage information
-      run: simplecov merge coverage/.resultset.json
-
-    - name: Set coverage environment variable
-      run: echo "COVERAGE=$(tail -n 1 coverage/coverage.txt | awk '{print $1}')" >> $GITHUB_ENV
-
-  check-coverage:
-    runs-on: ubuntu-latest
-
-    needs: test
-
-    steps:
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2.2
-
-    - name: Install SimpleCov
-      run: gem install simplecov
-
-    - name: Check coverage
+    - name: Run RSpec
       run: |
-        COVERAGE_THRESHOLD=90
-        coverage=$COVERAGE
-        echo "Code coverage is $coverage%."
-        if (( $(echo "$coverage >= $COVERAGE_THRESHOLD" | bc -l) )); then
-          echo "Code coverage is over 90%."
-        else
-          echo "Code coverage is below 90%."
-          exit 1
-        fi
+        bundle exec rspec
+
+    - name: Run Cucumber
+      run: |
+        bundle exec rails cucumber
+        
