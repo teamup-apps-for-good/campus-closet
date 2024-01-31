@@ -55,14 +55,6 @@ if User.count == 0
   User.create(first: "Test", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "College Station, TX", student: false)
   User.create(first: "Test", last: "Student", email: "teststudent@tamu.edu", phone: "0987654321", address: "College Station, TX", student: true)
 end
-
-if Pickup.count == 0
-  Pickup.create(donator_id: User.first, receiver_id: User.second, item_id: Item.first)
-end
-
-if Request.count == 0
-  Request.create(donator_id: User.first, receiver_id: User.second, item_id: Item.second)
-end
 # more_items = [
 #   {:color => Color, :type => '',
 #     :gender => '', :description => 'Nice shirt',

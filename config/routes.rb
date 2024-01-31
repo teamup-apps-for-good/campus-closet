@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :pickups
-  resources :requests
   resources :users
   resources :conditions
   resources :sizes
