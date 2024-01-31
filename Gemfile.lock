@@ -77,6 +77,8 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
+    autoprefixer-rails (10.4.16.0)
+      execjs (~> 2)
     aws-eventstream (1.3.0)
     aws-partitions (1.879.0)
     aws-sdk-core (3.190.2)
@@ -98,6 +100,10 @@ GEM
     bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
+    bootstrap (5.0.2)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 2.9.2, < 3)
+      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     capybara (3.39.2)
       addressable
@@ -158,6 +164,7 @@ GEM
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
+    execjs (2.9.1)
     factory_bot (6.4.5)
       activesupport (>= 5.0.0)
     faraday (2.9.0)
@@ -245,6 +252,7 @@ GEM
     omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    popper_js (2.11.8)
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
@@ -317,6 +325,14 @@ GEM
     rspec-support (3.12.1)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     selenium-webdriver (4.16.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -349,6 +365,7 @@ GEM
     sys-uname (1.2.3)
       ffi (~> 1.1)
     thor (1.3.0)
+    tilt (2.3.0)
     timeout (0.4.1)
     turbo-rails (1.5.0)
       actionpack (>= 6.0.0)
@@ -383,6 +400,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3
   bootsnap
+  bootstrap (~> 5.0.1)
   capybara
   cucumber-rails
   database_cleaner
