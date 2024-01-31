@@ -25,6 +25,13 @@ Rails.application.routes.draw do
   get '/auth/failure', to: redirect('/')
   get '/signout', to: 'sessions#destroy', as: 'signout'
 
+  resources :users do
+    patch 'update_user', on: :member
+    member do
+      get 'account_creation', to: 'users#account_creation'
+    end
+  end
+
 
   resources :items
 

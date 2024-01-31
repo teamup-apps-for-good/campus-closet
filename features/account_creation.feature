@@ -11,34 +11,31 @@ Background:
     | test_donor@gmail.com  |
     | test_student@tamu.edu |
 
-Scenario: User logs in with TAMU email for first time
-    Given I am a user with a TAMU email
-    And I do not have an account already
-    And I am on the Login page
-    When I click "Login with Google"
-    Then I should be logged in successfully
-    And I should be put on the account creation page
 
 Scenario: User logs in with TAMU email
-    Given I am a user with a TAMU email
-    And I have an account
-    And I am on the Login page
-    When I click "Login with Google"
-    Then I should be logged in successfully
-    And I should be put on the account creation page
-
-Scenario: User logs in with gmail for first time
-    Given I am a user with a gmail
-    And I do not have an account already
+    Given I have an account, "test_student@tamu.edu"
     And I am on the Login page
     When I click "Login with Google"
     Then I should be logged in successfully
     And I should be put on the account creation page
 
 Scenario: User logs in with gmail
-    Given I am a user with a gmail
-    And I have an account
+    Given I have an account, "test_donor@gmail.com"
     And I am on the Login page
     When I click "Login with Google"
     Then I should be logged in successfully
     And I should be put on the homepage
+
+Scenario: User logs in with TAMU email for first time
+    Given I do not have an account already, "teststudent2@tamu.edu"
+    And I am on the Login page
+    When I click "Login with Google"
+    Then I should be logged in successfully
+    And I should be put on the account creation page
+
+Scenario: User logs in with gmail for first time
+    Given I do not have an account already, "testdonor2@gmail.com"
+    And I am on the Login page
+    When I click "Login with Google"
+    Then I should be logged in successfully
+    And I should be put on the account creation page

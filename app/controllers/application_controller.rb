@@ -3,7 +3,7 @@
 # controller for the application
 class ApplicationController < ActionController::Base
   helper_method :current_user
-  
+
   private
 
   def create_and_respond(model, redirect_url, params_method)
