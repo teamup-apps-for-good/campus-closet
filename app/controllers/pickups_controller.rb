@@ -22,7 +22,7 @@ class PickupsController < ApplicationController
 
   # POST /pickups or /pickups.json
   def create
-    create_and_respond(Pickup, :pick_url, :pickup_params)
+    create_and_respond(Pickup, :pickup_url, :pickup_params)
   end
 
   # PATCH/PUT /pickups/1 or /pickups/1.json
