@@ -88,8 +88,22 @@ class SizesControllerTest < ActionDispatch::IntegrationTest
 end
 
 # controller for types of clothing - Used or Unused
-class ConditionControllerTest < ActionDispatch::IntegrationTest
+class ConditionsControllerTest < ActionDispatch::IntegrationTest
   include CommonControllerTests
 
   self.resource_name = 'condition'
+end
+
+# controller for pickups
+class PickupsControllerTest < ActionDispatch::IntegrationTest
+  include CommonControllerTests
+
+  self.resource_name = 'pickup'
+end
+
+# controller for requests
+class RequestsControllerTest < ActionDispatch::IntegrationTest
+  include CommonControllerTests
+
+  self.resource_name = 'request'
 end

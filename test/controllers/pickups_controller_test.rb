@@ -23,7 +23,6 @@ class PickupsControllerTest < ActionDispatch::IntegrationTest
            params: { pickup: { donor_id: @pickup.donor_id, item_id: @pickup.item_id,
                                receiver_id: @pickup.receiver_id } }
     end
-
     assert_redirected_to pickup_url(Pickup.last)
   end
 

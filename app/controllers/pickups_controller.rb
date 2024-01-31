@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# controller for the pickups
 class PickupsController < ApplicationController
   before_action :set_pickup, only: %i[show edit update destroy]
 
