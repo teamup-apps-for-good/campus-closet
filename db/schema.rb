@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_29_164605) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_31_035356) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -78,6 +78,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_164605) do
     t.index ["type_id"], name: "index_items_on_type_id"
   end
 
+  create_table "pickups", force: :cascade do |t|
+    t.integer "donor_id", null: false
+    t.integer "receiver_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["donor_id"], name: "index_pickups_on_donor_id"
+    t.index ["item_id"], name: "index_pickups_on_item_id"
+    t.index ["receiver_id"], name: "index_pickups_on_receiver_id"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.integer "donor_id", null: false
+    t.integer "receiver_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["donor_id"], name: "index_requests_on_donor_id"
+    t.index ["item_id"], name: "index_requests_on_item_id"
+    t.index ["receiver_id"], name: "index_requests_on_receiver_id"
+  end
+
   create_table "sizes", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -115,4 +137,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_164605) do
   add_foreign_key "items", "sizes"
   add_foreign_key "items", "statuses"
   add_foreign_key "items", "types"
+  add_foreign_key "pickups", "items"
+  add_foreign_key "pickups", "users", column: "donor_id"
+  add_foreign_key "pickups", "users", column: "receiver_id"
+  add_foreign_key "requests", "items"
+  add_foreign_key "requests", "users", column: "donor_id"
+  add_foreign_key "requests", "users", column: "receiver_id"
 end
