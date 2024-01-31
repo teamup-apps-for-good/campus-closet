@@ -1,27 +1,32 @@
-<p style="color: green"><%= notice %></p>
-
 <% if current_user %>
   Welcome, <%= current_user.first %> <%= current_user.last %>! <%= link_to 'Sign out', signout_path %>
 <% else %>
   <p><%= button_to "Login with Google", "/auth/google_oauth2", data: {turbo: "false"} %></p>
 <% end %>
 
-<h1>Items</h1>
+<div class="container">
+  <h1 class="mt-4">Items</h1>
+  <%= render "filter" %>
+  <div class="row">
+    <% @items.each do |item| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+        <% if item.image_url.present? %>
+          <%= image_tag item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: cover; height: 500px;" %>
+        <% else %>
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No Image Available" style="object-fit: cover; height: 500px;">
+        <% end %>
 
-<div id="items">
-  <% @items.each do |item| %>
-    <% if item.image_url.present? %>
-  <%= image_tag item.image_url, :style => "width: 20vw", class: "item-image" %>
-<% else %>
-  <p>No image available</p>
-<% end %>
-    <%= render item %>
-    <p>
-      <%= link_to "Show this item", item %>
-    </p>
-  <% end %>
+          <div class="card-body">
+            <%= render item %>
+            <p class="card-text">
+              <%= link_to "Show this item", item, class: "btn btn-primary" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to "New item", new_item_path, class: "btn btn-success mt-4" %>
 </div>
-
-<%= link_to "New item", new_item_path %>
-
-<%= render "filter" %>
