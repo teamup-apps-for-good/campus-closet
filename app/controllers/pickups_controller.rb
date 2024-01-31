@@ -22,40 +22,17 @@ class PickupsController < ApplicationController
 
   # POST /pickups or /pickups.json
   def create
-    @pickup = Pickup.new(pickup_params)
-
-    respond_to do |format|
-      if @pickup.save
-        format.html { redirect_to pickup_url(@pickup), notice: 'Pickup was successfully created.' }
-        format.json { render :show, status: :created, location: @pickup }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @pickup.errors, status: :unprocessable_entity }
-      end
-    end
+    create_and_respond(Pickup, :pick_url, :pickup_params)
   end
 
   # PATCH/PUT /pickups/1 or /pickups/1.json
   def update
-    respond_to do |format|
-      if @pickup.update(pickup_params)
-        format.html { redirect_to pickup_url(@pickup), notice: 'Pickup was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pickup }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @pickup.errors, status: :unprocessable_entity }
-      end
-    end
+    update_and_respond(@pickup, :pickup_params)
   end
 
   # DELETE /pickups/1 or /pickups/1.json
   def destroy
-    @pickup.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to pickups_url, notice: 'Pickup was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_and_respond(@pickup, :pickups_url, Pickup.model_name)
   end
 
   private

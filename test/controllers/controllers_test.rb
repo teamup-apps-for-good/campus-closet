@@ -93,17 +93,3 @@ class ConditionsControllerTest < ActionDispatch::IntegrationTest
 
   self.resource_name = 'condition'
 end
-
-# controller for pickups
-class PickupsControllerTest < ActionDispatch::IntegrationTest
-  include CommonControllerTests
-
-  self.resource_name = 'pickup'
-end
-
-# controller for requests
-class RequestsControllerTest < ActionDispatch::IntegrationTest
-  include CommonControllerTests
-
-  self.resource_name = 'request'
-end

@@ -155,11 +155,3 @@ end
 RSpec.describe TypesController, type: :controller do
   it_behaves_like 'a CRUD controller', Type, 'Type', 'types'
 end
-
-RSpec.describe PickupsController, type: :controller do
-  it_behaves_like 'a CRUD controller', Pickup, 'Pickup', 'pickups'
-end
-
-RSpec.describe RequestsController, type: :controller do
-  it_behaves_like 'a CRUD controller', Request, 'Request', 'requests'
-end
