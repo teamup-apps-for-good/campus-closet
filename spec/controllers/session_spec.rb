@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/controllers/sessions_controller_spec.rb
 
 require 'rails_helper'
@@ -9,8 +11,7 @@ RSpec.describe SessionsController, type: :controller do
         first: 'John',
         last: 'Doe',
         email: 'john.doe@example.com',
-        student: true, # Assuming it's a student
-        # Add other attributes as needed
+        student: true
       )
 
       session[:user_id] = user.id

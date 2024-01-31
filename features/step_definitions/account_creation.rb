@@ -4,18 +4,18 @@ Given('the following emails have an account associated with them:') do |table|
   table.hashes.each do |row|
     email = row['email']
     if email.ends_with?('.com')
-      User.create(first: "Test", last: "Donor", email: email, student: false)
+      User.create(first: 'Test', last: 'Donor', email:, student: false)
     else
-      User.create(first: "Test", last: "Student", email: email, student: true)
+      User.create(first: 'Test', last: 'Student', email:, student: true)
     end
   end
 end
 
 Given('I am on the Login page') do
-  visit("/")
+  visit('/')
 end
 
-When('I click {string}') do |string|
+When('I click {string}') do |_string|
   pending
 end
 
@@ -32,11 +32,11 @@ Then('I should be put on the homepage') do
 end
 
 Given('I have an account, {string}') do |email|
-  user_exists = User.where(email: email).exists?
+  user_exists = User.where(email:).exists?
   expect(user_exists).to eq(true)
 end
 
 Given('I do not have an account already, {string}') do |email|
-  user_exists = User.where(email: email).exists?
+  user_exists = User.where(email:).exists?
   expect(user_exists).to eq(false)
 end
