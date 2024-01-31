@@ -5,7 +5,7 @@
     <% if @item.image_url.present? %>
       <%= image_tag @item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
     <% else %>
-      <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No Image Available" style="object-fit: contain; height: 500px;">
+      <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
     <% end %>
     <div class="card-body">
       <%= render @item %>
