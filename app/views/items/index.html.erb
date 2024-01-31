@@ -1,5 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
+<% if current_user %>
+  Welcome, <%= current_user.first %> <%= current_user.last %>! <%= link_to 'Sign out', signout_path %>
+<% else %>
+  <p><%= button_to "Login with Google", "/auth/google_oauth2", data: {turbo: "false"} %></p>
+<% end %>
+
 <h1>Items</h1>
 
 <div id="items">

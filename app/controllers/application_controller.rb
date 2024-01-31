@@ -2,6 +2,8 @@
 
 # controller for the application
 class ApplicationController < ActionController::Base
+  helper_method :current_user
+  
   private
 
   def create_and_respond(model, redirect_url, params_method)
@@ -41,5 +43,9 @@ class ApplicationController < ActionController::Base
       format.html { redirect_to send(redirect_url), notice: "#{model_name.human} was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 end
