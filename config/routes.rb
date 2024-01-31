@@ -19,6 +19,20 @@ Rails.application.routes.draw do
   # root "posts#index"
   root 'items#index'
 
+  #OAuth Routes
+  get '/auth/google_oauth2', as: 'google_login'
+  get '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/failure', to: redirect('/')
+  get '/signout', to: 'sessions#destroy', as: 'signout'
+
+  resources :users do
+    patch 'update_user', on: :member
+    member do
+      get 'account_creation', to: 'users#account_creation'
+    end
+  end
+
+
   resources :items
 
   resources :items do
