@@ -10,15 +10,6 @@ gem 'rails', '~> 7.1.2'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
-group :development, :test do
-  # Use sqlite3 as the database for Active Record
-  gem "sqlite3", "~> 1.4"
-end
-
-group :production do
-  gem 'pg'
-end
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 
@@ -64,6 +55,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot'
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :development do
@@ -92,3 +84,7 @@ gem 'aws-sdk-s3'
 
 # setup .env file
 gem 'dotenv-rails', groups: %i[development test]
+
+group :production do
+  gem 'pg'
+end
