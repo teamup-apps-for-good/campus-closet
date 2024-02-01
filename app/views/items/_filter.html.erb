@@ -3,25 +3,32 @@
     <%= form.radio_button("color_", "color_" + color.id.to_s) %>
     <%= form.label("color_" + color.id.to_s, color.name) %>
   <% end %>
+  <br>
   <% Type.all.each do |type| %>
     <%= form.radio_button("type_", "type_" + type.id.to_s) %>
     <%= form.label("type_" + type.id.to_s, type.name) %>
   <% end %>
+  <br>
   <% Gender.all.each do |gender| %>
     <%= form.radio_button("gender_", "gender_" + gender.id.to_s) %>
     <%= form.label("gender_" + gender.id.to_s, gender.name) %>
   <% end %>
+  <br>
   <% Status.all.each do |status| %>
     <%= form.radio_button("status_", "status_" + status.id.to_s) %>
     <%= form.label("status_" + status.id.to_s, status.name) %>
   <% end %>
+  <br>
   <% Size.all.each do |size| %>
     <%= form.radio_button("size_", "size_" + size.id.to_s) %>
     <%= form.label("size_" + size.id.to_s, size.name) %>
   <% end %>
+  <br>
   <% Condition.all.each do |condition| %>
     <%= form.radio_button("condition_", "condition_" + condition.id.to_s) %>
     <%= form.label("condition_" + condition.id.to_s, condition.name) %>
   <% end %>
+  <br>
   <%= form.submit "Search" %>
 <% end %>
+

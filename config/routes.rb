@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   #OAuth Routes
   get '/auth/google_oauth2', as: 'google_login'
-  get '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/:google_oauth2/callback', to: 'sessions#create'
   get '/auth/failure', to: redirect('/')
   get '/signout', to: 'sessions#destroy', as: 'signout'
 
