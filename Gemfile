@@ -85,6 +85,7 @@ gem 'aws-sdk-s3'
 # setup .env file
 gem 'dotenv-rails', groups: %i[development test]
 
+# adding gem for production
 group :production do
   gem 'pg'
 end
