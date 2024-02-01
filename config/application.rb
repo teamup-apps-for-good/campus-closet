@@ -9,7 +9,9 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 # loads the .env file
-Dotenv::Railtie.load
+if Rails.env.development? || Rails.env.test?
+  Dotenv::Railtie.load
+end
 
 module CampusCloset
   # /config/application.rb
