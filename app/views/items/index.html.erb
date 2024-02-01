@@ -1,9 +1,3 @@
-<% if current_user %>
-  Welcome, <%= current_user.first %> <%= current_user.last %>! <%= link_to 'Sign out', signout_path %>
-<% else %>
-  <p><%= button_to "Login with Google", "/auth/google_oauth2", data: {turbo: "false"} %></p>
-<% end %>
-
 <div class="container">
   <h1 class="mt-4">Items</h1>
   <%= render "filter" %>
@@ -16,7 +10,6 @@
         <% else %>
           <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No Image Available" style="object-fit: contain; height: 500px;">
         <% end %>
-
           <div class="card-body">
             <%= render item %>
             <p class="card-text">
