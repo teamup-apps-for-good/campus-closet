@@ -2,7 +2,7 @@
 
 # Controller for the user class
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy update_user]
 
   # GET /users or /users.json
   def index
@@ -39,6 +39,18 @@ class UsersController < ApplicationController
   # DELETE /users/1 or /users/1.json
   def destroy
     destroy_and_respond(@user, :users_url, User.model_name)
+  end
+
+  def account_creation
+    @user = User.find(params[:id])
+  end
+
+  def update_user
+    if @user.update(user_params)
+      redirect_to root_path, notice: 'Account created successfully.'
+    else
+      render :edit
+    end
   end
 
   private

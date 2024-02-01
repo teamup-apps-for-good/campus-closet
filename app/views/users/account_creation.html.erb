@@ -1,0 +1,33 @@
+<!-- app/views/users/account_creation.html.erb -->
+
+<h1>Account Creation</h1>
+
+<%= form_for @user, url: update_user_user_path(@user), method: :patch do |f| %>
+  <div>
+     <p>
+        First Name: <%= @user.first %><br>
+        Last Name: <%= @user.last %><br>
+        Email: <%= @user.email %><br>
+     </p>
+  </div>
+
+  <div>
+    <%= f.label :phone %>
+    <%= f.text_field :phone %>
+  </div>
+
+  <div>
+    <%= f.label :address %>
+    <%= f.text_field :address %>
+  </div>
+
+  <!-- adding this here temporarily, will eventually need the student account verification -->
+  <div>
+    <%= f.label :student %>
+    <%= f.check_box :student %>
+  </div>
+
+  <div>
+    <%= f.submit 'Save' %>
+  </div>
+<% end %>

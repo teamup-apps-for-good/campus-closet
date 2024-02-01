@@ -1,16 +1,22 @@
 <p style="color: green"><%= notice %></p>
 
-<% if @item.image_url.present? %>
-  <%= image_tag @item.image_url, class: "item-image" %>
-<% else %>
-  <p>No image available</p>
-<% end %>
-
-<%= render @item %>
+<div class="col-md-4 mb-4">
+  <div class="card">
+    <% if @item.image_url.present? %>
+      <%= image_tag @item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
+    <% else %>
+      <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
+    <% end %>
+    <div class="card-body">
+      <%= render @item %>
+      <p class="card-text">
+        <%= link_to "Edit this item", edit_item_path(@item) %> |
+        <%= link_to "Back to items", items_path %>
+      </p>
+    </div>
+  </div>
+</div>
 
 <div>
-  <%= link_to "Edit this item", edit_item_path(@item) %> |
-  <%= link_to "Back to items", items_path %>
-
   <%= button_to "Destroy this item", @item, method: :delete %>
 </div>
