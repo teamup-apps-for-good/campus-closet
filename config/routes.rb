@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :requests
+  resources :pickups
   resources :users
   resources :conditions
   resources :sizes
@@ -40,4 +42,5 @@ Rails.application.routes.draw do
       patch :image_upload
     end
   end
+
 end
