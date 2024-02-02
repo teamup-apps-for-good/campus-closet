@@ -65,12 +65,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:first, :last, :email, :phone, :address, :student)
   end
-  
-  def require_login
-    unless current_user && current_user.id == @user.id
-      flash[:alert] = "You don't have permission to view this profile."
-      redirect_to root_path
-    end
-  end
 
+  def require_login
+    return if current_user && current_user.id == @user.id
+
+    flash[:alert] = "You don't have permission to view this profile."
+    redirect_to root_path
+  end
 end
