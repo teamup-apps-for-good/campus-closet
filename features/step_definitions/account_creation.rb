@@ -54,7 +54,7 @@ Given('I am on the account creation page, {string}') do |email|
     :google_oauth2,
     info: { email: }
   )
-  click_on "Login with Google"
+  click_on 'Login with Google'
 end
 
 When('I enter {string} in {string}') do |value, field|
