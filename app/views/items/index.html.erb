@@ -23,4 +23,6 @@
 
 </div>
 
-<%= link_to "New item", new_item_path %>
+<% unless session[:user_id].nil? %>
+  <%= link_to "New item", new_item_path %>
+<% end %>
