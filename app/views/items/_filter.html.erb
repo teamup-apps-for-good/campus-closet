@@ -14,11 +14,6 @@
     <%= form.label("gender_" + gender.id.to_s, gender.name) %>
   <% end %>
   <br>
-  <% Status.all.each do |status| %>
-    <%= form.radio_button("status_", "status_" + status.id.to_s) %>
-    <%= form.label("status_" + status.id.to_s, status.name) %>
-  <% end %>
-  <br>
   <% Size.all.each do |size| %>
     <%= form.radio_button("size_", "size_" + size.id.to_s) %>
     <%= form.label("size_" + size.id.to_s, size.name) %>

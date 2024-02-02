@@ -7,14 +7,15 @@ So that I can quickly and easily list clothes for buyers.
 Background: clothing in database
 
   Given the following items exist:
-  | color     | type       | Description         | Gender       | Size  | Condition  | Status       | 
-  | black     | shirt      | black shirt         | Male         | M     | Used       | Available    | 
-  | red       | pants      | red pants           | Female       | L     | Unused     | Unavailable  |
-  | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available    |
-  | brown     | belt       | brown belt          | Female       | M     | Unused     | Unavailable  |
+  | color     | type       | Description         | Gender       | Size  | Condition  | Status     | 
+  | black     | shirt      | black shirt         | Male         | M     | Used       | Available  | 
+  | red       | pants      | red pants           | Female       | L     | Unused     | Available  |
+  | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available  |
+  | brown     | belt       | brown belt          | Female       | M     | Unused     | Available  |
 
 Scenario: upload new item with all categories
     Given I am on the items page
+    And I am logged in
     When I click on "New item"
     And I am on the new item page
     And I fill in "color" with "blue"
@@ -30,6 +31,7 @@ Scenario: upload new item with all categories
 
 Scenario: upload new item with only one category
     Given I am on the items page
+    And I am logged in
     When I click on "New item"
     And I fill in "type" with "pants"
     And I click on "Create Item"
@@ -37,6 +39,7 @@ Scenario: upload new item with only one category
 
 Scenario: upload new item without image
     Given I am on the items page
+    And I am logged in
     When I click on "New item"
     And I fill in "color" with "blue"
     And I fill in "type" with "pants"

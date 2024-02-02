@@ -7,11 +7,11 @@ So I can easily view only the types of clothes I want.
 Background: clothing in database
 
   Given the following items exist:
-  | color     | type       | Description         | Gender       | Size  | Condition  | Status       | 
-  | black     | shirt      | black shirt         | Male         | M     | Used       | Available    | 
-  | red       | pants      | red pants           | Female       | L     | Unused     | Unavailable  |
-  | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available    |
-  | brown     | belt       | brown belt          | Female       | M     | Unused     | Unavailable  |
+  | color     | type       | Description         | Gender       | Size  | Condition  | Status     | 
+  | black     | shirt      | black shirt         | Male         | M     | Used       | Available  | 
+  | red       | pants      | red pants           | Female       | L     | Unused     | Available  |
+  | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available  |
+  | brown     | belt       | brown belt          | Female       | M     | Unused     | Available  |
 
 Scenario: filter by condition
   Given I am on the homepage
@@ -44,10 +44,3 @@ Scenario: filter by Size
   When I press "L"
   And I click on "Search"
   Then I should see an item with the description "red pants"
-
-Scenario: filter by Status
-  Given I am on the homepage
-  When I press "Available"
-  And I click on "Search"
-  Then I should see an item with the description "black shirt"
-  And I should see an item with the description "blue sweater"
