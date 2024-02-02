@@ -3,6 +3,7 @@
 # Controller for the user class
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy update_user]
+  before_action :require_login, only: [:show]
 
   # GET /users or /users.json
   def index
@@ -64,4 +65,12 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:first, :last, :email, :phone, :address, :student)
   end
+  
+  def require_login
+    unless current_user && current_user.id == @user.id
+      flash[:alert] = "You don't have permission to view this profile."
+      redirect_to root_path
+    end
+  end
+
 end

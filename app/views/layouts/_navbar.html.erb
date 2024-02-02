@@ -5,15 +5,16 @@
       <li class="nav-item">
         <%= link_to "Home", "/", class: 'nav-link', style: 'transition: background-color 0.3s;' %>
       </li>
-      <% if current_user && current_user.student %>
-        <li class="nav-item">
-          <%= link_to "Student Profile", "/", class: 'nav-link' %>
-        </li>
-      <% end %>
-      <% if current_user && !current_user.student %>
-        <li class="nav-item">
-          <%= link_to "Donor Dashboard", "/", class: 'nav-link' %>
-        </li>
+      <% if current_user %>
+        <% if current_user.student %>
+          <li class="nav-item">
+            <%= link_to "Student Profile", user_path(current_user), class: 'nav-link' %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Donor Dashboard", user_path(current_user), class: 'nav-link' %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
     <div class="navbar-text">
