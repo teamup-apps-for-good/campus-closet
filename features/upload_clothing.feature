@@ -7,11 +7,11 @@ So that I can quickly and easily list clothes for buyers.
 Background: clothing in database
 
   Given the following items exist:
-  | color     | type       | Description         | Gender       | Size  | Condition  | Status       | 
-  | black     | shirt      | black shirt         | Male         | M     | Used       | Available    | 
-  | red       | pants      | red pants           | Female       | L     | Unused     | Unavailable  |
-  | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available    |
-  | brown     | belt       | brown belt          | Female       | M     | Unused     | Unavailable  |
+  | color     | type       | Description         | Gender       | Size  | Condition  | Status     | 
+  | black     | shirt      | black shirt         | Male         | M     | Used       | Available  | 
+  | red       | pants      | red pants           | Female       | L     | Unused     | Available  |
+  | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available  |
+  | brown     | belt       | brown belt          | Female       | M     | Unused     | Available  |
 
 Scenario: upload new item with all categories
     Given I am on the items page
