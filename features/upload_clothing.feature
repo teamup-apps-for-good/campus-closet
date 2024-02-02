@@ -15,6 +15,7 @@ Background: clothing in database
 
 Scenario: upload new item with all categories
     Given I am on the items page
+    And I am logged in
     When I click on "New item"
     And I am on the new item page
     And I fill in "color" with "blue"
@@ -30,6 +31,7 @@ Scenario: upload new item with all categories
 
 Scenario: upload new item with only one category
     Given I am on the items page
+    And I am logged in
     When I click on "New item"
     And I fill in "type" with "pants"
     And I click on "Create Item"
@@ -37,6 +39,7 @@ Scenario: upload new item with only one category
 
 Scenario: upload new item without image
     Given I am on the items page
+    And I am logged in
     When I click on "New item"
     And I fill in "color" with "blue"
     And I fill in "type" with "pants"
