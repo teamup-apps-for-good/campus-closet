@@ -12,6 +12,7 @@ class User < ApplicationRecord
       first: names[0],
       last: names[1..].join(' ')
     )
+    user.update(student: auth.info.email.include?('tamu.edu'))
 
     # Save the user
     user.save
