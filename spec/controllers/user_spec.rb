@@ -88,7 +88,7 @@ RSpec.describe UsersController, user: :controller do
     context 'with valid parameters' do
       it 'creates a new User' do
         expect do
-          post :create, params: { user: { first: 'New User' } }
+          post :create, params: { user: { first: 'New User', email: 'test@tamu.edu' } }
         end.to change(User, :count).by(1)
       end
 
