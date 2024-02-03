@@ -51,7 +51,7 @@ class UsersController < ApplicationController
       @user.update(student: @user.email.include?('tamu.edu'))
       redirect_to root_path, notice: 'Account created successfully.'
     else
-      render :edit
+      # render :edit
     end
   end
 
