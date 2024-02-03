@@ -29,7 +29,8 @@ Then('I should be logged in') do
 end
 
 Then('I should be put on the account creation page') do
-  pending
+  user_id = page.driver.request.session['user_id']
+  expect(page).to have_current_path("/users/#{user_id}/account_creation")
 end
 
 Then('I should be put on the homepage') do
@@ -44,4 +45,18 @@ end
 Given('I do not have an account already, {string}') do |email|
   user_exists = User.where(email:).exists?
   expect(user_exists).to eq(false)
+end
+
+Given('I am on the account creation page, {string}') do |email|
+  visit('/')
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.add_mock(
+    :google_oauth2,
+    info: { email: }
+  )
+  click_on 'Login with Google'
+end
+
+When('I enter {string} in {string}') do |value, field|
+  fill_in field, with: value
 end
