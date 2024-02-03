@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 Given('I am a logged in donor') do
-  User.create(first: 'Test', last: 'Donor', email: "testdonor@gmail.com", student: false)
+  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false)
   visit('/')
   OmniAuth.config.test_mode = true
   OmniAuth.config.add_mock(
     :google_oauth2,
-    info: { email: "testdonor@gmail.com"}
+    info: { email: 'testdonor@gmail.com' }
   )
   click_on 'Login with Google'
 end
