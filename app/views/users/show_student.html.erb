@@ -5,7 +5,22 @@
 <%= render @user %>
 
 <div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-  <%= button_to "Destroy this user", @user, method: :delete %>
+  <%= link_to "Edit Account", edit_user_path(@user) %>
+  <%= button_to "Delete Account", @user, method: :delete %>
 </div>
+
+<h2>Pickups:</h2>
+<% @user.received_pickups.each do |pickup| %>
+  <p>
+    <strong>Pickup ID:</strong>
+    <%= pickup.id %>
+  </p>
+<% end %>
+
+<h2>Requests:</h2>
+<% @user.received_requests.each do |request| %>
+  <p>
+    <strong>Request ID:</strong>
+    <%= request.id %>
+  </p>
+<% end %>
