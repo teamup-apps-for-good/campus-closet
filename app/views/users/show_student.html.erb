@@ -2,11 +2,12 @@
 
 <h1> Welcome to the Student Dashboard, <%= @user.first %></h1>
 
-<%= render @user %>
-
-<div>
-  <%= link_to "Edit Account", edit_user_path(@user) %>
-  <%= button_to "Delete Account", @user, method: :delete %>
+<div style="float: right; margin-right: 20px;">
+  <%= render @user %>
+  <div>
+    <%= link_to "Edit Account", edit_user_path(@user) %>
+    <%= button_to "Delete Account", @user, method: :delete %>
+  </div>
 </div>
 
 <h2>Pickups:</h2>
