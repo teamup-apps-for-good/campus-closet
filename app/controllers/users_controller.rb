@@ -3,7 +3,7 @@
 # Controller for the user class
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy update_user]
-  before_action :require_login, only: [:show]
+  before_action :require_login, only: %i[show edit update_user]
 
   # GET /users or /users.json
   def index
