@@ -3,6 +3,7 @@
 <h1> Welcome to the Student Dashboard, <%= @user.first %></h1>
 
 <div style="float: right; margin-right: 20px;">
+  <div><strong>Account Details</strong><br></div>
   <%= render @user %>
   <div>
     <%= link_to "Edit Account", edit_user_path(@user) %>

@@ -12,24 +12,24 @@ Background: students exist in database
 
 Scenario: Logged in student visits profile page
     Given I am a logged in student
-    When I click on "Profile Page"
-    Then I should see "Current Requests"
-    And I should see "Past Pickups"
+    When I click on "Student Profile"
+    Then I should see "Requests"
+    And I should see "Pickups"
     And I should see my account details
 
 Scenario: Student editing address
     Given I am a logged in student
-    And I am on the "Profile Page"
-    When I click on "edit" next to "address"
-    And I fill in the field with "College Station, TX"
-    And I press "Submit"
-    Then I should see "College Station, TX" as my "address"
+    And I am on the Profile Page
+    When I click on "Edit Account"
+    And I fill in the "Address" field with "College Station, TX"
+    And I click on "Confirm User Updates"
+    Then I should see "College Station, TX" as my "Address"
 
 Scenario: Student editing phone
     Given I am a logged in student
-    And I am on the "Profile Page"
-    When I click on "edit" next to "phone"
-    And I fill in the field with "1234567890"
-    And I press "Submit"
-    Then I should see "1234567890" as my "phone"
+    And I am on the Profile Page
+    When I click on "Edit Account"
+    And I fill in the "Phone" field with "1234567890"
+    And I click on "Confirm User Updates"
+    Then I should see "1234567890" as my "Phone"
   

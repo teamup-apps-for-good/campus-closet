@@ -12,44 +12,38 @@ Background: students exist in database
 Scenario: Logged in donor visits profile page
     Given I am a logged in donor
     When I click on "Dashboard"
-    Then I should see "Current Listings"
-    And I should see "Past Listings"
+    Then I should see "Requests"
+    And I should see "Pickups"
     And I should see my account details
 
 Scenario: Donor editing first name
     Given I am a logged in donor
-    And I am on the "Dashboard"
-    When I click on "edit" next to "first name"
-    And I fill in the field with "Jimmy"
-    And I press "Submit"
-    Then I should see "Jimmy" as my "first name"
+    And I am on the Dashboard
+    When I click on "Edit Account"
+    And I fill in the "First" field with "Jimmy"
+    And I click on "Confirm User Updates"
+    Then I should see "Jimmy" as my "First"
 
 Scenario: Donor editing last name
     Given I am a logged in donor
-    And I am on the "Dashboard"
-    When I click on "edit" next to "last name"
-    And I fill in the field with "Jimmy"
-    And I press "Submit"
-    Then I should see "Jimmy" as my "last name"
+    And I am on the Dashboard
+    When I click on "Edit Account"
+    And I fill in the "Last" field with "Jimmy"
+    And I click on "Confirm User Updates"
+    Then I should see "Jimmy" as my "Last"
 
 Scenario: Donor editing phone
     Given I am a logged in donor
-    And I am on the "Dashboard"
-    When I click on "edit" next to "phone"
-    And I fill in the field with "1234567890"
-    And I press "Submit"
-    Then I should see "1234567890" as my "phone"
+    And I am on the Dashboard
+    When I click on "Edit Account"
+    And I fill in the "Phone" field with "1234567890"
+    And I click on "Confirm User Updates"
+    Then I should see "1234567890" as my "Phone"
 
 Scenario: Donor editing address
     Given I am a logged in donor
-    And I am on the "Dashboard"
-    When I click on "edit" next to "address"
-    And I fill in the field with "College Station, TX"
-    And I press "Submit"
-    Then I should see "College Station, TX" as my "address"
-
-Scenario: Donor creating listings
-    Given I am a logged in donor
-    And I am on the "Dashboard"
-    When I click on "Create Listing"
-    Then I should go to the "Create Item" page
+    And I am on the Dashboard
+    When I click on "Edit Account"
+    And I fill in the "Address" field with "College Station, TX"
+    And I click on "Confirm User Updates"
+    Then I should see "College Station, TX" as my "Address"
