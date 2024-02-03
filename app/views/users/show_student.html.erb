@@ -12,15 +12,35 @@
 <h2>Pickups:</h2>
 <% @user.received_pickups.each do |pickup| %>
   <p>
-    <strong>Pickup ID:</strong>
-    <%= pickup.id %>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <% if pickup.item.image_url.present? %>
+          <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
+        <% else %>
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
+        <% end %>
+        <div class="card-body">
+          <%= render pickup.item %>
+        </div>
+      </div>
+    </div>
   </p>
 <% end %>
 
 <h2>Requests:</h2>
 <% @user.received_requests.each do |request| %>
   <p>
-    <strong>Request ID:</strong>
-    <%= request.id %>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <% if request.item.image_url.present? %>
+          <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
+        <% else %>
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
+        <% end %>
+        <div class="card-body">
+          <%= render request.item %>
+        </div>
+      </div>
+    </div>
   </p>
 <% end %>
