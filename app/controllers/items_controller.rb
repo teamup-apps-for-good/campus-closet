@@ -31,7 +31,9 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
 
-    upload_to_s3(params[:item][:image]) if params[:item][:image].present?
+    image_param = params[:item][:image]
+
+    upload_to_s3(image_param) if image_param.present?
 
     if @item.save
       # Handle the image upload here if necessary
