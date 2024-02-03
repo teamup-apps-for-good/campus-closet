@@ -3,13 +3,25 @@
 # A lot of overlap with the donor dashboard feature
 
 Given('I am a logged in student') do
-  pending # Write code here that turns the phrase above into concrete actions
+  User.create(first: 'Test', last: 'Student', email: "teststudent@tamu.edu", student: true)
+  visit('/')
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.add_mock(
+    :google_oauth2,
+    info: { email: "teststudent@tamu.edu"}
+  )
+  click_on 'Login with Google'
 end
 
-Then('I should see {string}') do |_string|
-  pending # Write code here that turns the phrase above into concrete actions
+Then('I should see {string}') do |listing|
+  expect(page).to have_content(listing)
 end
 
 Then('I should see my account details') do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(page).to have_content("Account Details")
+end
+
+Given('I am on the Profile Page') do
+  dash = "/users/#{page.driver.request.session['user_id']}"
+  visit(dash)
 end
