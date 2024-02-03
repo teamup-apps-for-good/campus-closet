@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, user: :controller do
-
   describe 'GET #index' do
     it 'returns a success response' do
       get :index
@@ -52,7 +51,6 @@ RSpec.describe UsersController, user: :controller do
 
     expect(response).to be_successful
   end
-
 
   describe 'GET #new' do
     it 'returns a success response' do

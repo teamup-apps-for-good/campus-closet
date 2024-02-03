@@ -33,9 +33,7 @@ class ItemsController < ApplicationController
 
     image_param = params[:item][:image]
 
-    if image_param.present?
-      upload_to_s3(image_param)
-    end
+    upload_to_s3(image_param) if image_param.present?
 
     if @item.save
       # Handle the image upload here if necessary
