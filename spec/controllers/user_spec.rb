@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, user: :controller do
+
   describe 'GET #index' do
     it 'returns a success response' do
       get :index
@@ -11,14 +12,13 @@ RSpec.describe UsersController, user: :controller do
   end
 
   describe 'GET #show' do
-    it 'returns a success response for logged-in user' do
+    it 'returns a success response for logged-in donor user' do
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(
         :google_oauth2,
         info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
       )
 
-      # Log in the user by creating a session
       user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
       session[:user_id] = user.id
 
@@ -34,6 +34,25 @@ RSpec.describe UsersController, user: :controller do
       expect(flash[:alert]).to eq("You don't have permission to view this profile.")
     end
   end
+
+  it 'returns a success response for logged-in student user' do
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.add_mock(
+      :google_oauth2,
+      info: { email: 'teststudent@tamu.edu', name: 'Test Student' }
+    )
+
+    # Log in the student user by creating a session
+    student_user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+    student_user.student = true
+    student_user.save
+    session[:user_id] = student_user.id
+
+    get :show, params: { id: student_user.id }
+
+    expect(response).to be_successful
+  end
+
 
   describe 'GET #new' do
     it 'returns a success response' do

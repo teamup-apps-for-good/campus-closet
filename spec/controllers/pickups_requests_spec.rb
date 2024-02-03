@@ -18,9 +18,9 @@ shared_examples 'a CRUD controller' do |model_class, _controller_class|
     )
   end
   let(:item1) do
-    Item.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
-                gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
+    Item.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
+                gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),
+                size: Size.create(name: 'size1'), condition: Condition.create(name: 'condition1'))
   end
 
   describe 'GET #index' do
