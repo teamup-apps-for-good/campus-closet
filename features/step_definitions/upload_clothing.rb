@@ -4,6 +4,16 @@ Given('I am on the items page') do
   visit('/items')
 end
 
+Given('I am logged in') do
+  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false)
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.add_mock(
+    :google_oauth2,
+    info: { email: 'testdonor@gmail.com' }
+  )
+  click_on 'Login with Google'
+end
+
 When('I click on {string}') do |button_text|
   click_on button_text
 end
