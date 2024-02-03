@@ -55,6 +55,31 @@ if User.count == 0
   User.create(first: "Test", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "College Station, TX", student: false)
   User.create(first: "Test", last: "Student", email: "teststudent@tamu.edu", phone: "0987654321", address: "College Station, TX", student: true)
 end
+
+if Pickup.count == 0
+  # replace with your own email
+  # user1 = User.find_by(email: 'hunterpearson36@gmail.com')
+  # user2 = User.find_by(email: 'hunter-pearson_36@tamu.edu')
+  user3 = User.find_by(email: 'testdonor@gmail.com')
+  user4 = User.find_by(email: 'teststudent@tamu.edu')
+  item1 = Item.find_by(description: 'Sample description 3')
+  item2 = Item.find_by(description: 'Sample description')
+  Pickup.create(donor:user1, receiver:user2, item: item1)
+  Pickup.create(donor:user3, receiver:user4, item: item2)
+end
+
+if Request.count == 0
+  # replace with your own email
+  # user1 = User.find_by(email: 'hunterpearson36@gmail.com')
+  # user2 = User.find_by(email: 'hunter-pearson_36@tamu.edu')
+  user3 = User.find_by(email: 'testdonor@gmail.com')
+  user4 = User.find_by(email: 'teststudent@tamu.edu')
+  item1 = Item.find_by(description: 'Sample description 3')
+  item2 = Item.find_by(description: 'Sample description')
+  Request.create(donor:user1, receiver:user2, item: item1)
+  Request.create(donor:user3, receiver:user4, item: item2)
+end
+
 # more_items = [
 #   {:color => Color, :type => '',
 #     :gender => '', :description => 'Nice shirt',

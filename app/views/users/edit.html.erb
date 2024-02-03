@@ -1,6 +1,33 @@
-<h1>Editing user</h1>
+<br>
 
-<%= render "form", user: @user %>
+<h1>Editing Profile Information</h1>
+
+<br>
+
+<%= form_with(model: @user) do |form| %>
+
+  <%= form.label :first %>
+  <%= form.text_field :first %>
+
+  <%= form.label :last %>
+  <%= form.text_field :last %>
+
+  <%= form.label :email %>
+  <%= form.text_field :email, readonly: true %>
+  
+  <br> <br>
+
+  <%= form.label :phone %>
+  <%= form.text_field :phone %>
+
+  <%= form.label :address %>
+  <%= form.text_field :address %>
+
+
+  <br> <br>
+
+  <%= form.submit 'Confirm User Updates' %>
+<% end %>
 
 <br>
 

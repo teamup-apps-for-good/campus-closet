@@ -11,10 +11,27 @@ RSpec.describe UsersController, user: :controller do
   end
 
   describe 'GET #show' do
-    it 'returns a success response' do
+    it 'returns a success response for logged-in user' do
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.add_mock(
+        :google_oauth2,
+        info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
+      )
+
+      # Log in the user by creating a session
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      session[:user_id] = user.id
+
+      get :show, params: { id: user.id }
+
+      expect(response).to be_successful
+    end
+
+    it 'redirects to root_path for unauthorized user' do
       user = User.create(first: 'Example User')
       get :show, params: { id: user.to_param }
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to eq("You don't have permission to view this profile.")
     end
   end
 
@@ -26,10 +43,27 @@ RSpec.describe UsersController, user: :controller do
   end
 
   describe 'GET #edit' do
-    it 'returns a success response' do
+    it 'returns a success response for logged-in user' do
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.add_mock(
+        :google_oauth2,
+        info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
+      )
+
+      # Log in the user by creating a session
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      session[:user_id] = user.id
+
+      get :edit, params: { id: user.id }
+
+      expect(response).to be_successful
+    end
+
+    it 'redirects to root_path for unauthorized user' do
       user = User.create(first: 'Example User')
       get :edit, params: { id: user.to_param }
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to eq("You don't have permission to view this profile.")
     end
   end
 

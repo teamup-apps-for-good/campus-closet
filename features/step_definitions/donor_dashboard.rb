@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
 Given('I am a logged in donor') do
-  pending # Write code here that turns the phrase above into concrete actions
+  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false)
+  visit('/')
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.add_mock(
+    :google_oauth2,
+    info: { email: 'testdonor@gmail.com' }
+  )
+  click_on 'Login with Google'
 end
 
-Then('I should go to the {string} page') do |_string|
-  pending # Write code here that turns the phrase above into concrete actions
+Given('I am on the Dashboard') do
+  dash = "/users/#{page.driver.request.session['user_id']}"
+  visit(dash)
 end
 
-Given('I am on the {string}') do |_string|
-  pending # Write code here that turns the phrase above into concrete actions
+When('I fill in the {string} field with {string}') do |field, val|
+  fill_in field, with: val
 end
 
-When('I click on {string} next to {string}') do |_string, _string2|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When('I fill in the field with {string}') do |_string|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('I should see {string} as my {string}') do |_string, _string2|
-  pending # Write code here that turns the phrase above into concrete actions
+Then('I should see {string} as my {string}') do |val, _string2|
+  expect(page).to have_content(val)
 end

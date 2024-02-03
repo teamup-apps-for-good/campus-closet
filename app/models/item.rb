@@ -9,4 +9,6 @@ class Item < ApplicationRecord
   belongs_to :size
   belongs_to :condition
   has_one_attached :image
+  has_many :pickups
+  has_many :requests
 end

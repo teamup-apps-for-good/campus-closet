@@ -2,12 +2,47 @@
 
 <h1> Welcome to the Student Dashboard, <%= @user.first %></h1>
 
-<%= link_to 'Go to homepage', items_path, class: 'btn btn-primary', style: 'position: absolute; top: 15px; right: 15px; color:red;' %>
-
-<%= render @user %>
-
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-  <%= button_to "Destroy this user", @user, method: :delete %>
+<div style="float: right; margin-right: 20px;">
+  <div><strong>Account Details</strong><br></div>
+  <%= render @user %>
+  <div>
+    <%= link_to "Edit Account", edit_user_path(@user) %>
+    <%= button_to "Delete Account", @user, method: :delete %>
+  </div>
 </div>
+
+<h2>Pickups:</h2>
+<% @user.received_pickups.each do |pickup| %>
+  <p>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <% if pickup.item.image_url.present? %>
+          <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
+        <% else %>
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
+        <% end %>
+        <div class="card-body">
+          <%= render pickup.item %>
+        </div>
+      </div>
+    </div>
+  </p>
+<% end %>
+
+<h2>Requests:</h2>
+<% @user.received_requests.each do |request| %>
+  <p>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <% if request.item.image_url.present? %>
+          <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
+        <% else %>
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
+        <% end %>
+        <div class="card-body">
+          <%= render request.item %>
+        </div>
+      </div>
+    </div>
+  </p>
+<% end %>
