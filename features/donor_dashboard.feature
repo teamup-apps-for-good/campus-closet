@@ -11,7 +11,7 @@ Background: students exist in database
 
 Scenario: Logged in donor visits profile page
     Given I am a logged in donor
-    When I click on "Dashboard"
+    When I click on "Donor Dashboard"
     Then I should see "Requests"
     And I should see "Pickups"
     And I should see my account details

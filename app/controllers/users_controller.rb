@@ -2,8 +2,8 @@
 
 # Controller for the user class
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy update_user]
-  before_action :require_login, only: %i[show edit update_user]
+  before_action :set_user, only: %i[show_student show_donor edit update destroy update_user]
+  before_action :require_login, only: %i[show_student show_donor edit update_user]
 
   # GET /users or /users.json
   def index
@@ -12,11 +12,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    if @user.student?
-      render 'show_student'
-    else
-      render 'show_donor'
-    end
+    render 'show'
   end
 
   # GET /users/new
@@ -25,7 +21,9 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit; end
+  def edit
+    session[:return_to] ||= request.referer
+  end
 
   # POST /users or /users.json
   def create
@@ -34,8 +32,13 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    update_and_respond(@user, :user_params)
+    if @user.update(user_params)
+      redirect_to session.delete(:return_to), notice: 'Profile updated successfully.'
+    # else
+    #   render :edit
+    end
   end
+  
 
   # DELETE /users/1 or /users/1.json
   def destroy
@@ -55,6 +58,16 @@ class UsersController < ApplicationController
     # render :edit
   end
 
+  def show_student
+    @user = User.find(params[:id])
+    render 'show_student'
+  end
+
+  def show_donor
+    @user = User.find(params[:id])
+    render 'show_donor'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -64,7 +77,7 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:first, :last, :email, :phone, :address, :student)
+    params.require(:user).permit(:first, :last, :email, :phone, :address, :student, :donor)
   end
 
   def require_login
