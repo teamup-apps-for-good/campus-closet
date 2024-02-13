@@ -35,4 +35,13 @@
     <%= item.condition.name %>
   </p>
 
+  <% if item.user.present? %>
+    <p>
+      <strong>Donor:</strong>
+      <%= item.user.first %> 
+      <%= item.user.last  %>
+    </p>
+  <% end %>
+  
+
 </div>

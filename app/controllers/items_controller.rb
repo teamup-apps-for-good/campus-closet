@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    @item = current_user.items.build(item_params)
 
     image_param = params[:item][:image]
 
@@ -63,7 +63,7 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :status_id, :size_id,
-                                 :condition_id, :image_url)
+                                 :condition_id, :image_url, :user_id)
   end
 
   def upload_to_s3(image)

@@ -6,6 +6,7 @@ Given('the following items exist:') do |table|
   table.hashes.each do |item_params|
     # find the object if it exists, otherwise create a new object
 
+    user = User.create(first: 'Example User', donor: true)
     color = find_or_create(Color, item_params['color'])
     type = find_or_create(Type, item_params['type'])
     gender = find_or_create(Gender, item_params['Gender'])
@@ -14,7 +15,7 @@ Given('the following items exist:') do |table|
     condition = find_or_create(Condition, item_params['Condition'])
 
     # Create the item
-    Item.create(
+    user.items.create(
       color_id: color&.id,
       type_id: type&.id,
       gender_id: gender&.id,

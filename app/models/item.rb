@@ -11,4 +11,5 @@ class Item < ApplicationRecord
   has_one_attached :image
   has_many :pickups
   has_many :requests
+  belongs_to :user
 end
