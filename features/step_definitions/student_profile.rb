@@ -3,7 +3,7 @@
 # A lot of overlap with the donor dashboard feature
 
 Given('I am a logged in student') do
-  User.create(first: 'Test', last: 'Student', email: 'teststudent@tamu.edu', student: true, donor:false)
+  User.create(first: 'Test', last: 'Student', email: 'teststudent@tamu.edu', student: true, donor: false)
   visit('/')
   OmniAuth.config.test_mode = true
   OmniAuth.config.add_mock(

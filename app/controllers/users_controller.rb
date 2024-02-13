@@ -32,13 +32,12 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    if @user.update(user_params)
-      redirect_to session.delete(:return_to), notice: 'Profile updated successfully.'
+    return unless @user.update(user_params)
+
+    redirect_to session.delete(:return_to), notice: 'Profile updated successfully.'
     # else
     #   render :edit
-    end
   end
-  
 
   # DELETE /users/1 or /users/1.json
   def destroy
