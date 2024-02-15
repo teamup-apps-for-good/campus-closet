@@ -21,10 +21,12 @@
     <%= f.text_field :address %>
   </div>
 
-  <div>
-    <%= f.label :donor %>
-    <%= f.check_box :donor %>
-  </div>
+  <% if @user.email.include?('tamu.edu') %>
+    <div>
+      <%= f.label :donor %>
+      <%= f.check_box :donor %>
+    </div>
+  <% end %>
 
   <div>
     <%= f.submit 'Save' %>
