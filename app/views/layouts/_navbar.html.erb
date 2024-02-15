@@ -18,11 +18,13 @@
       <% if current_user %>
         <% if current_user.student %>
           <li class="nav-item">
-            <%= link_to "Student Profile", user_path(current_user), class: 'nav-link' %>
+            <%= link_to "Student Profile", user_student_path(current_user), class: 'nav-link' %>
           </li>
-        <% else %>
+        <% end %>
+    
+        <% if current_user.donor %>
           <li class="nav-item">
-            <%= link_to "Donor Dashboard", user_path(current_user), class: 'nav-link' %>
+            <%= link_to "Donor Dashboard", user_donor_path(current_user), class: 'nav-link' %>
           </li>
         <% end %>
       <% end %>

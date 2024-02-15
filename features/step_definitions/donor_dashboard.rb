@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Given('I am a logged in donor') do
-  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false)
+  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false, donor: true)
   visit('/')
   OmniAuth.config.test_mode = true
   OmniAuth.config.add_mock(
@@ -12,7 +12,7 @@ Given('I am a logged in donor') do
 end
 
 Given('I am on the Dashboard') do
-  dash = "/users/#{page.driver.request.session['user_id']}"
+  dash = "/users/#{page.driver.request.session['user_id']}/donor"
   visit(dash)
 end
 

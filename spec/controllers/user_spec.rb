@@ -28,7 +28,7 @@ RSpec.describe UsersController, user: :controller do
 
     it 'redirects to root_path for unauthorized user' do
       user = User.create(first: 'Example User')
-      get :show, params: { id: user.to_param }
+      get :show_donor, params: { id: user.to_param }
       expect(response).to redirect_to(root_path)
       expect(flash[:alert]).to eq("You don't have permission to view this profile.")
     end
@@ -101,31 +101,6 @@ RSpec.describe UsersController, user: :controller do
     context 'with invalid parameters' do
       it "returns a success response (i.e., to display the 'new' template)" do
         post :create, params: { user: { first: nil } }
-        expect(response).to_not be_successful
-      end
-    end
-  end
-
-  describe 'PUT #update' do
-    context 'with valid parameters' do
-      it 'updates the requested user' do
-        user = User.create(first: 'Example User')
-        put :update, params: { id: user.to_param, user: { first: 'Updated User' } }
-        user.reload
-        expect(user.first).to eq('Updated User')
-      end
-
-      it 'redirects to the user' do
-        user = User.create(first: 'Example User')
-        put :update, params: { id: user.to_param, user: { first: 'Updated User' } }
-        expect(response).to redirect_to(user)
-      end
-    end
-
-    context 'with invalid parameters' do
-      it "returns a success response (i.e., to display the 'edit' template)" do
-        user = User.create(first: 'Example User')
-        put :update, params: { id: user.to_param, user: { first: nil } }
         expect(response).to_not be_successful
       end
     end

@@ -5,7 +5,7 @@ Given('I am on the items page') do
 end
 
 Given('I am logged in') do
-  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false)
+  User.create(first: 'Test', last: 'Donor', email: 'testdonor@gmail.com', student: false, donor: true)
   OmniAuth.config.test_mode = true
   OmniAuth.config.add_mock(
     :google_oauth2,
