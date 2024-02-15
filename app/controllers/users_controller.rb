@@ -47,9 +47,9 @@ class UsersController < ApplicationController
 
   def account_creation
     @user = User.find(params[:id])
-    if(!(@user.email.include?('tamu.edu'))) then
-      @user.update(donor: true)
-    end
+    return if @user.email.include?('tamu.edu')
+
+    @user.update(donor: true)
   end
 
   def update_user
