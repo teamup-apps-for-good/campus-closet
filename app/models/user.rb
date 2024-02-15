@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :received_pickups, class_name: 'Pickup', foreign_key: 'receiver_id'
   has_many :donated_requests, class_name: 'Request', foreign_key: 'donor_id'
   has_many :received_requests, class_name: 'Request', foreign_key: 'receiver_id'
+  has_many :items
 
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize

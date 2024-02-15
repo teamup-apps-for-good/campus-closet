@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 shared_examples 'a CRUD controller' do |model_class, _controller_class|
-  let(:user) { User.create(first: 'Example User') }
-  let(:user1) { User.create(first: 'Example User1') }
+  let(:user) { User.create(first: 'Example User', donor: true) }
+  let(:user1) { User.create(first: 'Example User1', donor: true) }
   let(:user2) { User.create(first: 'Example User2') }
   let(:user3) { User.create(first: 'Example User3') }
   let(:item) do
-    Item.create(
+    user.items.create(
       color: Color.create(name: 'temp_color'),
       type: Type.create(name: 'temp_type'),
       gender: Gender.create(name: 'temp_gender'),
@@ -18,9 +18,9 @@ shared_examples 'a CRUD controller' do |model_class, _controller_class|
     )
   end
   let(:item1) do
-    Item.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
-                gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),
-                size: Size.create(name: 'size1'), condition: Condition.create(name: 'condition1'))
+    user1.items.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
+                       gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),
+                       size: Size.create(name: 'size1'), condition: Condition.create(name: 'condition1'))
   end
 
   describe 'GET #index' do

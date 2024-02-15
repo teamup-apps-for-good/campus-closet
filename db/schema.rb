@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_12_202800) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_13_050250) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -70,12 +70,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_12_202800) do
     t.text "brand"
     t.string "photo_link"
     t.string "image_url"
+    t.integer "user_id", null: false
     t.index ["color_id"], name: "index_items_on_color_id"
     t.index ["condition_id"], name: "index_items_on_condition_id"
     t.index ["gender_id"], name: "index_items_on_gender_id"
     t.index ["size_id"], name: "index_items_on_size_id"
     t.index ["status_id"], name: "index_items_on_status_id"
     t.index ["type_id"], name: "index_items_on_type_id"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "pickups", force: :cascade do |t|
@@ -138,6 +140,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_12_202800) do
   add_foreign_key "items", "sizes"
   add_foreign_key "items", "statuses"
   add_foreign_key "items", "types"
+  add_foreign_key "items", "users"
   add_foreign_key "pickups", "items"
   add_foreign_key "pickups", "users", column: "donor_id"
   add_foreign_key "pickups", "users", column: "receiver_id"
