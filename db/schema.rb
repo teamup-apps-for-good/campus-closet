@@ -70,7 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_13_050250) do
     t.text "brand"
     t.string "photo_link"
     t.string "image_url"
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.index ["color_id"], name: "index_items_on_color_id"
     t.index ["condition_id"], name: "index_items_on_condition_id"
     t.index ["gender_id"], name: "index_items_on_gender_id"
