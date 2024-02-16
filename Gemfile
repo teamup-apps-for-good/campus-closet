@@ -89,3 +89,5 @@ gem 'dotenv-rails', groups: %i[development test]
 group :production do
   gem 'pg'
 end
+
+gem 'rubocop', '~> 1.60', require: false
