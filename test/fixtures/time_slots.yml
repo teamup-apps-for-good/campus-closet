@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  donor: one
+  start_time: 2024-02-17 02:09:51
+  end_time: 2024-02-17 02:09:51
+  status: MyString
+
+two:
+  donor: two
+  start_time: 2024-02-17 02:09:51
+  end_time: 2024-02-17 02:09:51
+  status: MyString

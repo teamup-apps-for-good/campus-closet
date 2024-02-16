@@ -9,6 +9,35 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+if TimeSlot.count == 0
+  user1 = User.create(first: 'John', last: 'Doe', email: 'john@example.com')
+  user2 = User.create(first: 'Jane', last: 'smith', email: 'jane@example.com')
+
+  # Create some time slots for the first user
+  TimeSlot.create([
+    {
+      donor: user1,
+      start_time: DateTime.now.beginning_of_hour + 1.day,
+      end_time: DateTime.now.beginning_of_hour + 25.hours,
+      status: 'available'
+    },
+    {
+      donor: user1,
+      start_time: DateTime.now.beginning_of_hour + 2.days,
+      end_time: DateTime.now.beginning_of_hour + 49.hours,
+      status: 'available'
+    }
+  ])
+
+  # Create a time slot for the second user
+  TimeSlot.create(
+    donor: user2,
+    start_time: DateTime.now.beginning_of_hour + 3.days,
+    end_time: DateTime.now.beginning_of_hour + 73.hours,
+    status: 'available'
+  )
+end
+
 if Color.count == 0
   Color.create(name: 'Red')
   Color.create(name: 'Blue')
@@ -70,8 +99,8 @@ end
 
 if Request.count == 0
   # replace with your own email
-  # user1 = User.find_by(email: 'hunterpearson36@gmail.com')
-  # user2 = User.find_by(email: 'hunter-pearson_36@tamu.edu')
+  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
   user3 = User.find_by(email: 'testdonor@gmail.com')
   user4 = User.find_by(email: 'teststudent@tamu.edu')
   item1 = Item.find_by(description: 'Sample description 3')
