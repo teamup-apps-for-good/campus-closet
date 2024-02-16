@@ -1,5 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
+<% unless session[:user_id].nil? %> 
+  <div style="float: right; margin-right: 25vw;">
+    <div><strong>Select Pickup Timeslot</strong><br></div>
+  </div>
+<% end %>
+
 <div class="col-md-4 mb-4">
   <div class="card">
     <% if @item.image_url.present? %>
@@ -15,7 +21,10 @@
       </p>
     </div>
   </div>
+  
 </div>
+
+
 
 <div>
   <%= button_to "Destroy this item", @item, method: :delete %>
