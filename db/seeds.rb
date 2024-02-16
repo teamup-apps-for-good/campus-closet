@@ -80,6 +80,13 @@ if Request.count == 0
   Request.create(donor:user3, receiver:user4, item: item2)
 end
 
+# chat seeding
+50.times do
+  Message.create(
+  body: Faker::Lorem.sentence(word_count: 10),
+  user_id: rand(1..3)) # may have to check this
+end
+
 # more_items = [
 #   {:color => Color, :type => '',
 #     :gender => '', :description => 'Nice shirt',
