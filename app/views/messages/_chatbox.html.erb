@@ -1,0 +1,18 @@
+<%= turbo_stream_from "messages" %>
+  <div class="custom-scroll-container overflow-auto" style="max-height: 96px;">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div id="messages">
+            <% @messages.each do |message| %>
+              <%= render partial: "messages/message",
+              locals: { 
+                message: message,
+                display_controls: message.user == current_user
+                } %> 
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

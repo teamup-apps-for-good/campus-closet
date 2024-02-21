@@ -1,0 +1,24 @@
+<%= turbo_stream_from dom_id(message) do %>
+    <div class="message" data-user-id="<%= message.user.id %>">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div>
+            <div class="message_author">
+                <%= message.user.id %>
+            </div>
+            <div class="message_timestamp">
+                <%= message.created_at.strftime("%H:%M:%S") %>
+          </div>
+        </div>
+        <%= turbo_frame_tag [dom_id(message), "controls"] do %>
+            <% if display_controls %>
+                <%= render partial: "messages/controls", locals: { message: message } %>
+              <% end %>
+            <% end %>
+        </div>
+        <div class="card-body">
+          <%= message.body %>
+        </div>
+      </div>
+    </div>
+  <% end %>
