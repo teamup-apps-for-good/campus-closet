@@ -1,9 +1,16 @@
 <p style="color: green"><%= notice %></p>
 
 <% unless session[:user_id].nil? %> 
-  <div style="float: right; margin-right: 25vw;">
-    <div><strong>Select Pickup Timeslot</strong><br></div>
-  </div>
+  <% if !current_user.donor? %> 
+    <div style="float: right; margin-right: 25vw;">
+      <div><strong>Select Pickup Timeslot</strong><br></div>
+      <div class="card">
+        <% @time_slots.each do |time_slot| %>
+          <%= render time_slot %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="col-md-4 mb-4">
