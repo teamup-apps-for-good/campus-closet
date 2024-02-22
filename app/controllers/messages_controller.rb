@@ -1,23 +1,32 @@
+# frozen_string_literal: true
+
 class MessagesController < ApplicationController
-    # before_action :authenticate_user!
-    before_action :set_message, only: [:destroy]
+  # before_action :authenticate_user!
+  before_action :set_message, only: [:destroy]
 
-    def create # creates message
-        @message = current_user.messages.build(message_params)
-        @message.save
+  # creates message
+  def create
+    @message = current_user.messages.build(message_params)
+    @message.save
+  end
+
+  def destroy
+    @message.destroy
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@message) }
+      format.html { redirect_to messages_url, notice: 'Message was successfully destroyed.' }
     end
+  end
 
-    def destroy
-        @message.destroy
-    end
+  private
 
-    private
+  # require message data
+  def message_params
+    params.require(:message).permit(:body)
+  end
 
-    def message_params # require message data
-        params.require(:message).permit(:body)
-    end
-
-    def set_message # find message by id
-        @message = Message.find(params[:id])
-    end
+  # find message by id
+  def set_message
+    @message = Message.find(params[:id])
+  end
 end
