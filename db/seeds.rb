@@ -81,11 +81,11 @@ if Request.count == 0
 end
 
 # chat seeding
-50.times do
-  Message.create(
-  body: Faker::Lorem.sentence(word_count: 10),
-  user_id: rand(1..3)) # may have to check this
-end
+# 50.times do
+#   Message.create(
+#   body: Faker::Lorem.sentence(word_count: 10),
+#   user_id: rand(1..3))
+# end
 
 # more_items = [
 #   {:color => Color, :type => '',
