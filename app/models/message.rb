@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# "Messages" model. Contains max character length and attributes.
 class Message < ApplicationRecord
   belongs_to :user
   validates :body, presence: true, length: { maximum: 500 }

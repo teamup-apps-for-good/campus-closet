@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller responsible for managing "messages" model.
 class MessagesController < ApplicationController
   # before_action :authenticate_user!
   before_action :set_message, only: [:destroy]

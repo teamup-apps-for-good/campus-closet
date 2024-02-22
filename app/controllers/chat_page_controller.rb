@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller responsible for managing chat page.
 class ChatPageController < ApplicationController
   # before_action :authenticate_user!
 
