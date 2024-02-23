@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ChatPageController, type: :controller do
   describe 'GET #home' do
     context 'when user is logged in' do
-      let(:user) { User.create(email: "example@gmail.com", first: 'User1') }
+      let(:user) { User.create(email: 'example@gmail.com', first: 'User1') }
       let!(:messages) do
-        10.times { |i| Message.create(body: "Message #{i + 1}", user: user) }
+        10.times { |i| Message.create(body: "Message #{i + 1}", user:) }
       end
 
       before do
