@@ -1,37 +1,40 @@
-<p style="color: green"><%= notice %></p>
-
-<% unless session[:user_id].nil? %> 
-  <% if !current_user.donor? %> 
-    <div style="float: right; margin-right: 25vw;">
-      <div><strong>Select Pickup Timeslot</strong><br></div>
+<div style="display: flex;">
+  <div style="flex: 1;">
+    <div class="col-md-6 mb-6">
       <div class="card">
-        <% @time_slots.each do |time_slot| %>
-          <%= render time_slot %>
+        <% if @item.image_url.present? %>
+          <%= image_tag @item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
+        <% else %>
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
         <% end %>
+        <div class="card-body">
+          <%= render @item %>
+          <p class="card-text">
+            <%= link_to "Edit this item", edit_item_path(@item) %> |
+            <%= link_to "Back to items", items_path %>
+          </p>
+        </div>
       </div>
-    </div>
-  <% end %>
-<% end %>
-
-<div class="col-md-4 mb-4">
-  <div class="card">
-    <% if @item.image_url.present? %>
-      <%= image_tag @item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
-    <% else %>
-      <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
-    <% end %>
-    <div class="card-body">
-      <%= render @item %>
-      <p class="card-text">
-        <%= link_to "Edit this item", edit_item_path(@item) %> |
-        <%= link_to "Back to items", items_path %>
-      </p>
     </div>
   </div>
   
+  <div style="flex: 1;">
+    <div style="float: right;">
+      <%= month_calendar(events: @time_slots, class: "text-center") do |date, time_slots| %>
+        <div class="day">
+          <h3 style="font-size: 18px; color: #2c3e50; font-weight: bold;"><%= date.strftime('%B %d, %Y') %></h3>
+          <% time_slots.each do |time_slot| %>
+            <div class="time-slot">
+              <p style="background-color: #2ecc71; padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+                <%= "#{time_slot.start_time.strftime('%I:%M %p')} to #{time_slot.end_time.strftime('%I:%M %p')}" %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-
 
 <div>
   <%= button_to "Destroy this item", @item, method: :delete %>

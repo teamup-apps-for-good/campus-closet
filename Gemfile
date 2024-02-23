@@ -91,3 +91,5 @@ group :production do
 end
 
 gem 'rubocop', '~> 1.60', require: false
+
+gem 'simple_calendar'
