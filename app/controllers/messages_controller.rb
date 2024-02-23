@@ -1,3 +1,4 @@
+require 'rails_helper'
 # frozen_string_literal: true
 
 # Controller responsible for managing "messages" model.
