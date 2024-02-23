@@ -91,3 +91,6 @@ group :production do
 end
 
 gem 'faker', '~> 3.2'
+
+# rails controller testing
+gem 'rails-controller-testing'
