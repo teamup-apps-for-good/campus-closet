@@ -6,7 +6,8 @@ class TimeSlotsController < ApplicationController
 
   # GET /time_slots or /time_slots.json
   def index
-    @time_slots = TimeSlot.all
+    @time_slots = current_user ? current_user.time_slots : []
+    @slots = @time_slots
   end
 
   # GET /time_slots/1 or /time_slots/1.json
@@ -23,6 +24,8 @@ class TimeSlotsController < ApplicationController
   # POST /time_slots or /time_slots.json
   def create
     @time_slot = TimeSlot.new(time_slot_params)
+    @time_slot.status = 'available'
+    @time_slot.donor_id = current_user.id if current_user
 
     respond_to do |format|
       if @time_slot.save

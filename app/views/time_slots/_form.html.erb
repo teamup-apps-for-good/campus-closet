@@ -1,37 +1,53 @@
-<%= form_with(model: time_slot) do |form| %>
-  <% if time_slot.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
+<div id="form-container">
+  <%= form_with(model: time_slot) do |form| %>
+    <% if time_slot.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
 
-      <ul>
-        <% time_slot.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% time_slot.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div>
+      <%= form.label :start_time, style: "display: block" %>
+      <%= form.datetime_field :start_time %>
+    </div>
+
+    <div>
+      <%= form.label :end_time, style: "display: block" %>
+      <%= form.datetime_field :end_time %>
     </div>
   <% end %>
+</div>
 
-  <div>
-    <%= form.label :donor_id, style: "display: block" %>
-    <%= form.text_field :donor_id %>
-  </div>
+<!-- Add button to add another time slot -->
+<button id="add-time-slot">Add Another Time Slot</button>
 
-  <div>
-    <%= form.label :start_time, style: "display: block" %>
-    <%= form.datetime_field :start_time %>
-  </div>
+<!-- Button to submit all time slots -->
+<button id="submit-time-slots">Create Time Slots</button>
 
-  <div>
-    <%= form.label :end_time, style: "display: block" %>
-    <%= form.datetime_field :end_time %>
-  </div>
+<!-- JavaScript to duplicate the form section -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('add-time-slot').addEventListener('click', function() {
+      var formSection = document.querySelector('#form-container form').cloneNode(true);
+      var deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete Time Slot';
+      deleteButton.addEventListener('click', function() {
+        formSection.remove();
+      });
+      formSection.appendChild(deleteButton);
+      document.getElementById('form-container').appendChild(formSection);
+    });
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    document.getElementById('submit-time-slots').addEventListener('click', function() {
+      var formSections = document.querySelectorAll('#form-container form');
+      formSections.forEach(function(form) {
+        form.submit();
+      });
+    });
+  });
+</script>
