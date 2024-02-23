@@ -6,7 +6,8 @@ class TimeSlotsController < ApplicationController
 
   # GET /time_slots or /time_slots.json
   def index
-    @time_slots = TimeSlot.all
+    @time_slots = current_user ? current_user.time_slots : []
+    @slots = @time_slots
   end
 
   # GET /time_slots/1 or /time_slots/1.json
@@ -22,17 +23,23 @@ class TimeSlotsController < ApplicationController
 
   # POST /time_slots or /time_slots.json
   def create
-    @time_slot = TimeSlot.new(time_slot_params)
+    time_slot_params[:time_slots].each do |time_slot_param|
+      @time_slot = TimeSlot.new(time_slot_param)
+      @time_slot.status = 'available'
+      @time_slot.donor_id = current_user.id if current_user
 
-    respond_to do |format|
-      if @time_slot.save
-        format.html { redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully created.' }
-        format.json { render :show, status: :created, location: @time_slot }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @time_slot.errors, status: :unprocessable_entity }
+      unless @time_slot.save
+        redirect_to time_slots_path, notice: 'Time slots were not saved.'
+        return
+      end
+
+      if time_slot_params[:time_slots].any? { |time_slot_param| time_slot_param[:start_time].blank? || time_slot_param[:end_time].blank? }
+        redirect_to new_time_slot_path, alert: 'Start and end times cannot be empty.'
+        return
       end
     end
+
+    redirect_to time_slots_path, notice: 'Time slots were successfully created.'
   end
 
   # PATCH/PUT /time_slots/1 or /time_slots/1.json
@@ -67,6 +74,6 @@ class TimeSlotsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def time_slot_params
-    params.require(:time_slot).permit(:donor_id, :start_time, :end_time, :status)
+    params.permit(time_slots: [:start_time, :end_time])
   end
 end

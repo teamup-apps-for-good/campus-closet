@@ -5,6 +5,9 @@
   <%= render @user %>
   <div>
     <%= link_to "Edit Account", edit_user_path(@user) %>
+    <%= link_to "New time slot", new_time_slot_path %>
+    <%= link_to "View Time Slots", time_slots_path %>
+
     <%= button_to "Delete Account", @user, method: :delete %>
   </div>
 </div>

@@ -1,37 +1,68 @@
-<%= form_with(model: time_slot) do |form| %>
-  <% if time_slot.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
+<!-- app/views/time_slots/new.html.erb -->
+<div id="form-container">
+  <%= form_with(model: TimeSlot.new, url: time_slots_path, local: true) do |form| %>
+    <% if @time_slot.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
 
-      <ul>
-        <% time_slot.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% @time_slot.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- This is where you'll dynamically add multiple time slot fields -->
+    <div id="time-slots-fields">
+      <!-- Initially, you may have one set of fields -->
+      <div class="time-slot">
+        <%= form.label :start_time, style: "display: block" %>
+        <%= form.datetime_field :start_time, name: 'time_slots[][start_time]' %>
+        
+        <%= form.label :end_time, style: "display: block" %>
+        <%= form.datetime_field :end_time, name: 'time_slots[][end_time]' %>
+      </div>
     </div>
+
+    <!-- Button to add another time slot -->
+    <button type="button" id="add-time-slot">Add Another Time Slot</button>
+
+    <!-- Button to submit all time slots -->
+    <%= form.submit 'Create Time Slots', id: 'submit-time-slots' %>
   <% end %>
+</div>
 
-  <div>
-    <%= form.label :donor_id, style: "display: block" %>
-    <%= form.text_field :donor_id %>
-  </div>
+<script>
+document.getElementById('submit-time-slots').addEventListener('click', function(event) {
+  var form = document.querySelector('#form-container form');
+  var timeSlotInputs = form.querySelectorAll('.time-slot input');
 
-  <div>
-    <%= form.label :start_time, style: "display: block" %>
-    <%= form.datetime_field :start_time %>
-  </div>
+  // Check for empty time slots
+  for (var i = 0; i < timeSlotInputs.length; i += 2) {
+    var startTimeInput = timeSlotInputs[i];
+    var endTimeInput = timeSlotInputs[i + 1];
 
-  <div>
-    <%= form.label :end_time, style: "display: block" %>
-    <%= form.datetime_field :end_time %>
-  </div>
+    if (!startTimeInput.value || !endTimeInput.value) {
+      alert('Start and end times cannot be empty.');
+      event.preventDefault(); // Prevent form submission
+      return;
+    }
+  }
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
+  // Validate start and end times
+  for (var i = 0; i < timeSlotInputs.length; i += 2) {
+    var startTimeInput = timeSlotInputs[i];
+    var endTimeInput = timeSlotInputs[i + 1];
+    var startTime = new Date(startTimeInput.value);
+    var endTime = new Date(endTimeInput.value);
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    if (startTime >= endTime) {
+      alert('Start and end times do not match.');
+      event.preventDefault(); // Prevent form submission
+      return;
+    }
+  }
+});
+
+</script>
