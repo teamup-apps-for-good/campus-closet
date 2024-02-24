@@ -192,6 +192,10 @@ GEM
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
     jwt (2.7.1)
+    kredis (1.7.0)
+      activemodel (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      redis (>= 4.2, < 6)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -309,6 +313,10 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
+    redis (5.1.0)
+      redis-client (>= 0.17.0)
+    redis-client (0.20.0)
+      connection_pool
     regexp_parser (2.9.0)
     reline (0.4.2)
       io-console (~> 0.5)
@@ -417,6 +425,7 @@ DEPENDENCIES
   faker (~> 3.2)
   importmap-rails
   jbuilder
+  kredis
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
@@ -424,6 +433,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.1.2)
   rails-controller-testing
+  redis (>= 4.0.1)
   rspec-rails
   selenium-webdriver
   simplecov
