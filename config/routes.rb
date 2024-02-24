@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get '/signout', to: 'sessions#destroy', as: 'signout'
 
   # chat routes
-  mount ActionCable.server => '/cable'
+  # mount ActionCable.server => '/cable'
 
   resources :users do
     patch 'update_user', on: :member
