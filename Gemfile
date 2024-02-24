@@ -96,3 +96,5 @@ gem 'faker', '~> 3.2'
 gem 'rails-controller-testing'
 
 gem 'rubocop', '~> 1.60', require: false
+
+gem 'simple_calendar'
