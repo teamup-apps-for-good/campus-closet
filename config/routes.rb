@@ -46,4 +46,7 @@ Rails.application.routes.draw do
     end
   end
 
+  patch 'time_slots/:id/mark_unavailable', to: 'time_slots#mark_unavailable', as: 'mark_unavailable_time_slot'
+
+
 end
