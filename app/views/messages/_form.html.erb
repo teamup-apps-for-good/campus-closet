@@ -1,0 +1,21 @@
+<%= form_with(
+      model: message,
+      id: "message_form",
+      method: :post,
+      data: {
+          controller: "reset-form",
+          action: "turbo:submit-end->reset-form#clearInput"
+      },
+      class: "d-flex" # Added for Bootstrap's flexbox utility
+  ) do |form| %>
+    <%= form.text_field :body,
+      id: "chat-input",
+      class: "form-control me-2", # Bootstrap classes for form controls and margin end
+      data: {
+          reset_form_target: "input"
+      },
+      placeholder: "Type a message..." %>
+    <%= form.button type: 'submit', class: "btn btn-primary" do %>
+      Send
+    <% end %>
+<% end %>

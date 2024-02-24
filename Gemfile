@@ -89,3 +89,8 @@ gem 'dotenv-rails', groups: %i[development test]
 group :production do
   gem 'pg'
 end
+
+gem 'faker', '~> 3.2'
+
+# rails controller testing
+gem 'rails-controller-testing'

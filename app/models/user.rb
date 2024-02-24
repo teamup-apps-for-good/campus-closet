@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :time_slots, class_name: 'TimeSlot', foreign_key: 'donor_id'
   has_many :items
 
+  # for chat feature
+  has_many :messages, dependent: :destroy
+
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize
     names = auth['info']['name'].split
