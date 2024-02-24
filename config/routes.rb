@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   get 'chat_page/home'
+  resources :time_slots
   resources :requests
   resources :pickups
   resources :users
@@ -39,6 +40,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'users/:id/student', to: 'users#show_student', as: 'user_student'
+  get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
 
   resources :items
 

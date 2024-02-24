@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.1].define(version: 2024_02_16_214441) do
+=======
+ActiveRecord::Schema[7.1].define(version: 2024_02_16_180951) do
+>>>>>>> 26ac7a54613bb271d9f64c20eca0d02970e54739
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -70,12 +74,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_214441) do
     t.text "brand"
     t.string "photo_link"
     t.string "image_url"
+    t.integer "user_id"
     t.index ["color_id"], name: "index_items_on_color_id"
     t.index ["condition_id"], name: "index_items_on_condition_id"
     t.index ["gender_id"], name: "index_items_on_gender_id"
     t.index ["size_id"], name: "index_items_on_size_id"
     t.index ["status_id"], name: "index_items_on_status_id"
     t.index ["type_id"], name: "index_items_on_type_id"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -120,6 +126,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_214441) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "time_slots", force: :cascade do |t|
+    t.integer "donor_id", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["donor_id"], name: "index_time_slots_on_donor_id"
+  end
+
   create_table "types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -135,6 +151,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_214441) do
     t.boolean "student"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "donor"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -145,11 +162,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_214441) do
   add_foreign_key "items", "sizes"
   add_foreign_key "items", "statuses"
   add_foreign_key "items", "types"
+<<<<<<< HEAD
   add_foreign_key "messages", "users"
+=======
+  add_foreign_key "items", "users"
+>>>>>>> 26ac7a54613bb271d9f64c20eca0d02970e54739
   add_foreign_key "pickups", "items"
   add_foreign_key "pickups", "users", column: "donor_id"
   add_foreign_key "pickups", "users", column: "receiver_id"
   add_foreign_key "requests", "items"
   add_foreign_key "requests", "users", column: "donor_id"
   add_foreign_key "requests", "users", column: "receiver_id"
+  add_foreign_key "time_slots", "users", column: "donor_id"
 end

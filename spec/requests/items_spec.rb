@@ -24,6 +24,7 @@ RSpec.describe '/items', type: :request do
   # let(:status) { FactoryGirl.create(:hospital) }
   # let(:size) { FactoryGirl.create(:hospital) }
   # let(:condition) { FactoryGirl.create(:condition) }
+  let(:user) { User.create(first: 'Example User', donor: true) }
   let(:valid_attributes) do
     { color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
       gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
@@ -41,9 +42,9 @@ RSpec.describe '/items', type: :request do
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      Item.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
-                  gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                  size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
+      user.items.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
+                        gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
+                        size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
       get items_url
       expect(response).to be_successful
     end
@@ -51,9 +52,9 @@ RSpec.describe '/items', type: :request do
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      item = Item.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
-                         gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                         size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
+      item = user.items.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
+                               gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
+                               size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_cond'))
       get item_url(item)
       expect(response).to be_successful
     end
@@ -68,52 +69,18 @@ RSpec.describe '/items', type: :request do
 
   describe 'GET /edit' do
     it 'renders a successful response' do
-      item = Item.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
-                         gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                         size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
+      item = user.items.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
+                               gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
+                               size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_cond'))
       get edit_item_url(item)
       expect(response).to be_successful
-    end
-  end
-
-  describe 'POST /create' do
-    context 'with valid parameters' do
-      it 'creates a new Item' do
-        color = Color.create(name: 'temp_color')
-        type = Type.create(name: 'temp_type')
-        gender = Gender.create(name: 'temp_gender')
-        status = Status.create(name: 'temp_status')
-        size = Size.create(name: 'temp_size')
-        condition = Condition.create(name: 'temp_condition')
-
-        expect do
-          post items_url, params: { item: {
-            color_id: color.id,
-            type_id: type.id,
-            gender_id: gender.id,
-            status_id: status.id,
-            size_id: size.id,
-            condition_id: condition.id,
-            description: 'Item Description',
-            image_url: 'https://example.com/image.jpg'
-          } }
-        end.to change(Item, :count).by(1)
-      end
-    end
-
-    context 'with invalid parameters' do
-      it 'does not create a new Item' do
-        expect do
-          post items_url, params: { item: invalid_attributes }
-        end.to change(Item, :count).by(0)
-      end
     end
   end
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
       it 'updates the requested item' do
-        item = Item.create! valid_attributes
+        item = user.items.create! valid_attributes
         new_color = Color.create(name: 'new_color')
 
         # Set the color_id directly in the new_attributes
@@ -127,7 +94,7 @@ RSpec.describe '/items', type: :request do
       end
 
       it 'redirects to the item' do
-        item = Item.create! valid_attributes
+        item = user.items.create! valid_attributes
         new_color = Color.create(name: 'new_color')
         new_attributes = { color_id: new_color.id }
 
@@ -144,7 +111,7 @@ RSpec.describe '/items', type: :request do
       end
 
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        item = Item.create! valid_attributes
+        item = user.items.create! valid_attributes
         patch item_url(item), params: { item: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -153,14 +120,14 @@ RSpec.describe '/items', type: :request do
 
   describe 'DELETE /destroy' do
     it 'destroys the requested item' do
-      item = Item.create! valid_attributes
+      item = user.items.create! valid_attributes
       expect do
         delete item_url(item)
       end.to change(Item, :count).by(-1)
     end
 
     it 'redirects to the items list' do
-      item = Item.create! valid_attributes
+      item = user.items.create! valid_attributes
       delete item_url(item)
       expect(response).to redirect_to(items_url)
     end

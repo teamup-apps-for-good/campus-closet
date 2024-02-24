@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @time_slot %>
+
+<div>
+  <%= link_to "Edit this time slot", edit_time_slot_path(@time_slot) %> |
+  <%= link_to "Back to time slots", time_slots_path %>
+
+  <%= button_to "Destroy this time slot", @time_slot, method: :delete %>
+</div>
