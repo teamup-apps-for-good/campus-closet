@@ -26,7 +26,7 @@
           <% time_slots.select { |time_slot| time_slot.status == 'available' }.each do |time_slot| %>
             <div class="time-slot">
               <p style="background-color: #2ecc71; padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
-                <%= button_tag "#{time_slot[:start_time].strftime('%I:%M %p')} to #{time_slot[:end_time].strftime('%I:%M %p')}", id: "time_slot_button", data: { time_slot_id: time_slot.id } %>
+                <%= button_tag "#{time_slot[:start_time].strftime('%I:%M %p')} to #{time_slot[:end_time].strftime('%I:%M %p')}", id: "time_slot_button", data: { time_slot_id: time_slot.id ,donor_id: time_slot.donor_id, receiver_id: current_user.id, item_id: @item.id} %>
               </p>
             </div>
           <% end %>
@@ -47,7 +47,12 @@
     timeSlotButtons.forEach(button => {
       button.addEventListener('click', function() {
         if (window.confirm('Are you sure you want to request this timeslot?')) {
+          console.log(this.dataset)
           const timeSlotId = this.dataset.timeSlotId;
+          const donorId = this.dataset.donorId;
+          const receiverId = this.dataset.receiverId;
+          const itemId = this.dataset.itemId;
+
           const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
           fetch(`/time_slots/${timeSlotId}/mark_unavailable`, {
@@ -62,11 +67,36 @@
             if (response.ok) {
               alert('Time slot requested');
             } else {
-              alert('Time slot requested');
+              alert('Time slot failed to update - was not requested');
             }
           }).catch(error => {
             console.error('Error:', error);
           });
+          fetch('/requests', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken
+          },
+          credentials: 'same-origin',
+          body: JSON.stringify({
+            request: {
+              item_id: itemId, 
+              donor_id: donorId,
+              receiver_id: receiverId
+            }
+          })
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log("created new request")
+          } else {
+            alert('Failed to create clothing request.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
         }
       });
     });

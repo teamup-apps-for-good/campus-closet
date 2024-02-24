@@ -61,10 +61,10 @@ class TimeSlotsController < ApplicationController
   def mark_unavailable
     @time_slot = TimeSlot.find(params[:id])
     if @time_slot.update(status: 'unavailable')
-      redirect_to time_slot_url(@time_slot), notice: 'Time slot marked as unavailable.'
+      render json: { message: 'Time slot marked as unavailable.' }, status: :ok
     else
-      Rails.logger.error "Failed to mark time slot as unavailable: #{time_slot_errors}"
-      redirect_to time_slot_url(@time_slot), alert: 'Failed to mark time slot as unavailable. Please try again.'
+      render json: { error: 'Failed to mark time slot as unavailable. Please try again.' },
+             status: :unprocessable_entity
     end
   end
 
