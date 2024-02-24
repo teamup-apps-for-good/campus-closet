@@ -48,7 +48,7 @@ end
 if Item.count == 0
   donor = User.find_by(email: "testdonor@gmail.com")
 
-  Item.create(color: Color.first, type: Type.first, gender: Gender.first, description: 'Sample description',
+  Item.create(color: Color.first, type: Type.first, gendker: Gender.first, description: 'Sample description',
               status: Status.first, size: Size.first, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redpants.jpg', user: donor)
 
   Item.create(color: Color.second, type: Type.second, gender: Gender.second, description: 'Sample description 2',
@@ -60,26 +60,26 @@ end
 
 if Pickup.count == 0
   # replace with your own email
-  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
-  # user3 = User.find_by(email: 'testdonor@gmail.com')
-  # user4 = User.find_by(email: 'teststudent@tamu.edu')
-  # item1 = Item.find_by(description: 'Sample description 3')
-  # item2 = Item.find_by(description: 'Sample description')
-  # Pickup.create(donor:user1, receiver:user2, item: item1)
-  # Pickup.create(donor:user3, receiver:user4, item: item2)
+  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  user3 = User.find_by(email: 'testdonor@gmail.com')
+  user4 = User.find_by(email: 'teststudent@tamu.edu')
+  item1 = Item.find_by(description: 'Sample description 3')
+  item2 = Item.find_by(description: 'Sample description')
+  Pickup.create(donor:user1, receiver:user2, item: item1)
+  Pickup.create(donor:user3, receiver:user4, item: item2)
 end
 
 if Request.count == 0
   # replace with your own email
-  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
-  # user3 = User.find_by(email: 'testdonor@gmail.com')
-  # user4 = User.find_by(email: 'teststudent@tamu.edu')
-  # item1 = Item.find_by(description: 'Sample description 3')
-  # item2 = Item.find_by(description: 'Sample description')
-  # Request.create(donor:user1, receiver:user2, item: item1)
-  # Request.create(donor:user3, receiver:user4, item: item2)
+  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  user3 = User.find_by(email: 'testdonor@gmail.com')
+  user4 = User.find_by(email: 'teststudent@tamu.edu')
+  item1 = Item.find_by(description: 'Sample description 3')
+  item2 = Item.find_by(description: 'Sample description')
+  Request.create(donor:user1, receiver:user2, item: item1)
+  Request.create(donor:user3, receiver:user4, item: item2)
 end
 
 # chat seeding
