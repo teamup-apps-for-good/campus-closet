@@ -82,6 +82,12 @@ if Request.count == 0
   Request.create(donor:user3, receiver:user4, item: item2)
 end
 
+# chat seeding
+# 50.times do
+#   Message.create(
+#   body: Faker::Lorem.sentence(word_count: 10),
+#   user_id: rand(1..3))
+# end
 if TimeSlot.count == 0
   donor_user = User.find_by(email: 'testdonor@gmail.com')
 
