@@ -33,6 +33,12 @@ gem 'omniauth-rails_csrf_protection'
 # bootstrap for styling
 gem 'bootstrap', '~> 5.0.1'
 
+# belong_to
+gem 'shoulda-matchers', '~> 5.0'
+
+# simple calender
+gem 'simple_calendar'
+
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0.1'
 
