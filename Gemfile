@@ -100,3 +100,5 @@ gem 'faker', '~> 3.2'
 
 # rails controller testing
 gem 'rails-controller-testing'
+
+gem 'rubocop', '~> 1.60', require: false

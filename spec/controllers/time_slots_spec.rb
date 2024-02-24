@@ -144,4 +144,48 @@ RSpec.describe TimeSlotsController, type: :controller do
       post :create, params: invalid_params
     end
   end
+
+  describe 'PUT #mark_unavailable' do
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.add_mock(
+      :google_oauth2,
+      info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
+    )
+
+    user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+    time_slot = TimeSlot.create(
+      donor: user,
+      start_time: DateTime.now.beginning_of_hour + 1.day,
+      end_time: DateTime.now.beginning_of_hour + 25.hours,
+      status: 'available'
+    )
+
+    context 'when the time slot is successfully marked as unavailable' do
+      before do
+        put :mark_unavailable, params: { id: time_slot.id }
+        time_slot.reload
+      end
+
+      it 'returns a success message' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['message']).to eq('Time slot marked as unavailable.')
+      end
+
+      it 'marks the time slot as unavailable' do
+        expect(time_slot.status).to eq('unavailable')
+      end
+    end
+
+    context 'when the time slot cannot be marked as unavailable' do
+      before do
+        allow_any_instance_of(TimeSlot).to receive(:update).and_return(false)
+        put :mark_unavailable, params: { id: time_slot.id }
+      end
+
+      it 'returns an error message' do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)['error']).to eq('Failed to mark time slot as unavailable. Please try again.')
+      end
+    end
+  end
 end

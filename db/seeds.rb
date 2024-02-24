@@ -41,8 +41,8 @@ if Condition.count == 0
 end
 
 if User.count == 0
-  User.create(first: "Test", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "College Station, TX", student: false)
-  User.create(first: "Test", last: "Student", email: "teststudent@tamu.edu", phone: "0987654321", address: "College Station, TX", student: true)
+  User.create(first: "TestDonor", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "College Station, TX", student: false)
+  User.create(first: "TestReceiver", last: "Receiver", email: "testreceiver@tamu.edu", phone: "0987654321", address: "College Station, TX", student: true)
 end
 
 if Item.count == 0
@@ -60,8 +60,8 @@ end
 
 if Pickup.count == 0
   # replace with your own email
-  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
   user3 = User.find_by(email: 'testdonor@gmail.com')
   user4 = User.find_by(email: 'teststudent@tamu.edu')
   item1 = Item.find_by(description: 'Sample description 3')
@@ -72,8 +72,8 @@ end
 
 if Request.count == 0
   # replace with your own email
-  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
   user3 = User.find_by(email: 'testdonor@gmail.com')
   user4 = User.find_by(email: 'teststudent@tamu.edu')
   item1 = Item.find_by(description: 'Sample description 3')

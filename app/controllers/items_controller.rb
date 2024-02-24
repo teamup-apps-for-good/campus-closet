@@ -17,7 +17,11 @@ class ItemsController < ApplicationController
   end
 
   # GET /items/1 or /items/1.json
-  def show; end
+  def show
+    # DonorMailer.with(user: current_user).confirm_time_to_donor_email.deliver_later
+    @time_slots = @item.user.time_slots
+    # Tell the UserMailer to send a welcome email after save
+  end
 
   # GET /items/new
   def new
