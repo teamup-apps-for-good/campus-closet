@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'chat_page/home'
   resources :time_slots
   resources :requests
   resources :pickups
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   resources :types
   resources :colors
   resources :items
+  resources :messages, only: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -27,6 +29,9 @@ Rails.application.routes.draw do
   get '/auth/:google_oauth2/callback', to: 'sessions#create'
   get '/auth/failure', to: redirect('/')
   get '/signout', to: 'sessions#destroy', as: 'signout'
+
+  # chat routes
+  # mount ActionCable.server => '/cable'
 
   resources :users do
     patch 'update_user', on: :member
