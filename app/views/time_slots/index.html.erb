@@ -1,14 +1,21 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-5">
+  <div class="text-center">
+    <h1 style="color: #3498db; font-family: 'Arial', sans-serif;"><%= notice %></h1>
+    <h2 class="text-center" style="font-family: 'Arial', sans-serif; color: #2c3e50; font-size: 24px;">Available Times</h2>
+  </div>
 
-<h1>Time slots</h1>
-
-<div id="time_slots">
-  <% @time_slots.each do |time_slot| %>
-    <%= render time_slot %>
-    <p>
-      <%= link_to "Show this time slot", time_slot %>
-    </p>
-  <% end %>
+  <div class="text-center">
+    <%= month_calendar(events: @slots, class: "text-center") do |date, time_slots| %>
+      <div class="day">
+        <h3 style="font-size: 18px; color: #2c3e50; font-weight: bold;"><%= date.strftime('%B %d, %Y') %></h3>
+        <% time_slots.each do |time_slot| %>
+          <div class="time-slot">
+            <p style="background-color: #2ecc71; padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+              <%= "Start: #{time_slot.start_time.strftime('%I:%M %p')}  End: #{time_slot.end_time.strftime('%I:%M %p')}" %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
-
-<%= link_to "New time slot", new_time_slot_path %>
