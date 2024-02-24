@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-# frozen_string_literal: true
-
 # Controller responsible for managing "messages" model.
 class MessagesController < ApplicationController
   # before_action :authenticate_user!

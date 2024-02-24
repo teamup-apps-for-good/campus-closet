@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+# require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
   let(:user) { User.create(email: 'example@gmail.com', first: 'User1') }
