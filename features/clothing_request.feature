@@ -41,6 +41,7 @@ Scenario: Request gets submitted
 
 Scenario: Donor goes to dashboard after a student requests item
     Given I have a donor account, "test_donor@gmail.com"
+    And I am on the items page
     And I have an item(s) listed to be donated
     And a student requests an item
     And I go to my profile page

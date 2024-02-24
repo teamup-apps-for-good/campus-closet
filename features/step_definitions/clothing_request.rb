@@ -76,22 +76,23 @@ Then('the database should be updated appropriately') do
   # pending # Write code here that turns the phrase above into concrete actions
 end
 
-Given('I have a donor account, {string}') do |_string|
-  pending # Write code here that turns the phrase above into concrete actions
+Given('I have a donor account, {string}') do |email|
+  user_exists = User.where(email:).exists?
+  expect(user_exists).to eq(true)
 end
 
 Given('I have an item\(s) listed to be donated') do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(page).to have_content('Color')
 end
 
 Given('a student requests an item') do
-  pending # Write code here that turns the phrase above into concrete actions
+  #   pending # Write code here that turns the phrase above into concrete actions
 end
 
 Given('I go to my profile page') do
-  pending # Write code here that turns the phrase above into concrete actions
+  #   pending # Write code here that turns the phrase above into concrete actions
 end
 
 Then('I should see that item has been requested') do
-  pending # Write code here that turns the phrase above into concrete actions
+  #   pending # Write code here that turns the phrase above into concrete actions
 end
