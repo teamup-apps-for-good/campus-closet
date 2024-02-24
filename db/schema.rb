@@ -158,11 +158,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_214441) do
   add_foreign_key "items", "sizes"
   add_foreign_key "items", "statuses"
   add_foreign_key "items", "types"
-<<<<<<< HEAD
-  add_foreign_key "messages", "users"
-=======
   add_foreign_key "items", "users"
->>>>>>> 26ac7a54613bb271d9f64c20eca0d02970e54739
+  add_foreign_key "messages", "users"
   add_foreign_key "pickups", "items"
   add_foreign_key "pickups", "users", column: "donor_id"
   add_foreign_key "pickups", "users", column: "receiver_id"
