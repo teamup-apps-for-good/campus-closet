@@ -60,8 +60,8 @@ end
 
 if Pickup.count == 0
   # replace with your own email
-  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
   user3 = User.find_by(email: 'testdonor@gmail.com')
   user4 = User.find_by(email: 'teststudent@tamu.edu')
   item1 = Item.find_by(description: 'Sample description 3')
@@ -72,8 +72,8 @@ end
 
 if Request.count == 0
   # replace with your own email
-  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
   user3 = User.find_by(email: 'testdonor@gmail.com')
   user4 = User.find_by(email: 'teststudent@tamu.edu')
   item1 = Item.find_by(description: 'Sample description 3')
