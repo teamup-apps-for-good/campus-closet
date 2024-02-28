@@ -48,7 +48,7 @@ end
 if Item.count == 0
   donor = User.find_by(email: "testdonor@gmail.com")
 
-  Item.create(color: Color.first, type: Type.first, gendker: Gender.first, description: 'Sample description',
+  Item.create(color: Color.first, type: Type.first, gender: Gender.first, description: 'Sample description',
               status: Status.first, size: Size.first, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redpants.jpg', user: donor)
 
   Item.create(color: Color.second, type: Type.second, gender: Gender.second, description: 'Sample description 2',
