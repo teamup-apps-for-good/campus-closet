@@ -13,7 +13,7 @@
 </div>
 
 
-<h2>Pickups:</h2>
+<h2>Past Pickups:</h2>
 <% @user.donated_pickups.each do |pickup| %>
   <p>
     <div class="col-md-4 mb-4">
@@ -31,7 +31,7 @@
   </p>
 <% end %>
 
-<h2>Requests:</h2>
+<h2>Current Requests:</h2>
 <% @user.donated_requests.each do |request| %>
   <p>
   <div class="col-md-4 mb-4">
@@ -43,8 +43,24 @@
       <% end %>
       <div class="card-body">
         <%= render request.item %>
+        <div class="btn btn-primary btn-lg">
+          <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button"%>
+        </div>
       </div>
     </div>
   </div>
 </p>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const confirmPickupButtons = document.querySelectorAll('.confirm_pickup_button');
+
+    confirmPickupButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        console.log('click')
+        alert('your pickup is confirmed')
+      });
+    });
+  });
+</script>
