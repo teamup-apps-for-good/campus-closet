@@ -60,13 +60,10 @@ class ItemsController < ApplicationController
   # items_controller.rb
   def mark_unavailable
     @item = Item.find(params[:id])
-
-    # Update the associated status record using the foreign key relationship
     @item.status = Status.find_by(name: 'Unavailable') || Status.create(name: 'Unavailable')
-
+  
     respond_to do |format|
       if @item.save
-        format.html { redirect_to @item, notice: 'Item status updated to unavailable.' }
         format.json { render json: @item, status: :ok }
       else
         format.html { render :edit, status: :unprocessable_entity }
