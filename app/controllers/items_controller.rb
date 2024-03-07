@@ -61,7 +61,7 @@ class ItemsController < ApplicationController
   def mark_unavailable
     @item = Item.find(params[:id])
     @item.status = Status.find_by(name: 'Unavailable') || Status.create(name: 'Unavailable')
-    
+
     respond_to do |format|
       if @item.save
         format.json { render json: @item, status: :ok }
