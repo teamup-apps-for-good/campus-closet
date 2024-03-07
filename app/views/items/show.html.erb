@@ -63,7 +63,7 @@
               'X-CSRF-Token': csrfToken
             },
             credentials: 'same-origin',
-            body: JSON.stringify({ time_slot_id: timeSlotId }) // Optional: Send additional data if needed
+            body: JSON.stringify({ time_slot_id: timeSlotId })
           }).then(response => {
             if (response.ok) {
               alert('Time slot requested');
@@ -73,6 +73,25 @@
           }).catch(error => {
             console.error('Error:', error);
           });
+
+          fetch(`/items/${itemId}/mark_unavailable`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            credentials: 'same-origin'
+          }).then(response => {
+            if (response.ok) {
+              alert('Item marked unavailable');
+            } else {
+              console.log(response)
+              alert('Item failed to update');
+            }
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+
           fetch('/requests', {
           method: 'POST',
           headers: {
