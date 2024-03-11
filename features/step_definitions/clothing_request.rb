@@ -32,7 +32,7 @@ Given('I have a student account, {string}') do |email|
 end
 
 When('I click on a link with href {string} and text {string}') do |href_value, link_text|
-  # find("a[href='#{href_value}']", text: link_text).click
+  find("a[href='#{href_value}']", text: link_text).click
 end
 
 When('I click {string}') do |string|
@@ -48,7 +48,7 @@ Given('there is a time slot from {string} to {string} for user with id {int}') d
 end
 
 When('I click a time slot from {string} to {string}') do |start_time, end_time|
-  # puts page.html.to_s
+  # save_and_open_page
   # find('#time_slot_button').click
 end
 

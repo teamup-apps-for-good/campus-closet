@@ -44,7 +44,7 @@
       <div class="card-body">
         <%= render request.item %>
         <div class="btn btn-primary btn-lg">
-          <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button"%>
+          <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id}%>
         </div>
       </div>
     </div>
@@ -54,12 +54,52 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const confirmPickupButtons = document.querySelectorAll('.confirm_pickup_button');
+    const timeSlotButtons = document.querySelectorAll('.time-slot button');
 
+    timeSlotButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        
+      });
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const confirmPickupButtons = document.querySelectorAll('.confirm_pickup_button');
     confirmPickupButtons.forEach(button => {
       button.addEventListener('click', function() {
-        console.log('click')
-        alert('your pickup is confirmed')
+        if (window.confirm('Confirm your item has been delivered and dropped-off.')) {
+          console.log(this.dataset)
+          const donorId = this.dataset.donorId;
+          const receiverId = this.dataset.receiverId;
+          const itemId = this.dataset.itemId;
+
+          const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+          fetch(`/pickups/`, {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+            pickup: {
+              item_id: itemId, 
+              donor_id: donorId,
+              receiver_id: receiverId
+            }
+          })
+          }).then(response => {
+            if (response.ok) {
+              alert('Time slot requested');
+            } else {
+              alert('Time slot failed to update - was not requested');
+            }
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+        }
       });
     });
   });

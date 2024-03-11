@@ -20,6 +20,7 @@ Background: clothing in database
 
 Scenario: Select a time to pickup item as a student
     Given I have a student account, "test_student@tamu.edu"
+    And I am a logged in student
     And I am on the items page
     And there is a time slot from "2024-02-22 21:00:00" to "2024-02-22 21:30:00" for user with id 1
     When I click on a link with href "/items/1" and text "Show this item"
