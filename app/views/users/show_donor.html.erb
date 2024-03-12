@@ -44,7 +44,7 @@
       <div class="card-body">
         <%= render request.item %>
         <div class="btn btn-primary btn-lg">
-          <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id}%>
+          <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
         </div>
       </div>
     </div>
@@ -74,6 +74,8 @@
           const donorId = this.dataset.donorId;
           const receiverId = this.dataset.receiverId;
           const itemId = this.dataset.itemId;
+          const requestId = this.dataset.requestId;
+          var pickup_created = false;
 
           const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
           fetch(`/pickups/`, {
@@ -92,9 +94,28 @@
           })
           }).then(response => {
             if (response.ok) {
-              alert('Time slot requested');
+              fetch(`/requests/${requestId}`, {
+                method: 'delete',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': csrfToken
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+              })
+              }).then(response => {
+                if (response.ok) {
+                  alert('Item has been updated and moved to previous pickups');
+                  location.reload();
+                } else {
+                  alert('Item has been updated and moved to previous pickups');
+                  location.reload();
+                }
+              }).catch(error => {
+                console.error('Error:', error);
+              });
             } else {
-              alert('Time slot failed to update - was not requested');
+              alert('Item failed to update - was not moved');
             }
           }).catch(error => {
             console.error('Error:', error);
