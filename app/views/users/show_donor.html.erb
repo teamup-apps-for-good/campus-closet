@@ -15,6 +15,7 @@
 
 <h2>Pickups:</h2>
 <% @user.donated_pickups.each do |pickup| %>
+  
   <p>
     <div class="col-md-4 mb-4">
       <div class="card">
@@ -44,7 +45,31 @@
       <div class="card-body">
         <%= render request.item %>
       </div>
+      <% if request.receiver %>
+        <button onclick="showMap('map-container-<%= request.id %>')">Show Map</button>
+        <div id="map-container-<%= request.id %>" class="map_container">
+          <%= js_map [{latitude: request.receiver.latitude, longitude: request.receiver.longitude}], height: "300px", controls: true %>
+        </div>
+      <% else %>
+        <p>Receiver location not available.</p>
+      <% end %>
     </div>
   </div>
 </p>
 <% end %>
+
+<script>
+window.onload = function() {
+  var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none;");
+};
+function showMap(containerId) {
+  var el = document.getElementsByClassName("map_container")[0]
+
+  if (el.style.display === 'none') {
+    var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: block; background-color: #F5F5F5;");
+  } else {
+    var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none");
+  }
+  
+}
+</script>
