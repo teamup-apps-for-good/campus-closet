@@ -109,6 +109,7 @@
         .then(response => {
           if (response.ok) {
             console.log("created new request")
+            location.reload();
           } else {
             alert('Failed to create clothing request.');
           }

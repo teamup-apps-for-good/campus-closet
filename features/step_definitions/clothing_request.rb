@@ -66,11 +66,15 @@ end
 
 When('I click a time slot from {string} to {string}') do |_start_time, _end_time|
   refresh
+  button_text_before_click = find('#time_slot_button').text
+  puts "Button text before click: #{button_text_before_click}"
+
   message = accept_confirm do
+    # Wait for the confirmation dialog to appear
     find('#time_slot_button').click
   end
   expect(message).to eq('Are you sure you want to request this timeslot?')
-  refresh
+  sleep 2
 end
 
 Then('I should see the donors availability') do
@@ -78,8 +82,8 @@ Then('I should see the donors availability') do
 end
 
 Then('I should be sent back to the items page') do
-  pending
-  # click_link('Student Profile')
+  # save_and_open_page
+  click_link('Student Profile')
 end
 
 Then('the donor should be notified') do
