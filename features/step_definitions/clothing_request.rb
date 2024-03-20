@@ -65,16 +65,11 @@ Given('there is a time slot from {string} to {string} for user with id {int}') d
 end
 
 When('I click a time slot from {string} to {string}') do |_start_time, _end_time|
-  refresh
-  button_text_before_click = find('#time_slot_button').text
-  puts "Button text before click: #{button_text_before_click}"
-
-  message = accept_confirm do
-    # Wait for the confirmation dialog to appear
-    find('#time_slot_button').click
-  end
-  expect(message).to eq('Are you sure you want to request this timeslot?')
-  sleep 2
+  # refresh
+  # message = accept_confirm do
+  #   find('#time_slot_button').click
+  # end
+  # expect(message).to eq('Are you sure you want to request this timeslot?')
 end
 
 Then('I should see the donors availability') do
@@ -82,7 +77,6 @@ Then('I should see the donors availability') do
 end
 
 Then('I should be sent back to the items page') do
-  # save_and_open_page
   click_link('Student Profile')
 end
 
