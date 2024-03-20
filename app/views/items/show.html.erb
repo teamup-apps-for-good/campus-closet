@@ -65,7 +65,7 @@
             credentials: 'same-origin',
           }).then(response => {
             if (response.ok) {
-              alert('Time slot requested');
+              console.log('Time slot requested');
             } else {
               alert('Time slot failed to update - was not requested');
             }
@@ -83,7 +83,7 @@
             body: JSON.stringify({})
           }).then(response => {
             if (response.ok) {
-              alert('Item marked unavailable');
+              console.log('Item marked unavailable');
             } else {
               alert('Item failed to update');
             }
