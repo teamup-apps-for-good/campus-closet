@@ -4,11 +4,6 @@
     <%= form.label("color_" + color.id.to_s, color.name) %>
   <% end %>
   <br>
-  <% Type.all.each do |type| %>
-    <%= form.radio_button("type_", "type_" + type.id.to_s) %>
-    <%= form.label("type_" + type.id.to_s, type.name) %>
-  <% end %>
-  <br>
   <% Gender.all.each do |gender| %>
     <%= form.radio_button("gender_", "gender_" + gender.id.to_s) %>
     <%= form.label("gender_" + gender.id.to_s, gender.name) %>
