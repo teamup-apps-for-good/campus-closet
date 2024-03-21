@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   include ActionController::Cookies
 
   before_action :set_item, only: %i[show edit update destroy]
+  skip_before_action :set_item, only: [:by_type]
 
   # GET /items or /items.json
   def index
@@ -69,6 +70,11 @@ class ItemsController < ApplicationController
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def by_type
+    type = Type.find_by(name: params[:type])
+    @items = Item.where(type_id: type.id)
   end
 
   private

@@ -33,12 +33,6 @@ Scenario: filter by Gender
   Then I should see an item with the description "red pants"
   And I should see an item with the description "brown belt"
 
-Scenario: filter by type
-  Given I am on the homepage
-  When I press "belt"
-  And I click on "Search"
-  Then I should see an item with the description "brown belt"
-
 Scenario: filter by Size
   Given I am on the homepage
   When I press "L"

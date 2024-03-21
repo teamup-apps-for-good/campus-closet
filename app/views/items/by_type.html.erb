@@ -1,6 +1,4 @@
-<% Type.all.each do |type| %>
-  <%= link_to "View " + type.name, items_by_type_path(type: type.name) %>
-<% end %>
+<%= link_to "Back to All Items", items_path %>
 
 <div class="container">
   <h1 class="mt-4">Items</h1>
