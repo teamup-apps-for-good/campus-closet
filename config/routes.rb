@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   end
 
   patch 'time_slots/:id/mark_unavailable', to: 'time_slots#mark_unavailable', as: 'mark_unavailable_time_slot'
-
+  patch "/items/:id/mark_unavailable", to: "items#mark_unavailable", as: 'mark_unavailable_item'
   get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
   resources :items, except: :show # Exclude the show action from the resources
 

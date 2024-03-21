@@ -58,6 +58,20 @@ class ItemsController < ApplicationController
     destroy_and_respond(@item, :items_url, Item.model_name)
   end
 
+  # items_controller.rb
+  def mark_unavailable
+    @item = Item.find(params[:id])
+    @item.status = Status.find_by(name: 'Unavailable') || Status.create(name: 'Unavailable')
+
+    respond_to do |format|
+      if @item.save
+        format.json { render json: @item, status: :ok }
+      else
+        format.json { render json: @item.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def by_type
     type = Type.find_by(name: params[:type])
     @items = Item.where(type_id: type.id)
