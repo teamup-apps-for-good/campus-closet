@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   resources :genders
   resources :types
   resources :colors
-  resources :items
   resources :messages, only: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -43,8 +42,6 @@ Rails.application.routes.draw do
   get 'users/:id/student', to: 'users#show_student', as: 'user_student'
   get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
 
-  resources :items
-
   resources :items do
     member do
       patch :image_upload
@@ -52,6 +49,8 @@ Rails.application.routes.draw do
   end
 
   patch 'time_slots/:id/mark_unavailable', to: 'time_slots#mark_unavailable', as: 'mark_unavailable_time_slot'
-
+  patch "/items/:id/mark_unavailable", to: "items#mark_unavailable", as: 'mark_unavailable_item'
+  get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
+  resources :items, except: :show # Exclude the show action from the resources
 
 end

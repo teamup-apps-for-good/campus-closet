@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   include ActionController::Cookies
 
   before_action :set_item, only: %i[show edit update destroy]
+  skip_before_action :set_item, only: [:by_type]
 
   # GET /items or /items.json
   def index
@@ -55,6 +56,25 @@ class ItemsController < ApplicationController
   # DELETE /items/1 or /items/1.json
   def destroy
     destroy_and_respond(@item, :items_url, Item.model_name)
+  end
+
+  # items_controller.rb
+  def mark_unavailable
+    @item = Item.find(params[:id])
+    @item.status = Status.find_by(name: 'Unavailable') || Status.create(name: 'Unavailable')
+
+    respond_to do |format|
+      if @item.save
+        format.json { render json: @item, status: :ok }
+      else
+        format.json { render json: @item.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def by_type
+    type = Type.find_by(name: params[:type])
+    @items = Item.where(type_id: type.id)
   end
 
   private

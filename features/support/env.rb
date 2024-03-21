@@ -7,6 +7,7 @@
 # files.
 
 require 'cucumber/rails'
+require 'selenium/webdriver'
 
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
@@ -55,3 +56,5 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 require 'simplecov'
 SimpleCov.command_name 'Cucumber'
+
+Capybara.javascript_driver = :selenium_chrome_headless
