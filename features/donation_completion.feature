@@ -28,7 +28,7 @@ Scenario: Finish a request as a donor
 
 Scenario: View past pickup as student
     Given I am logged in as a student
-    And there is a past pickup for item 2 uploaded by user 1 from user 2
+    And there is a past pickup for item 2 uploaded by 1 from user 2
     And I am on the student profile page
     Then I should see a past pickup
     And I should not see a current request
