@@ -30,9 +30,12 @@ if Status.count == 0
 end
 
 if Size.count == 0
-  Size.create(name: 'L')
-  Size.create(name: 'M')
-  Size.create(name: 'S')
+  Size.create(name: '30x30', type: Type.find_by(name: 'Pants'))
+  Size.create(name: '34x30', type: Type.find_by(name: 'Pants'))
+  Size.create(name: '38x30', type: Type.find_by(name: 'Pants'))
+  Size.create(name: 'L', type: Type.find_by(name: 'Shirt'))
+  Size.create(name: 'M', type: Type.find_by(name: 'Shirt'))
+  Size.create(name: 'S', type: Type.find_by(name: 'Shirt'))
 end
 
 if Condition.count == 0

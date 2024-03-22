@@ -2,7 +2,7 @@
 
 <div class="container">
   <h1 class="mt-4">Items</h1>
-  <%= render "filter" %>
+  <%= render "filter", type: @type %>
   <div class="row">
     <% @items.each do |item| %>
       <% if item.status.name == "Available" %>
