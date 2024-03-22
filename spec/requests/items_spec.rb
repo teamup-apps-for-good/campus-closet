@@ -28,7 +28,8 @@ RSpec.describe '/items', type: :request do
   let(:valid_attributes) do
     { color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
       gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-      size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition') }
+      size: Size.create(name: 'temp_size', type_id: Type.first.id),
+      condition: Condition.create(name: 'temp_condition') }
     # skip("Add a hash of attributes valid for your model")
     #   # {"color" => Color.find(1).id, "type" => 1, "gender" => 1, "status" => 1, "size" => 1, "condition" => 1}
     #   # FactoryBot.attributes_for(:item)
@@ -44,7 +45,8 @@ RSpec.describe '/items', type: :request do
     it 'renders a successful response' do
       user.items.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
                         gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                        size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_condition'))
+                        size: Size.create(name: 'temp_size', type_id: Type.first.id),
+                        condition: Condition.create(name: 'temp_condition'))
       get items_url
       expect(response).to be_successful
     end
@@ -54,7 +56,8 @@ RSpec.describe '/items', type: :request do
     it 'renders a successful response' do
       item = user.items.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
                                gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                               size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_cond'))
+                               size: Size.create(name: 'temp_size', type_id: Type.first.id),
+                               condition: Condition.create(name: 'temp_cond'))
       get item_url(item)
       expect(response).to be_successful
     end
@@ -71,7 +74,8 @@ RSpec.describe '/items', type: :request do
     it 'renders a successful response' do
       item = user.items.create(color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
                                gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),
-                               size: Size.create(name: 'temp_size'), condition: Condition.create(name: 'temp_cond'))
+                               size: Size.create(name: 'temp_size', type_id: Type.first.id),
+                               condition: Condition.create(name: 'temp_cond'))
       get edit_item_url(item)
       expect(response).to be_successful
     end
