@@ -24,6 +24,23 @@ When('I click the current request') do
   end
 end
 
+When('I click the Show Map') do
+  expect(page).to have_content('Show Map')
+
+  button = find('button.show-map-button')
+  button.click(wait: 10)
+end
+
+Then('the map container should be visible') do
+  map_container = find('.map_container', visible: :all)
+  expect(map_container).to be_visible
+end
+
+Then('the map container should not be visible') do
+  map_container = find('.map_container', visible: :all)
+  expect(map_container).not_to be_visible
+end
+
 Then('I should see the request destroyed') do
   # pending
 end

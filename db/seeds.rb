@@ -44,8 +44,8 @@ if Condition.count == 0
 end
 
 if User.count == 0
-  User.create(first: "TestDonor", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "College Station, TX", student: false)
-  User.create(first: "TestReceiver", last: "Receiver", email: "testreceiver@tamu.edu", phone: "0987654321", address: "College Station, TX", student: true)
+  User.create(first: "TestDonor", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "125 Spence St, College Station, TX 77840", student: false,  latitude: 30.62137515, longitude: -96.34020207698293)
+  User.create(first: "TestReceiver", last: "Receiver", email: "testreceiver@tamu.edu", phone: "0987654321", address: "907 Cross St, College Station, TX 77840", student: true, latitude: 30.62427312244898, longitude: -96.3443647755102)
 end
 
 if Item.count == 0
