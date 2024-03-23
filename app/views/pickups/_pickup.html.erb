@@ -1,17 +1,19 @@
 <div id="<%= dom_id pickup %>">
   <p>
     <strong>Donor:</strong>
-    <%= pickup.donor_id %>
+    <%= pickup.donor.first %>
+    <%= pickup.donor.last  %>
   </p>
 
   <p>
-    <strong>Receiver:</strong>
-    <%= pickup.receiver_id %>
+    <strong>Item Description:</strong>
+    <%= pickup.item.description %>
   </p>
 
-  <p>
-    <strong>Item:</strong>
-    <%= pickup.item_id %>
-  </p>
+  <% if pickup.review.present? %>
+    <%= render 'reviews/show', review: pickup.review %>
+  <% else %>
+    <%= link_to 'Review Donor', new_review_path(pickup_id: pickup.id), class: 'btn btn-primary' %>
+  <% end %>
 
 </div>
