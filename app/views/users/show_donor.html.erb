@@ -3,6 +3,11 @@
 <div style="float: right; margin-right: 20px;">
   <div><strong>Account Details</strong><br></div>
   <%= render @user %>
+  <% if @user.received_reviews.exists? %>
+      <p><strong>Average Rating:</strong> <%= @user.received_reviews.average(:rating) %></p>
+  <% else %>
+      <p>No reviews yet.</p>
+  <% end %>
   <div>
     <%= link_to "Edit Account", edit_user_path(@user) %>
     <%= link_to "New time slot", new_time_slot_path %>
@@ -25,7 +30,12 @@
           <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
         <% end %>
         <div class="card-body">
-          <%= render pickup.item %>
+          <p>
+            <strong>Receiver</strong>: <%= pickup.receiver.first %> <%= pickup.receiver.last %> 
+          </p>
+          <p>
+            <strong>Item Description</strong>: <%= pickup.item.description %>
+          </p>
         </div>
       </div>
     </div>
