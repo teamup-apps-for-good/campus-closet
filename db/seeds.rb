@@ -60,26 +60,26 @@ end
 
 if Pickup.count == 0
   # replace with your own email
-  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
   user3 = User.find_by(email: 'testdonor@gmail.com')
   user4 = User.find_by(email: 'teststudent@tamu.edu')
   item1 = Item.find_by(description: 'Sample description 3')
   item2 = Item.find_by(description: 'Sample description')
-  # Pickup.create(donor:user1, receiver:user2, item: item1)
-  # Pickup.create(donor:user3, receiver:user4, item: item2)
+  Pickup.create(donor:user1, receiver:user2, item: item1)
+  Pickup.create(donor:user3, receiver:user4, item: item2)
 end
 
 if Request.count == 0
   # replace with your own email
-  # user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  # user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
+  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
+  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
   user3 = User.find_by(email: 'testdonor@gmail.com')
   user4 = User.find_by(email: 'teststudent@tamu.edu')
   item1 = Item.find_by(description: 'Sample description 3')
   item2 = Item.find_by(description: 'Sample description')
-  # Request.create(donor:user1, receiver:user2, item: item1)
-  # Request.create(donor:user3, receiver:user4, item: item2)
+  Request.create(donor:user1, receiver:user2, item: item1)
+  Request.create(donor:user3, receiver:user4, item: item2)
 end
 
 # chat seeding

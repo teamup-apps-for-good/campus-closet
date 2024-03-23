@@ -49,7 +49,9 @@
         </div>
       </div>
       <% if request.receiver %>
-        <button onclick="showMap('map-container-<%= request.id %>')">Show Map</button>
+        <div class="btn btn-primary btn-lg">
+          <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
+        </div>
         <div id="map-container-<%= request.id %>" class="map_container">
           <%= js_map [{latitude: request.receiver.latitude, longitude: request.receiver.longitude}], height: "300px", controls: true %>
         </div>
