@@ -8,7 +8,8 @@ class User < ApplicationRecord
   has_many :received_requests, class_name: 'Request', foreign_key: 'receiver_id'
   has_many :time_slots, class_name: 'TimeSlot', foreign_key: 'donor_id'
   has_many :items
-
+  has_many :reviews, foreign_key: 'user_id'
+  has_many :received_reviews, class_name: 'Review', foreign_key: 'donor_id'
   # for chat feature
   has_many :messages, dependent: :destroy
 

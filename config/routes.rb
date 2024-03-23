@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :reviews
   get 'chat_page/home'
   resources :time_slots
   resources :requests
