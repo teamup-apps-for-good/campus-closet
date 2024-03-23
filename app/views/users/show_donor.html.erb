@@ -15,6 +15,7 @@
 
 <h2>Past Pickups:</h2>
 <% @user.donated_pickups.each do |pickup| %>
+  
   <p>
     <div class="col-md-4 mb-4">
       <div class="card">
@@ -47,6 +48,16 @@
           <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
         </div>
       </div>
+      <% if request.receiver %>
+        <div class="btn btn-primary btn-lg">
+          <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
+        </div>
+        <div id="map-container-<%= request.id %>" class="map_container">
+          <%= js_map [{latitude: request.receiver.latitude, longitude: request.receiver.longitude}], height: "300px", controls: true %>
+        </div>
+      <% else %>
+        <p>Receiver location not available.</p>
+      <% end %>
     </div>
   </div>
 </p>
@@ -124,4 +135,20 @@
       });
     });
   });
+</script>
+
+<script>
+window.onload = function() {
+  var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none;");
+};
+function showMap(containerId) {
+  var el = document.getElementsByClassName("map_container")[0]
+
+  if (el.style.display === 'none') {
+    var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: block; background-color: #F5F5F5;");
+  } else {
+    var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none");
+  }
+  
+}
 </script>

@@ -16,6 +16,9 @@ gem 'puma', '>= 5.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 
+# MapKick - Map Box API for Rails (https://github.com/nbulaj/mapbox-gl-rails)
+gem 'mapkick-rb'
+
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails'
 
@@ -44,6 +47,9 @@ gem 'redis', '>= 4.0.1'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 gem 'kredis'
+
+# Geocoder to convert address to latitude/longitude
+gem 'geocoder'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
