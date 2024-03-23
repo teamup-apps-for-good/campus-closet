@@ -160,6 +160,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "donor"
+    t.float "latitude"
+    t.float "longitude"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

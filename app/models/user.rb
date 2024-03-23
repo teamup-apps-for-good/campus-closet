@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :items
   has_many :reviews, foreign_key: 'user_id'
   has_many :received_reviews, class_name: 'Review', foreign_key: 'donor_id'
+  geocoded_by :address
+  after_validation :geocode, if: ->(obj) { obj.address.present? && obj.will_save_change_to_address? }
+
   # for chat feature
   has_many :messages, dependent: :destroy
 
