@@ -12,4 +12,5 @@ class Item < ApplicationRecord
   has_many :pickups
   has_many :requests
   belongs_to :user
+  has_one :chatroom, dependent: :destroy
 end
