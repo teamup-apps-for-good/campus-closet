@@ -12,7 +12,7 @@
         </div>
         <%= turbo_frame_tag [dom_id(message), "controls"] do %>
             <% if display_controls %>
-                <%= render partial: "messages/controls", locals: { message: message } %>
+            <%= render partial: "messages/controls", locals: { item: @item, chatroom: @chatroom, message: @message } %>
               <% end %>
             <% end %>
         </div>
