@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :types
   resources :colors
   resources :items
+  resources :messages, only: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -44,18 +45,14 @@ Rails.application.routes.draw do
   resources :items
 
   resources :items do
-    resource :chatroom do
-      resources :messages, only: [:create, :destroy]
-    end
-  end
-
-  resources :items do
     member do
       patch :image_upload
     end
   end
 
   patch 'time_slots/:id/mark_unavailable', to: 'time_slots#mark_unavailable', as: 'mark_unavailable_time_slot'
-
+  patch "/items/:id/mark_unavailable", to: "items#mark_unavailable", as: 'mark_unavailable_item'
+  get 'items/by_type/:type', to: 'items#by_type', as: :items_by_type
+  resources :items, except: :show # Exclude the show action from the resources
 
 end

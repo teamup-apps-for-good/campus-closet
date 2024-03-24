@@ -13,7 +13,7 @@
 </div>
 
 
-<h2>Pickups:</h2>
+<h2>Past Pickups:</h2>
 <% @user.donated_pickups.each do |pickup| %>
   <p>
     <div class="col-md-4 mb-4">
@@ -31,7 +31,7 @@
   </p>
 <% end %>
 
-<h2>Requests:</h2>
+<h2>Current Requests:</h2>
 <% @user.donated_requests.each do |request| %>
   <p>
   <div class="col-md-4 mb-4">
@@ -43,8 +43,85 @@
       <% end %>
       <div class="card-body">
         <%= render request.item %>
+        <div class="btn btn-primary btn-lg">
+          <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
+        </div>
       </div>
     </div>
   </div>
 </p>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const timeSlotButtons = document.querySelectorAll('.time-slot button');
+
+    timeSlotButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        
+      });
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const confirmPickupButtons = document.querySelectorAll('.confirm_pickup_button');
+    confirmPickupButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        if (window.confirm('Confirm your item has been delivered and dropped-off.')) {
+          console.log(this.dataset)
+          const donorId = this.dataset.donorId;
+          const receiverId = this.dataset.receiverId;
+          const itemId = this.dataset.itemId;
+          const requestId = this.dataset.requestId;
+          var pickup_created = false;
+
+          const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+          fetch(`/pickups/`, {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+            pickup: {
+              item_id: itemId, 
+              donor_id: donorId,
+              receiver_id: receiverId
+            }
+          })
+          }).then(response => {
+            if (response.ok) {
+              fetch(`/requests/${requestId}`, {
+                method: 'delete',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': csrfToken
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+              })
+              }).then(response => {
+                if (response.ok) {
+                  console.log('Item has been updated and moved to previous pickups');
+                  location.reload();
+                } else {
+                  console.log('Item has been updated and moved to previous pickups');
+                  location.reload();
+                }
+              }).catch(error => {
+                console.error('Error:', error);
+              });
+            } else {
+              alert('Item failed to update - was not moved');
+            }
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+        }
+      });
+    });
+  });
+</script>

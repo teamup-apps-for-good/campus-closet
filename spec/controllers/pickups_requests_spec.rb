@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_examples 'a CRUD controller' do |model_class, _controller_class|
+shared_examples 'another CRUD controller' do |model_class, _controller_class|
   let(:user) { User.create(first: 'Example User', donor: true) }
   let(:user1) { User.create(first: 'Example User1', donor: true) }
   let(:user2) { User.create(first: 'Example User2') }
@@ -131,9 +131,9 @@ shared_examples 'a CRUD controller' do |model_class, _controller_class|
 end
 
 RSpec.describe PickupsController, type: :controller do
-  it_behaves_like 'a CRUD controller', Pickup, PickupsController
+  it_behaves_like 'another CRUD controller', Pickup, PickupsController
 end
 
 RSpec.describe RequestsController, type: :controller do
-  it_behaves_like 'a CRUD controller', Request, RequestsController
+  it_behaves_like 'another CRUD controller', Request, RequestsController
 end
