@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'chat_page/home'
   resources :time_slots
   resources :requests
   resources :pickups
@@ -13,7 +12,6 @@ Rails.application.routes.draw do
   resources :types
   resources :colors
   resources :items
-  resources :messages, only: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -44,6 +42,12 @@ Rails.application.routes.draw do
   get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
 
   resources :items
+
+  resources :items do
+    resource :chatroom do
+      resources :messages, only: [:create, :destroy]
+    end
+  end
 
   resources :items do
     member do
