@@ -107,6 +107,11 @@ if TimeSlot.count == 0
   ])
 end
 
+Item.all.each do |item|
+  # Create a chatroom associated with the current listing
+  item.create_chatroom
+end
+
 # more_items = [
 #   {:color => Color, :type => '',
 #     :gender => '', :description => 'Nice shirt',
