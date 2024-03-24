@@ -17,6 +17,23 @@ Background: clothing in database
   | red       | pants      | red pants           | Female       | L     | Unused     | Unvailable  |  1      |
 
 @javascript
+Scenario: Donor sees map of requestor after button pressed
+    Given I am logged in as a donor
+    And there is a request for item 1 uploaded by user 1 from user 2 
+    And I am on the donor dashboard
+    When I click the Show Map
+    Then the map container should be visible
+
+@javascript
+Scenario: Donor does not see map of requestor after button pressed
+    Given I am logged in as a donor
+    And there is a request for item 1 uploaded by user 1 from user 2 
+    And I am on the donor dashboard
+    When I click the Show Map
+    When I click the Show Map
+    Then the map container should not be visible
+
+@javascript
 Scenario: Finish a request as a donor
     Given I am logged in as a donor
     And there is a request for item 1 uploaded by user 1 from user 2 
@@ -40,3 +57,20 @@ Scenario: Broken request confirmation
     When I click on the request
     Then I should see the request
     And I should not see a past pickup
+
+@javascript
+Scenario: Student sees map of donor after button pressed
+    Given I am logged in as a student
+    And there is a request for item 1 uploaded by user 1 from user 2 
+    And I am on the student profile page
+    When I click the Show Map
+    When I click the Show Map
+    Then the map container should be visible
+
+@javascript
+Scenario: Student does not see map of donor after button pressed
+    Given I am logged in as a student
+    And there is a request for item 1 uploaded by user 1 from user 2 
+    And I am on the student profile page
+    When I click the Show Map
+    Then the map container should not be visible

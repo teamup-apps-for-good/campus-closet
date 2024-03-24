@@ -175,6 +175,7 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.16.3)
+    geocoder (1.8.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -207,6 +208,7 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mapkick-rb (0.1.5)
     marcel (1.0.2)
     matrix (0.4.2)
     mini_mime (1.1.5)
@@ -450,9 +452,11 @@ DEPENDENCIES
   dotenv-rails
   factory_bot
   faker (~> 3.2)
+  geocoder
   importmap-rails
   jbuilder
   kredis
+  mapkick-rb
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
