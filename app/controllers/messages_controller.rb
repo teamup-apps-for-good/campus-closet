@@ -3,13 +3,22 @@
 # Controller responsible for managing "messages" model.
 class MessagesController < ApplicationController
   # before_action :authenticate_user!
+  # before_action :set_item_and_chatroom
   before_action :set_message, only: [:destroy]
 
   # creates message
   def create
+    @item = Item.find(params[:item_id])
+    @chatroom = @item.chatroom
     @message = current_user.messages.build(message_params)
-    @message.save
-  end
+    @message.chatroom = @chatroom
+    if @message.save
+      redirect_to item_chatroom_path(@item, @chatroom), notice: 'Message was successfully created.'
+    else
+      flash.now[:alert] = 'Failed to create message.'
+      render 'chatrooms/show'
+    end
+  end  
 
   def destroy
     @message.destroy
@@ -20,6 +29,11 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def set_item_and_chatroom
+    @item = Item.find(params[:item_id])
+    @chatroom = @item.chatroom
+  end
 
   # require message data
   def message_params
