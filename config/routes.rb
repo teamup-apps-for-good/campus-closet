@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-<<<<<<< HEAD
-=======
   resources :reviews
-  get 'chat_page/home'
->>>>>>> 699c19f47f3e59de2af22ce5896c338acab31441
   resources :time_slots
   resources :requests
   resources :pickups
@@ -48,6 +44,12 @@ Rails.application.routes.draw do
   get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
 
   resources :items
+
+  resources :items do
+    resources :chatroom do
+      resources :messages, only: [:create, :destroy]
+    end
+  end
 
   resources :items do
     member do
