@@ -41,6 +41,10 @@
         <% end %>
         <div class="card-body">
           <%= render request.item %>
+          <div class ="chat-btn-container">
+            <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
+            <p></p>
+          </div>
           <% if request.receiver %>
           <div class="btn btn-primary btn-lg">
             <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
