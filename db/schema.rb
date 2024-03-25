@@ -182,6 +182,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
   add_foreign_key "requests", "items"
   add_foreign_key "requests", "users", column: "donor_id"
   add_foreign_key "requests", "users", column: "receiver_id"
+  add_foreign_key "sizes", "types"
   add_foreign_key "reviews", "pickups"
   add_foreign_key "reviews", "users"
   add_foreign_key "reviews", "users", column: "donor_id"
