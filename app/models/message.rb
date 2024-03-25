@@ -7,7 +7,7 @@ class Message < ApplicationRecord
   validates :body, presence: true, length: { maximum: 500 }
 
   after_create_commit :broadcast_create
-  after_destroy_commit :broadcast_destroy
+  # after_destroy_commit :broadcast_destroy
 
   def broadcast_create
     # broadcast to all users the message partial
@@ -29,8 +29,8 @@ class Message < ApplicationRecord
     #   <% end %>
   end
 
-  def broadcast_destroy
-    # broadcast to all users the message partial
-    broadcast_remove_to 'messages'
-  end
+  # def broadcast_destroy
+  #   # broadcast to all users the message partial
+  #   broadcast_remove_to 'messages'
+  # end
 end

@@ -2,9 +2,7 @@
 
 # Controller responsible for managing "messages" model.
 class MessagesController < ApplicationController
-  # before_action :authenticate_user!
-  # before_action :set_item_and_chatroom
-  before_action :set_message, only: [:destroy]
+  # before_action :set_message, only: [:destroy]
 
   # creates message
   def create
@@ -18,22 +16,22 @@ class MessagesController < ApplicationController
       flash.now[:alert] = 'Failed to create message.'
       render 'chatrooms/show'
     end
-  end  
-
-  def destroy
-    @message.destroy
-    respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@message) }
-      format.html { redirect_to messages_url, notice: 'Message was successfully destroyed.' }
-    end
   end
+
+  # def destroy
+  #   @message.destroy
+  #   respond_to do |format|
+  #     format.turbo_stream { render turbo_stream: turbo_stream.remove(@message) }
+  #     format.html { redirect_to messages_url, notice: 'Message was successfully destroyed.' }
+  #   end
+  # end
 
   private
 
-  def set_item_and_chatroom
-    @item = Item.find(params[:item_id])
-    @chatroom = @item.chatroom
-  end
+  # def set_item_and_chatroom
+  #   @item = Item.find(params[:item_id])
+  #   @chatroom = @item.chatroom
+  # end
 
   # require message data
   def message_params
@@ -41,7 +39,7 @@ class MessagesController < ApplicationController
   end
 
   # find message by id
-  def set_message
-    @message = Message.find(params[:id])
-  end
+  # def set_message
+  #   @message = Message.find(params[:id])
+  # end
 end

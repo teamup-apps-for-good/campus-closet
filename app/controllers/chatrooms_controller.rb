@@ -12,7 +12,7 @@ class ChatroomsController < ApplicationController
 
   def create
     @item = Item.find(params[:item_id])
-    @chatroom = @item.build_chatroom
+    @chatroom = @item.create_chatroom
     if @chatroom.save
       redirect_to item_chatroom_path(@item), notice: 'Chatroom created successfully.'
     else
