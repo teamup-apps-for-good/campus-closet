@@ -9,7 +9,8 @@ RSpec.describe ChatroomsController, type: :controller do
       let(:item) do
         user.items.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
                           gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),
-                          size: Size.create(name: 'size1'), condition: Condition.create(name: 'condition1'))
+                          size: Size.create(name: 'size1', type_id: Type.first.id),
+                          condition: Condition.create(name: 'condition1'))
       end
       let!(:chatroom) { Chatroom.create(item:) }
       let!(:messages) do
@@ -41,7 +42,8 @@ RSpec.describe ChatroomsController, type: :controller do
     let(:item) do
       user.items.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
                         gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),
-                        size: Size.create(name: 'size1'), condition: Condition.create(name: 'condition1'))
+                        size: Size.create(name: 'size1', type_id: Type.first.id),
+                        condition: Condition.create(name: 'condition1'))
     end
 
     context 'with valid parameters' do
