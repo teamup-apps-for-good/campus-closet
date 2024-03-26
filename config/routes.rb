@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
   resources :reviews
-  get 'chat_page/home'
   resources :time_slots
   resources :requests
   resources :pickups
@@ -13,7 +12,7 @@ Rails.application.routes.draw do
   resources :genders
   resources :types
   resources :colors
-  resources :messages, only: [:create, :destroy]
+  resources :items
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -42,6 +41,14 @@ Rails.application.routes.draw do
 
   get 'users/:id/student', to: 'users#show_student', as: 'user_student'
   get 'users/:id/donor', to: 'users#show_donor', as: 'user_donor'
+
+  resources :items
+
+  resources :items do
+    resource :chatroom do
+      resources :messages, only: [:create, :destroy]
+    end
+  end
 
   resources :items do
     member do

@@ -15,7 +15,7 @@
 
   <div class="row mt-3">
     <div class="col-md-12">
-      <%= form_with(model: @message, id: "message_form", method: :post, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#clearInput" }, local: true) do |form| %>
+      <%= form_with(model: @message, url: item_chatroom_messages_path(@item, @message), id: "message_form", method: :post, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#clearInput" }, local: true) do |form| %>
         <div class="mb-3">
           <%= form.text_field :body, id: "chat-input", class: "form-control", placeholder: "Type a message...", data: { reset_form_target: "input" } %>
         </div>
