@@ -13,14 +13,15 @@ shared_examples 'another CRUD controller' do |model_class, _controller_class|
       type: Type.create(name: 'temp_type'),
       gender: Gender.create(name: 'temp_gender'),
       status: Status.create(name: 'temp_status'),
-      size: Size.create(name: 'temp_size'),
+      size: Size.create(name: 'temp_size', type_id: Type.first.id),
       condition: Condition.create(name: 'temp_condition')
     )
   end
   let(:item1) do
     user1.items.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
                        gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),
-                       size: Size.create(name: 'size1'), condition: Condition.create(name: 'condition1'))
+                       size: Size.create(name: 'size1', type_id: Type.first.id),
+                       condition: Condition.create(name: 'condition1'))
   end
 
   describe 'GET #index' do

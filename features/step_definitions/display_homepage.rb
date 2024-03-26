@@ -11,7 +11,7 @@ Given('the following items exist:') do |table|
     type = find_or_create(Type, item_params['type'])
     gender = find_or_create(Gender, item_params['Gender'])
     status = find_or_create(Status, item_params['Status'])
-    size = find_or_create(Size, item_params['Size'])
+    size = Size.find_by(name: item_params['Size']) || Size.create(name: item_params['Size'], type_id: Type.first.id)
     condition = find_or_create(Condition, item_params['Condition'])
 
     # Create the item

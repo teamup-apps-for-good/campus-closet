@@ -30,9 +30,12 @@ if Status.count == 0
 end
 
 if Size.count == 0
-  Size.create(name: 'L')
-  Size.create(name: 'M')
-  Size.create(name: 'S')
+  Size.create(name: '30x30', type: Type.find_by(name: 'Pants'))
+  Size.create(name: '34x30', type: Type.find_by(name: 'Pants'))
+  Size.create(name: '38x30', type: Type.find_by(name: 'Pants'))
+  Size.create(name: 'L', type: Type.find_by(name: 'Shirt'))
+  Size.create(name: 'M', type: Type.find_by(name: 'Shirt'))
+  Size.create(name: 'S', type: Type.find_by(name: 'Shirt'))
 end
 
 if Condition.count == 0
@@ -49,13 +52,13 @@ if Item.count == 0
   donor = User.find_by(email: "testdonor@gmail.com")
 
   Item.create(color: Color.first, type: Type.first, gender: Gender.first, description: 'Sample description',
-              status: Status.first, size: Size.first, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redpants.jpg', user: donor)
+              status: Status.first, size: Size.find_by(type: Type.find_by(name: 'Pants')), condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redpants.jpg', user: donor)
 
   Item.create(color: Color.second, type: Type.second, gender: Gender.second, description: 'Sample description 2',
-              status: Status.second, size: Size.second, condition: Condition.second, image_url: 'https://campuscloset.s3.amazonaws.com/blueshirt.jpg', user: donor)
+              status: Status.second, size: Size.find_by(type: Type.find_by(name: 'Shirt')), condition: Condition.second, image_url: 'https://campuscloset.s3.amazonaws.com/blueshirt.jpg', user: donor)
 
   Item.create(color: Color.first, type: Type.second, gender: Gender.first, description: 'Sample description 3',
-              status: Status.first, size: Size.second, condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redshirt.jpg', user: donor)
+              status: Status.first, size: Size.find_by(type: Type.find_by(name: 'Shirt')), condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redshirt.jpg', user: donor)
 end
 
 if Pickup.count == 0

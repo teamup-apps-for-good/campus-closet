@@ -1,4 +1,4 @@
-<%= form_with url: "/items", method: :get do |form| %>  
+<%= form_with url: "/items", method: :get do |form| %>   
   <% Color.all.each do |color| %>
     <%= form.radio_button("color_", "color_" + color.id.to_s) %>
     <%= form.label("color_" + color.id.to_s, color.name) %>
@@ -9,10 +9,18 @@
     <%= form.label("gender_" + gender.id.to_s, gender.name) %>
   <% end %>
   <br>
-  <% Size.all.each do |size| %>
-    <%= form.radio_button("size_", "size_" + size.id.to_s) %>
-    <%= form.label("size_" + size.id.to_s, size.name) %>
+  <% if @type %>
+    <% Size.where(type_id: @type.id).each do |size| %>
+      <%= form.radio_button("size_", "size_" + size.id.to_s) %>
+      <%= form.label("size_" + size.id.to_s, size.name) %>
+    <% end %>
+  <% else %>
+    <% Size.all.each do |size| %>
+      <%= form.radio_button("size_", "size_" + size.id.to_s) %>
+      <%= form.label("size_" + size.id.to_s, size.name) %>
+    <% end %>
   <% end %>
+  
   <br>
   <% Condition.all.each do |condition| %>
     <%= form.radio_button("condition_", "condition_" + condition.id.to_s) %>

@@ -11,7 +11,7 @@ RSpec.describe ReviewsController, type: :controller do
       type: Type.create!(name: 'temp_type'),
       gender: Gender.create!(name: 'temp_gender'),
       status: Status.create!(name: 'temp_status'),
-      size: Size.create!(name: 'temp_size'),
+      size: Size.create!(name: 'temp_size', type_id: Type.first.id),
       condition: Condition.create!(name: 'temp_condition')
     )
   end

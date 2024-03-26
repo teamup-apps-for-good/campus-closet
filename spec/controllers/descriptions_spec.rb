@@ -12,7 +12,12 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
 
   describe 'GET #show' do
     it 'returns a success response' do
-      instance = model.create(name: "Example #{controller_name}")
+      if controller_name == 'Size'
+        type = Type.create(name: 'Example Type')
+        instance = model.create(name: "Example #{controller_name}", type_id: type.id)
+      else
+        instance = model.create(name: "Example #{controller_name}")
+      end
       get :show, params: { id: instance.to_param }
       expect(response).to be_successful
     end
@@ -27,7 +32,12 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
 
   describe 'GET #edit' do
     it 'returns a success response' do
-      instance = model.create(name: "Example #{controller_name}")
+      if controller_name == 'Size'
+        type = Type.create(name: 'Example Type')
+        instance = model.create(name: "Example #{controller_name}", type_id: type.id)
+      else
+        instance = model.create(name: "Example #{controller_name}")
+      end
       get :edit, params: { id: instance.to_param }
       expect(response).to be_successful
     end
@@ -37,13 +47,24 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
     context 'with valid parameters' do
       it "creates a new #{controller_name}" do
         expect do
-          post :create, params: { "#{controller_name.downcase}": { name: "New #{controller_name}" } }
+          if controller_name == 'Size'
+            type = Type.create(name: 'Example Type')
+            model.create(name: "New #{controller_name}", type_id: type.id)
+          else
+            post :create, params: { "#{controller_name.downcase}": { name: "New #{controller_name}" } }
+          end
         end.to change(model, :count).by(1)
       end
 
       it "redirects to the created #{controller_name}" do
-        post :create, params: { "#{controller_name.downcase}": { name: "New #{controller_name}" } }
-        expect(response).to redirect_to(model.last)
+        if controller_name == 'Size'
+          type = Type.create(name: 'Example Type')
+          # model.create(name: "New #{controller_name}", type_id: type.id)
+          post :create, params: { "#{controller_name.downcase}": { name: "New #{controller_name}", type_id: type.id } }
+        else
+          post :create, params: { "#{controller_name.downcase}": { name: "New #{controller_name}" } }
+          expect(response).to redirect_to(model.last)
+        end
       end
     end
 
@@ -58,7 +79,12 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
   describe 'PUT #update' do
     context 'with valid parameters' do
       it "updates the requested #{controller_name}" do
-        instance = model.create(name: "Example #{controller_name}")
+        if controller_name == 'Size'
+          type = Type.create(name: 'Example Type')
+          instance = model.create(name: "Example #{controller_name}", type_id: type.id)
+        else
+          instance = model.create(name: "Example #{controller_name}")
+        end
         put :update,
             params: { id: instance.to_param, "#{controller_name.downcase}": { name: "Updated #{controller_name}" } }
         instance.reload
@@ -66,7 +92,12 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
       end
 
       it "redirects to the #{controller_name}" do
-        instance = model.create(name: "Example #{controller_name}")
+        if controller_name == 'Size'
+          type = Type.create(name: 'Example Type')
+          instance = model.create(name: "Example #{controller_name}", type_id: type.id)
+        else
+          instance = model.create(name: "Example #{controller_name}")
+        end
         put :update,
             params: { id: instance.to_param, "#{controller_name.downcase}": { name: "Updated #{controller_name}" } }
         expect(response).to redirect_to(instance)
@@ -75,7 +106,12 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
 
     context 'with invalid parameters' do
       it "returns a success response (i.e., to display the 'edit' template)" do
-        instance = model.create(name: "Example #{controller_name}")
+        if controller_name == 'Size'
+          type = Type.create(name: 'Example Type')
+          instance = model.create(name: "Example #{controller_name}", type_id: type.id)
+        else
+          instance = model.create(name: "Example #{controller_name}")
+        end
         put :update, params: { id: instance.to_param, "#{controller_name.downcase}": { name: nil } }
         expect(response).to_not be_successful
       end
@@ -84,14 +120,24 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
 
   describe 'DELETE #destroy' do
     it "destroys the requested #{controller_name}" do
-      instance = model.create(name: "Example #{controller_name}")
+      if controller_name == 'Size'
+        type = Type.create(name: 'Example Type')
+        instance = model.create(name: "Example #{controller_name}", type_id: type.id)
+      else
+        instance = model.create(name: "Example #{controller_name}")
+      end
       expect do
         delete :destroy, params: { id: instance.to_param }
       end.to change(model, :count).by(-1)
     end
 
     it "redirects to the #{index_path}" do
-      instance = model.create(name: "Example #{controller_name}")
+      if controller_name == 'Size'
+        type = Type.create(name: 'Example Type')
+        instance = model.create(name: "Example #{controller_name}", type_id: type.id)
+      else
+        instance = model.create(name: "Example #{controller_name}")
+      end
       delete :destroy, params: { id: instance.to_param }
       expect(response).to redirect_to(send("#{index_path}_url"))
     end
@@ -114,7 +160,14 @@ shared_examples 'a CRUD controller' do |model, controller_name, index_path|
   end
 
   describe 'PATCH #update' do
-    let(:instance) { model.create(name: "Initial #{controller_name}") }
+    let(:instance) do
+      if controller_name == 'Size'
+        type = Type.create(name: 'Example Type')
+        model.create(name: "Example #{controller_name}", type_id: type.id)
+      else
+        model.create(name: "Example #{controller_name}")
+      end
+    end
 
     context 'with invalid parameters' do
       it 'renders the edit template with unprocessable_entity status (HTML)' do

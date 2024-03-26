@@ -73,8 +73,8 @@ class ItemsController < ApplicationController
   end
 
   def by_type
-    type = Type.find_by(name: params[:type])
-    @items = Item.where(type_id: type.id)
+    @type = Type.find_by(name: params[:type])
+    @items = Item.where(type_id: @type.id)
   end
 
   private

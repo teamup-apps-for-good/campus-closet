@@ -7,7 +7,7 @@ Given('the following items exist with user_ids:') do |table|
     type = Type.find_by(name: item_params['type']) || Type.create(name: item_params['type'])
     gender = Gender.find_by(name: item_params['Gender']) || Gender.create(name: item_params['Gender'])
     status = Status.find_by(name: item_params['Status']) || Status.create(name: item_params['Status'])
-    size = Size.find_by(name: item_params['Size']) || Size.create(name: item_params['Size'])
+    size = Size.find_by(name: item_params['Size']) || Size.create(name: item_params['Size'], type_id: Type.first.id)
     condition = Condition.find_by(name: item_params['Condition']) || Condition.create(name: item_params['Condition'])
     user = User.find_by(id: item_params['User'].to_i) || User.create(first: 'Test', last: 'User')
 
