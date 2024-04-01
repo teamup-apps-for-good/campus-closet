@@ -33,6 +33,7 @@ When('I click the current request') do
 end
 
 When('I click the Show Map') do
+  sleep(1)
   expect(page).to have_content('Show Map')
 
   button = find('button.show-map-button')
@@ -71,4 +72,3 @@ end
 Then('I should no longer see a current request') do
   expect(page).to have_content('No Current Requests')
 end
-

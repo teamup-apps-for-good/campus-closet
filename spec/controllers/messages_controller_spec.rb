@@ -4,12 +4,7 @@
 
 RSpec.describe MessagesController, type: :controller do
   let(:user) { User.create(email: 'example@gmail.com', first: 'User1') }
-  let(:item) do
-    user.items.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
-                      gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),
-                      size: Size.create(name: 'size1', type_id: Type.first.id),
-                      condition: Condition.create(name: 'condition1'))
-  end
+  let(:item) { create_item(user) }
   let!(:chatroom) { Chatroom.create(item:) }
   let(:valid_message_params) { { message: { body: 'Hello, world!' } } }
 

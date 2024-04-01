@@ -5,16 +5,7 @@ require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
   let(:donor) { User.create!(first: 'Example User1', donor: true, student: false) }
   let(:receiver) { User.create!(first: 'Example User2', student: true, donor: false) }
-  let(:item) do
-    donor.items.create!(
-      color: Color.create!(name: 'temp_color'),
-      type: Type.create!(name: 'temp_type'),
-      gender: Gender.create!(name: 'temp_gender'),
-      status: Status.create!(name: 'temp_status'),
-      size: Size.create!(name: 'temp_size', type_id: Type.first.id),
-      condition: Condition.create!(name: 'temp_condition')
-    )
-  end
+  let(:item) { create_item(donor) }
   let(:pickup) { Pickup.create!(donor:, receiver:, item:) }
   let(:valid_attributes) { { rating: 5, pickup_id: pickup.id, user_id: receiver.id, donor_id: donor.id } }
   let(:invalid_attributes) { { rating: nil, pickup_id: pickup.id, user_id: receiver.id, donor_id: donor.id } }
