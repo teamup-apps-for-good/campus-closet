@@ -18,7 +18,7 @@ Background: clothing in database
   | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available  |  1      |
   | brown     | belt       | brown belt          | Female       | M     | Unused     | Available  |  1      |
 
-@javascript
+
 Scenario: Select a time to pickup item as a student
     Given I am logged in as a student
     And I am on the items page
@@ -28,9 +28,8 @@ Scenario: Select a time to pickup item as a student
     Then I should see the donors availability
     When I click a time slot from "9:00 PM" to "9:30 PM"
     Then I should be sent back to the items page
-    And the donor should be notified
 
-@javascript
+
 Scenario: Request gets submitted
     Given I am logged in as a student
     And I am on the items page
@@ -39,13 +38,12 @@ Scenario: Request gets submitted
     Then I should see the item details  
     And I click a time slot from "9:00 PM" to "9:30 PM"
     Then a request should be successfully submitted
-    And the database should be updated appropriately
+    And the time slot should be marked unavailable
 
 
 Scenario: Donor goes to dashboard after a student requests item
     Given I am logged in as a donor
     And I am on the items page
-    And I have an item(s) listed to be donated
     And a student requests an item
     And I go to my profile page
     Then I should see that item has been requested

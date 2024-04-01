@@ -52,6 +52,9 @@
 <% if current_user && current_user.id == @user.id %>
   <h2>Past Pickups:</h2>
   <div class="row">
+    <% if @user.donated_pickups.count == 0%>
+      <h3>No Past Pickups</h3>
+    <% end %>
     <% @user.donated_pickups.each do |pickup| %>
       <div class="col-md-4 mb-4">
         <div class="card">
@@ -75,6 +78,9 @@
 
   <h2>Current Requests:</h2>
   <div class="row">
+    <% if @user.donated_requests.count == 0%>
+      <h3>No Current Requests</h3>
+    <% end %>
     <% @user.donated_requests.each do |request| %>
       <div class="col-md-4 mb-4">
         <div class="card">
