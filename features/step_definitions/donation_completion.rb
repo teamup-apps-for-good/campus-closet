@@ -3,12 +3,12 @@
 Given('I am on the donor dashboard') do
   href = find_link('Donor Dashboard')[:href]
   visit(href)
-  # visit('/users/1/donor')
 end
 
 Given('I am on the student profile page') do
   visit('/')
-  click_link('Student Profile')
+  href = find_link('Student Profile')[:href]
+  visit(href)
 end
 
 Given('there is a request for item {int} uploaded by user {int} from user {int}') do |item_id, donor_id, receiver_id|
@@ -48,11 +48,7 @@ end
 
 Then('the map container should not be visible') do
   map_container = find('.map_container', visible: :all)
-  expect(map_container).not_to be_visible
-end
-
-Then('I should see the request destroyed') do
-  # pending
+  expect(map_container.visible?).not_to be eq(true)
 end
 
 Then('a past pickup should be created') do

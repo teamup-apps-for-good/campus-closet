@@ -20,7 +20,7 @@ Background: clothing in database
 @javascript
 Scenario: Donor sees map of requestor after button pressed
     Given I am logged in as a donor
-    And there is a request for item 2 uploaded by user 2 from user 2 
+    And there is a request for item 2 uploaded by user 2 from user 3 
     And I am on the donor dashboard
     When I click the Show Map
     Then the map container should be visible
@@ -67,6 +67,7 @@ Scenario: Student sees map of donor after button pressed
     And I am on the student profile page
     When I click the Show Map
     Then the map container should be visible
+
 
 @javascript
 Scenario: Student does not see map of donor after button pressed
