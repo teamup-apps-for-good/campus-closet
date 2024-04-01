@@ -25,13 +25,6 @@ RSpec.describe UsersController, user: :controller do
 
       expect(response).to be_successful
     end
-
-    it 'redirects to root_path for unauthorized user' do
-      user = User.create(first: 'Example User')
-      get :show_donor, params: { id: user.to_param }
-      expect(response).to redirect_to(root_path)
-      expect(flash[:alert]).to eq("You don't have permission to view this profile.")
-    end
   end
 
   it 'returns a success response for logged-in student user' do

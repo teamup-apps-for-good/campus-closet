@@ -1,80 +1,112 @@
 <p style="color: green"><%= notice %></p>
 
-<div style="float: right; margin-right: 20px;">
-  <div><strong>Account Details</strong><br></div>
-  <%= render @user %>
-  <% if @user.received_reviews.exists? %>
-      <p><strong>Average Rating:</strong> <%= @user.received_reviews.average(:rating) %></p>
-  <% else %>
-      <p>No reviews yet.</p>
-  <% end %>
-  <div>
-    <%= link_to "Edit Account", edit_user_path(@user) %>
-    <%= link_to "New time slot", new_time_slot_path %>
-    <%= link_to "View Time Slots", time_slots_path %>
-
-    <%= button_to "Delete Account", @user, method: :delete %>
-  </div>
-</div>
+<% if current_user && current_user.id == @user.id %>
+<%= link_to "Add New Item", new_item_path, class: "btn btn-primary" %>
 
 
-<h2>Past Pickups:</h2>
-<% @user.donated_pickups.each do |pickup| %>
-  
-  <p>
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <% if pickup.item.image_url.present? %>
-          <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
-        <% else %>
-          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
-        <% end %>
-        <div class="card-body">
-          <p>
-            <strong>Receiver</strong>: <%= pickup.receiver.first %> <%= pickup.receiver.last %> 
-          </p>
-          <p>
-            <strong>Item Description</strong>: <%= pickup.item.description %>
-          </p>
-        </div>
-      </div>
+  <div style="float: right; margin-right: 20px;">
+    <div><strong>Account Details</strong><br></div>
+    <%= render @user %>
+    <% if @user.received_reviews.exists? %>
+        <p><strong>Average Rating:</strong> <%= @user.received_reviews.average(:rating) %></p>
+    <% else %>
+        <p>No reviews yet.</p>
+    <% end %>
+    <div>
+      <%= link_to "Edit Account", edit_user_path(@user) %>
+      <%= link_to "New time slot", new_time_slot_path %>
+      <%= link_to "View Time Slots", time_slots_path %>
+
+      <%= button_to "Delete Account", @user, method: :delete %>
     </div>
-  </p>
+  </div>
+<% else %>
+  <h2>Reviews:</h2>
+  <div>
+    <% if @user.received_reviews.exists? %>
+        <p><strong>Average Rating:</strong> <%= @user.received_reviews.average(:rating) %></p>
+    <% else %>
+        <p>No reviews yet.</p>
+    <% end %>
+  </div>
 <% end %>
 
-<h2>Current Requests:</h2>
-<% @user.donated_requests.each do |request| %>
-  <p>
-  <div class="col-md-4 mb-4">
-    <div class="card">
-      <% if request.item.image_url.present? %>
-        <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
-      <% else %>
-        <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
-      <% end %>
-      <div class="card-body">
-        <%= render request.item %>
-        <div class ="chat-btn-container">
-        <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
-        <p></p>
-        </div>
-        <div class="btn btn-primary btn-lg">
-          <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
+<h2>Uploaded Items:</h2>
+<div class="row">
+  <% @user.items.each do |item| %>
+    <div class="col-md-2 mb-2">
+      <div class="card">
+        <% if item.image_url.present? %>
+          <%= image_tag item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
+        <% else %>
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
+        <% end %>
+        <div class="card-body">
+          <%= render partial: 'items/item', locals: { item: item } %>
         </div>
       </div>
-      <% if request.receiver %>
-        <div class="btn btn-primary btn-lg">
-          <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
-        </div>
-        <div id="map-container-<%= request.id %>" class="map_container">
-          <%= js_map [{latitude: request.receiver.latitude, longitude: request.receiver.longitude}], height: "300px", controls: true %>
-        </div>
-      <% else %>
-        <p>Receiver location not available.</p>
-      <% end %>
     </div>
+  <% end %>
+</div>
+
+<% if current_user && current_user.id == @user.id %>
+  <h2>Past Pickups:</h2>
+  <div class="row">
+    <% @user.donated_pickups.each do |pickup| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <% if pickup.item.image_url.present? %>
+            <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
+          <% else %>
+            <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
+          <% end %>
+          <div class="card-body">
+            <p>
+              <strong>Receiver</strong>: <%= pickup.receiver.first %> <%= pickup.receiver.last %> 
+            </p>
+            <p>
+              <strong>Item Description</strong>: <%= pickup.item.description %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-</p>
+
+  <h2>Current Requests:</h2>
+  <div class="row">
+    <% @user.donated_requests.each do |request| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <% if request.item.image_url.present? %>
+            <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
+          <% else %>
+            <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
+          <% end %>
+          <div class="card-body">
+            <%= render request.item %>
+            <div class ="chat-btn-container">
+              <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
+              <p></p>
+            </div>
+            <div class="btn btn-primary btn-lg">
+              <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
+            </div>
+          </div>
+          <% if request.receiver %>
+            <div class="btn btn-primary btn-lg">
+              <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
+            </div>
+            <div id="map-container-<%= request.id %>" class="map_container">
+              <%= js_map [{latitude: request.receiver.latitude, longitude: request.receiver.longitude}], height: "300px", controls: true %>
+            </div>
+          <% else %>
+            <p>Receiver location not available.</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 <% end %>
 
 <script>
