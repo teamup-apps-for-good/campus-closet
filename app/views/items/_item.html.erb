@@ -1,42 +1,32 @@
 <div id="<%= dom_id item %>">
-
-  <p>
     <strong>Color:</strong>
     <%= item.color.name %>
-  </p>
-
-  <p>
+    <br>
+    
     <strong>Type:</strong>
     <%= item.type.name %>
-  </p>
+    <br>
 
-  <p>
     <strong>Gender:</strong>
     <%= item.gender.name %>
-  </p>
+    <br>
 
-  <p>
     <strong>Description:</strong>
     <%= item.description %>
-  </p>
+    <br>
 
-  <p>
     <strong>Size:</strong>
     <%= item.size.name %>
-  </p>
+    <br>
 
-  <p>
     <strong>Condition:</strong>
     <%= item.condition.name %>
-  </p>
+    <br>
 
-  <% if item.user.present? %>
-    <p>
-      <strong>Donor:</strong>
-      <%= item.user.first %> 
-      <%= item.user.last  %>
-    </p>
-  <% end %>
-  
-
+    <% if item.user.present? %>
+      <p>
+        <strong>Donor:</strong>
+        <%= link_to "#{item.user.first} #{item.user.last}", user_donor_path(item.user) %>
+      </p>
+    <% end %>
 </div>
