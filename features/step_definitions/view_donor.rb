@@ -11,17 +11,6 @@ Given('the following emails have a donor account associated with them:') do |tab
   end
 end
 
-Given('the following emails have an account associated with them:') do |table|
-  table.hashes.each do |row|
-    email = row['email']
-    if email.ends_with?('.com')
-      User.create(first: 'Test', last: 'Donor', email:, student: false, donor: true)
-    else
-      User.create(first: 'Test', last: 'Student', email:, student: true, donor: false)
-    end
-  end
-end
-
 Given('the following student account exists:') do |table|
   table.hashes.each do |row|
     email = row['email']
