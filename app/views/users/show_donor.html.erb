@@ -174,4 +174,27 @@
             } else {
               alert('Item failed to update - was not moved');
             }
-          }).
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+window.onload = function() {
+  var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none;");
+};
+function showMap(containerId) {
+  var el = document.getElementsByClassName("map_container")[0]
+
+  if (el.style.display === 'none') {
+    var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: block; background-color: #F5F5F5;");
+  } else {
+    var el = document.getElementsByClassName("map_container")[0].setAttribute("style","display: none");
+  }
+  
+}
+</script>
