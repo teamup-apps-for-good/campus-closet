@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 Given('I am on the donor dashboard') do
-  visit('/users/1/donor')
+  href = find_link('Donor Dashboard')[:href]
+  visit(href)
+  # visit('/users/1/donor')
 end
 
 Given('I am on the student profile page') do

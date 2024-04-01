@@ -15,11 +15,12 @@ Background: clothing in database
   | color     | type       | Description         | Gender       | Size  | Condition  | Status     |   User    | 
   | black     | shirt      | black shirt         | Male         | M     | Used       | Available  |    1      |
   | red       | pants      | red pants           | Female       | L     | Unused     | Unvailable |    1      |
+  | red       | pants      | red pants           | Female       | L     | Unused     | Unvailable |    2      |
 
 @javascript
 Scenario: Donor sees map of requestor after button pressed
     Given I am logged in as a donor
-    And there is a request for item 1 uploaded by user 1 from user 2 
+    And there is a request for item 2 uploaded by user 2 from user 2 
     And I am on the donor dashboard
     When I click the Show Map
     Then the map container should be visible
@@ -64,7 +65,6 @@ Scenario: Student sees map of donor after button pressed
     Given I am logged in as a student
     And there is a request for item 1 uploaded by user 1 from user 2 
     And I am on the student profile page
-    When I click the Show Map
     When I click the Show Map
     Then the map container should be visible
 
