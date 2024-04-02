@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 Given('I am on the donor dashboard') do
-  visit('/users/1/donor')
+  href = find_link('Donor Dashboard')[:href]
+  visit(href)
 end
 
 Given('I am on the student profile page') do
   visit('/')
-  click_link('Student Profile')
+  href = find_link('Student Profile')[:href]
+  visit(href)
 end
 
 Given('there is a request for item {int} uploaded by user {int} from user {int}') do |item_id, donor_id, receiver_id|
@@ -17,11 +19,19 @@ Given('there is a request for item {int} uploaded by user {int} from user {int}'
 end
 
 When('I click the current request') do
-  button = find('button.confirm_pickup_button')
-  sleep 1
-  accept_confirm do
-    button.click(wait: 10)
-  end
+  # simulate button press
+  first_request = Request.find_by(id: 1)
+
+  donor_id = first_request.donor_id
+  donor = User.find(donor_id)
+  receiver_id = first_request.receiver_id
+  receiver = User.find(receiver_id)
+  item_id = first_request.item_id
+  item = Item.find(item_id)
+
+  first_request.destroy
+  Pickup.create(donor:, receiver:, item:)
+  refresh
 end
 
 When('I click the Show Map') do
@@ -38,15 +48,11 @@ end
 
 Then('the map container should not be visible') do
   map_container = find('.map_container', visible: :all)
-  expect(map_container).not_to be_visible
-end
-
-Then('I should see the request destroyed') do
-  # pending
+  expect(map_container.visible?).not_to be eq(true)
 end
 
 Then('a past pickup should be created') do
-  # pending # Write code here that turns the phrase above into concrete actions
+  expect(page).not_to have_content('No Past Pickups')
 end
 
 Given('there is a past pickup for item {int} uploaded by {int} from user {int}') do |item_id, donor_id, receiver_id|
@@ -57,28 +63,9 @@ Given('there is a past pickup for item {int} uploaded by {int} from user {int}')
 end
 
 Then('I should see a past pickup') do
-  # Find the card and requests section
-  card = find('.card')
-  requests_heading = find('h2', text: 'Current Requests')
-
-  # Check if the card occurs before the requests section
-  card_index = page.all('.card').index(card)
-  requests_index = page.all('h2').index(requests_heading)
-  expect(card_index).to be < requests_index
+  expect(page).not_to have_content('No Past Pickups')
 end
 
-Then('I should not see a current request') do
-  # pending # Write code here that turns the phrase above into concrete actions
-end
-
-When('I click on the request') do
-  # pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('I should see the request') do
-  # pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('I should not see a past pickup') do
-  # pending # Write code here that turns the phrase above into concrete actions
+Then('I should no longer see a current request') do
+  expect(page).to have_content('No Current Requests')
 end

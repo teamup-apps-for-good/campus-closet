@@ -12,6 +12,9 @@
 </div>
 
 <h2>Past Pickups:</h2>
+<% if @user.received_pickups.count == 0%>
+  <h3>No Past Pickups</h3>
+<% end %>
 <% @user.received_pickups.each do |pickup| %>
   <p>
     <div class="col-md-4 mb-4">
@@ -30,6 +33,9 @@
 <% end %>
 
 <h2>Current Requests:</h2>
+<% if @user.received_requests.count == 0%>
+  <h3>No Current Requests</h3>
+<% end %>
 <% @user.received_requests.each do |request| %>
   <p>
     <div class="col-md-4 mb-4">
