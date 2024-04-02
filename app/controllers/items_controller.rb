@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
 
   before_action :set_item, only: %i[show edit update destroy]
   skip_before_action :set_item, only: [:by_type]
+  before_action :authorize_item_edit, only: %i[edit update]
 
   # GET /items or /items.json
   def index
@@ -127,5 +128,13 @@ class ItemsController < ApplicationController
     %i[color type gender status size condition].each do |cookie_name|
       @items = @items.where(cookie_name => cookies[cookie_name]) unless cookies[cookie_name].nil?
     end
+  end
+
+  def authorize_item_edit
+    return if @item.user_id == current_user&.id
+    return if current_user&.admin?
+
+    flash[:alert] = 'You are not authorized to edit this item.'
+    redirect_to items_path
   end
 end

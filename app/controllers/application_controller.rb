@@ -50,9 +50,9 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    unless current_user&.admin? # Assuming you have a current_user method and admin boolean check
-      flash[:alert] = "You don't have permission to perform this action."
-      redirect_to root_path
-    end
+    return if current_user&.admin?
+
+    flash[:alert] = "You don't have permission to perform this action."
+    redirect_to root_path
   end
 end
