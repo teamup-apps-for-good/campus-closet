@@ -26,11 +26,11 @@ shared_examples 'a third CRUD controller' do |model_class, _controller_class|
 
   let(:timeslot1) do
     TimeSlot.create(
-        donor: user,
-        start_time: DateTime.now.beginning_of_hour + 1.day,
-        end_time: DateTime.now.beginning_of_hour + 25.hours,
-        status: 'available'
-      )
+      donor: user,
+      start_time: DateTime.now.beginning_of_hour + 1.day,
+      end_time: DateTime.now.beginning_of_hour + 25.hours,
+      status: 'available'
+    )
   end
 
   describe 'GET #index' do
@@ -42,7 +42,8 @@ shared_examples 'a third CRUD controller' do |model_class, _controller_class|
 
   describe 'GET #show' do
     it 'returns a success response' do
-      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id, time_slot_id: timeslot1.id)
+      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id,
+                                    time_slot_id: timeslot1.id)
       get :show, params: { id: instance.to_param }
       expect(response).to be_successful
     end
@@ -57,7 +58,8 @@ shared_examples 'a third CRUD controller' do |model_class, _controller_class|
 
   describe 'GET #edit' do
     it 'returns a success response' do
-      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id, time_slot_id: timeslot1.id)
+      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id,
+                                    time_slot_id: timeslot1.id)
       get :edit, params: { id: instance.to_param }
       expect(response).to be_successful
     end
@@ -92,7 +94,9 @@ shared_examples 'a third CRUD controller' do |model_class, _controller_class|
   end
 
   describe 'PATCH/PUT #update' do
-    let(:instance) { model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id, time_slot_id: timeslot1.id) }
+    let(:instance) do
+      model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id, time_slot_id: timeslot1.id)
+    end
 
     context 'with valid parameters' do
       it "updates the requested #{model_class}" do
@@ -126,14 +130,16 @@ shared_examples 'a third CRUD controller' do |model_class, _controller_class|
 
   describe 'DELETE #destroy' do
     it "destroys the requested #{model_class}" do
-      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id, time_slot_id: timeslot1.id)
+      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id,
+                                    time_slot_id: timeslot1.id)
       expect do
         delete :destroy, params: { id: instance.to_param }
       end.to change(model_class, :count).by(-1)
     end
 
     it "redirects to the #{model_class.to_s.pluralize} list" do
-      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id, time_slot_id: timeslot1.id)
+      instance = model_class.create(donor_id: user.id, receiver_id: user1.id, item_id: item.id,
+                                    time_slot_id: timeslot1.id)
       delete :destroy, params: { id: instance.to_param }
       expect(response).to redirect_to(send("#{model_class.to_s.underscore.pluralize}_url"))
     end
