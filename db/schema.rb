@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_02_225502) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -173,6 +173,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
     t.boolean "donor"
     t.float "latitude"
     t.float "longitude"
+    t.boolean "admin"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -193,10 +194,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
   add_foreign_key "requests", "items"
   add_foreign_key "requests", "users", column: "donor_id"
   add_foreign_key "requests", "users", column: "receiver_id"
-  add_foreign_key "sizes", "types"
   add_foreign_key "reviews", "pickups"
   add_foreign_key "reviews", "users"
-  add_foreign_key "reviews", "users", column: "donor_id"
   add_foreign_key "sizes", "types"
   add_foreign_key "time_slots", "users", column: "donor_id"
 end
