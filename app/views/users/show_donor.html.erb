@@ -14,10 +14,31 @@
     <% end %>
     <div>
       <%= link_to "Edit Account", edit_user_path(@user) %>
+      <%= button_to "Delete Account", @user, method: :delete %>
+    </div>
+    <br>
+    
+
+    <% if @user.time_slots.exists? %>
+    <strong>Time Slots</strong>:
+    <div class="text-center">
+      <% @user.time_slots.group_by { |slot| slot.start_time.to_date }.each do |date, time_slots| %>
+        <div class="day">
+          <h3 style="font-size: 18px; color: #2c3e50; font-weight: bold;"><%= date.strftime('%B %d, %Y') %></h3>
+          <% time_slots.each do |time_slot| %>
+            <div class="time-slot" style="background-color: <%= time_slot.status == 'available' ? '#2ecc71' : '#95a5a6' %>; padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+              <p>
+                <%= "Start: #{time_slot.start_time.strftime('%I:%M %p')}  End: #{time_slot.end_time.strftime('%I:%M %p')}" %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
+    <div>
       <%= link_to "New time slot", new_time_slot_path %>
       <%= link_to "View Time Slots", time_slots_path %>
-
-      <%= button_to "Delete Account", @user, method: :delete %>
     </div>
   </div>
 <% else %>
@@ -34,18 +55,16 @@
 <h2>Uploaded Items:</h2>
 <div class="row">
   <% @user.items.each do |item| %>
-    <div class="col-md-2 mb-2">
-      <div class="card">
-        <% if item.image_url.present? %>
-          <%= image_tag item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
-        <% else %>
-          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
-        <% end %>
-        <div class="card-body">
-          <%= render partial: 'items/item', locals: { item: item } %>
+    <% if item.status.name == "Available" %>
+      <div class="col-md-3 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <%= render partial: 'items/item', locals: { item: item } %>
+            <%= link_to "Show this item", item, class: "btn btn-primary" %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>
 
@@ -53,7 +72,7 @@
   <h2>Past Pickups:</h2>
   <div class="row">
     <% @user.donated_pickups.each do |pickup| %>
-      <div class="col-md-4 mb-4">
+      <div class="col-md-3 mb-3">
         <div class="card">
           <% if pickup.item.image_url.present? %>
             <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
@@ -76,7 +95,7 @@
   <h2>Current Requests:</h2>
   <div class="row">
     <% @user.donated_requests.each do |request| %>
-      <div class="col-md-4 mb-4">
+      <div class="col-md-3 mb-3">
         <div class="card">
           <% if request.item.image_url.present? %>
             <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
@@ -84,14 +103,19 @@
             <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
           <% end %>
           <div class="card-body">
-            <%= render request.item %>
-            <div class ="chat-btn-container">
-              <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
-              <p></p>
-            </div>
-            <div class="btn btn-primary btn-lg">
-              <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
-            </div>
+            <p>
+              <strong>Receiver</strong>: <%= request.receiver.first %> <%= request.receiver.last %> 
+            </p>
+            <p>
+              <strong>Item Description</strong>: <%= request.item.description %>
+            </p>
+          </div>
+          <div class ="chat-btn-container">
+            <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
+            <p></p>
+          </div>
+          <div class="btn btn-primary btn-lg">
+            <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
           </div>
           <% if request.receiver %>
             <div class="btn btn-primary btn-lg">

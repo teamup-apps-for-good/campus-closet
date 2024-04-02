@@ -1,8 +1,7 @@
 <div id="<%= dom_id pickup %>">
   <p>
-    <strong>Donor:</strong>
-    <%= pickup.donor.first %>
-    <%= pickup.donor.last  %>
+  <strong>Donor:</strong>
+  <%= link_to "#{pickup.item.user.first} #{pickup.item.user.last}", user_donor_path(pickup.item.user) %>
   </p>
 
   <p>

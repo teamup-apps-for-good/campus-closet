@@ -1,17 +1,12 @@
 <div id="<%= dom_id request %>">
   <p>
-    <strong>Donor:</strong>
-    <%= request.donor_id %>
+  <strong>Donor:</strong>
+  <%= link_to "#{request.item.user.first} #{request.item.user.last}", user_donor_path(request.item.user) %>
   </p>
 
   <p>
-    <strong>Receiver:</strong>
-    <%= request.receiver_id %>
-  </p>
-
-  <p>
-    <strong>Item:</strong>
-    <%= request.item_id %>
+    <strong>Item Description:</strong>
+    <%= request.item.description %>
   </p>
 
 </div>
