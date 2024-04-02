@@ -65,11 +65,15 @@ Given('there is a time slot from {string} to {string} for user with id {int}') d
 end
 
 When('I click a time slot from {string} to {string}') do |_start_time, _end_time|
-  # refresh
-  # message = accept_confirm do
-  #   find('#time_slot_button').click
-  # end
-  # expect(message).to eq('Are you sure you want to request this timeslot?')
+  first_time_slot = TimeSlot.find_by(id: 1)
+  patch "/time_slots/#{first_time_slot.id}/mark_unavailable"
+
+  # now create a request
+  donor = first_time_slot.donor
+  receiver = User.find_by(id: 2)
+  item = Item.find_by(id: 1)
+  Request.create(donor:, receiver:, item:)
+  visit('/users/2/student')
 end
 
 Then('I should see the donors availability') do
@@ -77,19 +81,11 @@ Then('I should see the donors availability') do
 end
 
 Then('I should be sent back to the items page') do
-  click_link('Student Profile')
-end
-
-Then('the donor should be notified') do
-  # pending # Write code here that turns the phrase above into concrete actions
+  expect(page).to have_content('Student Profile')
 end
 
 Then('a request should be successfully submitted') do
-  # pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('the database should be updated appropriately') do
-  # pending # Write code here that turns the phrase above into concrete actions
+  expect(page).not_to have_content('No Current Requests')
 end
 
 Given('I have a donor account, {string}') do |email|
@@ -102,13 +98,22 @@ Given('I have an item\(s) listed to be donated') do
 end
 
 Given('a student requests an item') do
-  #   pending # Write code here that turns the phrase above into concrete actions
+  donor = User.find_by(id: 1)
+  receiver = User.find_by(id: 2)
+  item = Item.find_by(id: 1)
+  Request.create(donor:, receiver:, item:)
 end
 
 Given('I go to my profile page') do
-  #   pending # Write code here that turns the phrase above into concrete actions
+  visit('/users/1/donor')
 end
 
 Then('I should see that item has been requested') do
-  #   pending # Write code here that turns the phrase above into concrete actions
+  expect(page).not_to have_content('No Current Requests')
+end
+
+Then('the time slot should be marked unavailable') do
+  first_time_slot = TimeSlot.find_by(id: 1)
+  visit("/time_slots/#{first_time_slot.id}")
+  expect(page).to have_content('Status: unavailable')
 end

@@ -35,16 +35,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe '#mark_unavailable' do
     let(:user) { User.create(first: 'Example User', donor: true) }
-    let(:item) do
-      user.items.create(
-        color: Color.create(name: 'temp_color'),
-        type: Type.create(name: 'temp_type'),
-        gender: Gender.create(name: 'temp_gender'),
-        status: Status.create(name: 'Available'),
-        size: Size.create(name: 'temp_size', type_id: Type.first.id),
-        condition: Condition.create(name: 'temp_condition')
-      )
-    end
+    let(:item) { create_item(user) }
     let(:status) { Status.create(name: 'Unavailable') }
 
     it 'marks the item as unavailable' do

@@ -7,16 +7,7 @@ shared_examples 'another CRUD controller' do |model_class, _controller_class|
   let(:user1) { User.create(first: 'Example User1', donor: true) }
   let(:user2) { User.create(first: 'Example User2') }
   let(:user3) { User.create(first: 'Example User3') }
-  let(:item) do
-    user.items.create(
-      color: Color.create(name: 'temp_color'),
-      type: Type.create(name: 'temp_type'),
-      gender: Gender.create(name: 'temp_gender'),
-      status: Status.create(name: 'temp_status'),
-      size: Size.create(name: 'temp_size', type_id: Type.first.id),
-      condition: Condition.create(name: 'temp_condition')
-    )
-  end
+  let(:item) { create_item(user) }
   let(:item1) do
     user1.items.create(color: Color.create(name: 'color1'), type: Type.create(name: 'type1'),
                        gender: Gender.create(name: 'gender1'), status: Status.create(name: 'status1'),

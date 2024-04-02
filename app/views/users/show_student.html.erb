@@ -12,9 +12,11 @@
 </div>
 
 <h2>Past Pickups:</h2>
-<div class="row">
-  <% if @user.received_pickups.exists? %>
-    <% @user.received_pickups.each do |pickup| %>
+<% if @user.received_pickups.count == 0%>
+  <h3>No Past Pickups</h3>
+<% end %>
+<% @user.received_pickups.each do |pickup| %>
+  <p>
     <div class="col-md-3 mb-3">
       <div class="card">
         <% if pickup.item.image_url.present? %>
@@ -36,7 +38,9 @@
 
 <h2>Current Requests:</h2>
 <div class="row">
-  <% if @user.received_requests.exists? %>
+  <% if @user.received_requests.count == 0%>
+    <h3>No Current Requests</h3>
+  <% else %>
     <% @user.received_requests.each do |request| %>
       <div class="col-md-3 mb-3">
         <div class="card">
@@ -65,8 +69,6 @@
         </div>
       </div>
     <% end %>
-  <% else %>
-      <div>No Current Requests</div>
   <% end %>
 </div>
 
