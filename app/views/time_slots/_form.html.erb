@@ -1,6 +1,7 @@
 <!-- app/views/time_slots/new.html.erb -->
 <div id="form-container">
   <%= form_with(model: TimeSlot.new, url: time_slots_path, local: true) do |form| %>
+    <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
     <% if @time_slot.errors.any? %>
       <div style="color: red">
         <h2><%= pluralize(@time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>

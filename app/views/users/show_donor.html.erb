@@ -20,19 +20,21 @@
     
 
     <% if @user.time_slots.exists? %>
-    <strong>Time Slots</strong>:
+    <strong>Available Time Slots</strong>:
     <div class="text-center">
       <% @user.time_slots.group_by { |slot| slot.start_time.to_date }.each do |date, time_slots| %>
-        <div class="day">
-          <h3 style="font-size: 18px; color: #2c3e50; font-weight: bold;"><%= date.strftime('%B %d, %Y') %></h3>
-          <% time_slots.each do |time_slot| %>
-            <div class="time-slot" style="background-color: <%= time_slot.status == 'available' ? '#2ecc71' : '#95a5a6' %>; padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
-              <p>
-                <%= "Start: #{time_slot.start_time.strftime('%I:%M %p')}  End: #{time_slot.end_time.strftime('%I:%M %p')}" %>
-              </p>
-            </div>
-          <% end %>
-        </div>
+        <% if time_slots.any? { |time_slot| time_slot.status == 'available' } %>
+          <div class="day">
+            <h3 style="font-size: 18px; color: #2c3e50; font-weight: bold;"><%= date.strftime('%B %d, %Y') %></h3>
+            <% time_slots.select { |time_slot| time_slot.status == 'available' }.each do |time_slot| %>
+              <div class="time-slot" style="background-color: <%= time_slot.status == 'available' ? '#2ecc71' : '#95a5a6' %>; padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+                <p>
+                  <%= "Start: #{time_slot.start_time.strftime('%I:%M %p')}  End: #{time_slot.end_time.strftime('%I:%M %p')}" %>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
     <% end %>
@@ -82,8 +84,7 @@
           <div class="card-body">
             <p>
               <strong>Receiver</strong>: <%= pickup.receiver.first %> <%= pickup.receiver.last %> 
-            </p>
-            <p>
+              <br>
               <strong>Item Description</strong>: <%= pickup.item.description %>
             </p>
           </div>
@@ -105,10 +106,22 @@
           <div class="card-body">
             <p>
               <strong>Receiver</strong>: <%= request.receiver.first %> <%= request.receiver.last %> 
-            </p>
-            <p>
+              <br>
               <strong>Item Description</strong>: <%= request.item.description %>
             </p>
+            <strong>Time Slot:</strong>
+            <div class="day">
+              <div style="font-size: 18px; color: #2c3e50; font-weight: bold;">
+                <%= request.time_slot.start_time.strftime('%B %d, %Y') %>
+              </div>
+              <div class="time-slot" style="padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+                <p>
+                  <%= "Start: #{request.time_slot.start_time.strftime('%I:%M %p')}"%> 
+                  <br>
+                  <%= "End: #{request.time_slot.end_time.strftime('%I:%M %p')}" %>
+                </p>
+              </div>
+            </div>
           </div>
           <div class ="chat-btn-container">
             <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>

@@ -2,11 +2,26 @@
   <p>
   <strong>Donor:</strong>
   <%= link_to "#{request.item.user.first} #{request.item.user.last}", user_donor_path(request.item.user) %>
-  </p>
+  <br>
 
-  <p>
-    <strong>Item Description:</strong>
-    <%= request.item.description %>
+  <strong>Item Description:</strong>
+  <%= request.item.description %>
+  <br>
   </p>
+  
+  <strong>Time Slot:</strong>
+  <div class="day">
+    <div style="font-size: 18px; color: #2c3e50; font-weight: bold;">
+      <%= request.time_slot.start_time.strftime('%B %d, %Y') %>
+    </div>
+    <div class="time-slot" style="padding: 10px; margin: 10px 0; font-family: 'Arial', sans-serif; font-size: 16px; color: #2c3e50;">
+      <p>
+        <%= "Start: #{request.time_slot.start_time.strftime('%I:%M %p')}"%> 
+        <br>
+        <%= "End: #{request.time_slot.end_time.strftime('%I:%M %p')}" %>
+      </p>
+    </div>
+  </div>
+
 
 </div>
