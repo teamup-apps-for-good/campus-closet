@@ -8,7 +8,7 @@ Background: clothing in database
 
   Given the following emails have an account associated with them:
   | email                 |
-  | testdonor@gmail.com  |
+  | testdonor@gmail.com   |
   | teststudent@tamu.edu  |
 
   Given the following items exist with user_ids:
