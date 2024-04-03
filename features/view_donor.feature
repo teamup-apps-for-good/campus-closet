@@ -43,8 +43,8 @@ Scenario: Viewing Donor Page
 Scenario: Viewing items in Donor Page
     Given I am on the homepage
     When I click on "Test Donor"
-    And I should see an item with the description "black shirt"
     And I should see an item with the description "blue pants"
+    And I should not see an item with the description "black shirt"
     And I should not see an item with the description "red pants"
 
 Scenario: Viewing review score in Donor Page

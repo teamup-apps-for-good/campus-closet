@@ -8,14 +8,29 @@ Background: clothing in database
 
   Given the following emails have an account associated with them:
   | email                 |
-  | test_donor@gmail.com  |
+  | test_donor@gmail.com   |
   | test_student@tamu.edu |
 
   Given the following items exist with user_ids:
   | color     | type       | Description         | Gender       | Size  | Condition  | Status     |   User    | 
   | black     | shirt      | black shirt         | Male         | M     | Used       | Available  |    1      |
-  | red       | pants      | red pants           | Female       | L     | Unused     | Unvailable |    1      |
-  | red       | pants      | red pants           | Female       | L     | Unused     | Unvailable |    2      |
+  | red       | pants      | red pants           | Female       | L     | Unused     | Available  |    1      |
+  | red       | pants      | red pants           | Female       | L     | Unused     | Available  |    2      |
+
+  Given the following time slot exists:
+  | Donor |
+  | 1     |
+
+  Given the following pickup exists:
+  | Donor | User | Item  |
+  | 1     | 2    | 2     |
+
+Scenario: Donor sees requests
+    Given I am logged in as a donor
+    And there is a request for item 2 uploaded by user 2 from user 3
+    And there is a request for item 1 uploaded by user 1 from user 2
+    And I am on the donor dashboard
+    Then I should not see "No Current Requests"
 
 @javascript
 Scenario: Donor sees map of requestor after button pressed

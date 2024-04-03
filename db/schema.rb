@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_02_075016) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -114,9 +114,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
     t.integer "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "time_slot_id", null: false
     t.index ["donor_id"], name: "index_requests_on_donor_id"
     t.index ["item_id"], name: "index_requests_on_item_id"
     t.index ["receiver_id"], name: "index_requests_on_receiver_id"
+    t.index ["time_slot_id"], name: "index_requests_on_time_slot_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -191,6 +193,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_213348) do
   add_foreign_key "pickups", "users", column: "donor_id"
   add_foreign_key "pickups", "users", column: "receiver_id"
   add_foreign_key "requests", "items"
+  add_foreign_key "requests", "time_slots"
   add_foreign_key "requests", "users", column: "donor_id"
   add_foreign_key "requests", "users", column: "receiver_id"
   add_foreign_key "sizes", "types"

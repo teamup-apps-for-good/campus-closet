@@ -15,7 +15,7 @@ Given('there is a request for item {int} uploaded by user {int} from user {int}'
   donor = User.find(donor_id)
   receiver = User.find(receiver_id)
   item = Item.find(item_id)
-  Request.create(donor:, receiver:, item:)
+  Request.create(donor:, receiver:, item:, time_slot_id: TimeSlot.first.id)
 end
 
 When('I click the current request') do
