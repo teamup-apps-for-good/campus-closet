@@ -20,11 +20,6 @@ Background: clothing in database
   Given the following time slot exists:
   | Donor |
   | 1     |
-  | 3     | 
-
-  Given the following request exists:
-  | Donor | User | Item  | Time |
-  | 1     | 2    | 1     | 1    |
 
   Given the following pickup exists:
   | Donor | User | Item  |
