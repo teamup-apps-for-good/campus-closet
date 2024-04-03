@@ -30,6 +30,13 @@ Background: clothing in database
   | Donor | User | Item  |
   | 1     | 2    | 2     |
 
+Scenario: Donor sees requests
+    Given I am logged in as a donor
+    And there is a request for item 2 uploaded by user 2 from user 3
+    And there is a request for item 1 uploaded by user 1 from user 2
+    And I am on the donor dashboard
+    Then I should not see "No Current Requests"
+
 @javascript
 Scenario: Donor sees map of requestor after button pressed
     Given I am logged in as a donor
