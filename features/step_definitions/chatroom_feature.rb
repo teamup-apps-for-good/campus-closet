@@ -12,7 +12,13 @@ Given('request for item {int} uploaded by user {int} from user {int} and chatroo
   donor = User.find(donor_id)
   receiver = User.find(receiver_id)
   item = Item.find(item_id)
-  Request.create(donor:, receiver:, item:)
+  time_slot = TimeSlot.create(
+    donor_id: donor,
+    start_time: DateTime.now.beginning_of_hour + 2.day,
+    end_time: DateTime.now.beginning_of_hour + 49.hours,
+    status: 'available'
+  )
+  Request.create(donor:, receiver:, item:, time_slot_id: time_slot.id)
   chatroom = item.build_chatroom if item.chatroom.nil?
   5.times do |i|
     Message.create(body: "Sample message #{i + 1}", user: donor, chatroom:)

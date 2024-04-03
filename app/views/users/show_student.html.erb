@@ -12,60 +12,62 @@
 </div>
 
 <h2>Past Pickups:</h2>
-<% if @user.received_pickups.count == 0%>
+<% if @user.received_pickups.count == 0 %>
   <h3>No Past Pickups</h3>
-<% end %>
-<% @user.received_pickups.each do |pickup| %>
-  <p>
-    <div class="col-md-4 mb-4">
+<% else %>
+  <div class="row">
+    <% @user.received_pickups.each do |pickup| %>
+    <div class="col-md-3 mb-3">
       <div class="card">
         <% if pickup.item.image_url.present? %>
-          <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
+          <%= image_tag pickup.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 250px;" %>
         <% else %>
-          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
+          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
         <% end %>
         <div class="card-body">
           <%= render pickup %>
         </div>
       </div>
     </div>
-  </p>
+    <% end %>
+  </div>
 <% end %>
 
 <h2>Current Requests:</h2>
-<% if @user.received_requests.count == 0%>
-  <h3>No Current Requests</h3>
-<% end %>
-<% @user.received_requests.each do |request| %>
-  <p>
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <% if request.item.image_url.present? %>
-          <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 500px;" %>
-        <% else %>
-          <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 500px;">
-        <% end %>
-        <div class="card-body">
-          <%= render request.item %>
-          <div class ="chat-btn-container">
-            <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
-            <p></p>
+<div class="row">
+  <% if @user.received_requests.count == 0 %>
+    <h3>No Current Requests</h3>
+  <% else %>
+    <% @user.received_requests.each do |request| %>
+      <div class="col-md-3 mb-3">
+        <div class="card">
+          <% if request.item.image_url.present? %>
+            <%= image_tag request.item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: contain; height: 250px;" %>
+          <% else %>
+            <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
+          <% end %>
+          <div class="card-body">
+            <%= render request %>
+            <div class ="chat-btn-container">
+              <%= link_to "Chat", item_chatroom_path(request.item), class: "btn btn-primary btn-lg"%>
+              <p></p>
+            </div>
+            <% if request.receiver %>
+            <div class="btn btn-primary btn-lg">
+              <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
+            </div>
+            <div id="map-container-<%= request.id %>" class="map_container">
+              <%= js_map [{latitude: request.donor.latitude, longitude: request.donor.longitude}], height: "300px", controls: true %>
+            </div>
+          <% else %>
+            <p>Receiver location not available.</p>
+          <% end %>
           </div>
-          <% if request.receiver %>
-          <div class="btn btn-primary btn-lg">
-            <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
-          </div>
-          <div id="map-container-<%= request.id %>" class="map_container">
-            <%= js_map [{latitude: request.donor.latitude, longitude: request.donor.longitude}], height: "300px", controls: true %>
-          </div>
-        <% else %>
-          <p>Receiver location not available.</p>
-        <% end %>
         </div>
       </div>
-    </div>
-  </p>
-<% end %>
+    <% end %>
+  <% end %>
+</div>
 
 
 <script>
