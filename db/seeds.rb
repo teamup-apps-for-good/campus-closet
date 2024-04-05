@@ -9,33 +9,63 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+colors = [
+  'Black', 'White', 'Gray', 'Navy', 'Blue', 'Light Blue', 'Dark Blue', 'Teal', 'Aqua', 'Turquoise',
+  'Green', 'Light Green', 'Dark Green', 'Yellow', 'Orange', 'Red', 'Maroon', 'Burgundy',
+  'Pink', 'Purple', 'Lavender', 'Brown', 'Beige', 'Cream', 'Tan'
+]
+
+clothing_types = [
+  'Shirt', 'Pants', 'Jacket', 'Dress', 'Skirt', 'Shorts', 'Blouse', 'Suit', 'Hoodie', 'Cardigan', 'Blazer', 'Vest', 'Polo', 'Leggings'
+]
+
+sizes = {
+  'Shirt' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Pants' => ['30x30', '32x30', '34x30', '36x30', '38x30', '30x32', '32x32', '34x32', '36x32', '38x32', '30x34', '32x34', '34x34', '36x34', '38x34'],
+  'Jacket' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Dress' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Skirt' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Shorts' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Blouse' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Suit' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Hoodie' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Cardigan' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Blazer' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Vest' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Polo' => ['XS', 'S', 'M', 'L', 'XL'],
+  'Leggings' => ['XS', 'S', 'M', 'L', 'XL']
+}
+
 if Color.count == 0
-  Color.create(name: 'Red')
-  Color.create(name: 'Blue')
+  colors.each do |color|
+    Color.create(name: color)
+  end
 end
 
 if Type.count == 0
-  Type.create(name: 'Pants')
-  Type.create(name: 'Shirt')
+  clothing_types.each do |type|
+    Type.create(name: type)
+  end
+end
+
+if Size.count == 0
+  sizes.each do |type_name, size_names|
+    size_names.each do |size_name|
+      Size.create(name: size_name, type: Type.find_by(name: type_name))
+    end
+  end
 end
 
 if Gender.count == 0
   Gender.create(name: 'Male')
   Gender.create(name: 'Female')
+  Gender.create(name: 'Unisex')
 end
 
 if Status.count == 0
   Status.create(name: 'Available')
-  Status.create(name: 'Unavailable')
-end
-
-if Size.count == 0
-  Size.create(name: '30x30', type: Type.find_by(name: 'Pants'))
-  Size.create(name: '34x30', type: Type.find_by(name: 'Pants'))
-  Size.create(name: '38x30', type: Type.find_by(name: 'Pants'))
-  Size.create(name: 'L', type: Type.find_by(name: 'Shirt'))
-  Size.create(name: 'M', type: Type.find_by(name: 'Shirt'))
-  Size.create(name: 'S', type: Type.find_by(name: 'Shirt'))
+  # Status.create(name: 'Unavailable')
 end
 
 if Condition.count == 0
@@ -44,21 +74,34 @@ if Condition.count == 0
 end
 
 if User.count == 0
-  User.create(first: "TestDonor", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "125 Spence St, College Station, TX 77840", student: false,  latitude: 30.62137515, longitude: -96.34020207698293)
-  User.create(first: "TestReceiver", last: "Receiver", email: "testreceiver@tamu.edu", phone: "0987654321", address: "907 Cross St, College Station, TX 77840", student: true, latitude: 30.62427312244898, longitude: -96.3443647755102)
+  User.create(first: "Test", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "125 Spence St, College Station, TX 77840", student: false,  latitude: 30.62137515, longitude: -96.34020207698293)
+  User.create(first: "Test", last: "Receiver", email: "testreceiver@tamu.edu", phone: "0987654321", address: "907 Cross St, College Station, TX 77840", student: true, latitude: 30.62427312244898, longitude: -96.3443647755102)
 end
 
 if Item.count == 0
-  donor = User.find_by(email: "testdonor@gmail.com")
-
-  Item.create(color: Color.first, type: Type.first, gender: Gender.first, description: 'Sample description',
-              status: Status.first, size: Size.find_by(type: Type.find_by(name: 'Pants')), condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redpants.jpg', user: donor)
-
-  Item.create(color: Color.second, type: Type.second, gender: Gender.second, description: 'Sample description 2',
-              status: Status.second, size: Size.find_by(type: Type.find_by(name: 'Shirt')), condition: Condition.second, image_url: 'https://campuscloset.s3.amazonaws.com/blueshirt.jpg', user: donor)
-
-  Item.create(color: Color.first, type: Type.second, gender: Gender.first, description: 'Sample description 3',
-              status: Status.first, size: Size.find_by(type: Type.find_by(name: 'Shirt')), condition: Condition.first, image_url: 'https://campuscloset.s3.amazonaws.com/redshirt.jpg', user: donor)
+  50.times do
+    color = colors.sample
+    type = clothing_types.sample
+    gender = ['Male', 'Female', 'Unisex'].sample
+    size = sizes[type].sample
+    description = 'Sample description'
+    status = Status.first
+    condition = Condition.first
+    image_url = 'https://campuscloset.s3.amazonaws.com/redpants.jpg'
+    user = User.find_by(email: 'testdonor@gmail.com')
+  
+    Item.create(
+      color: Color.find_by(name: color),
+      type: Type.find_by(name: type),
+      gender: Gender.find_by(name: gender),
+      description: description,
+      status: status,
+      size: Size.find_by(name: size, type: Type.find_by(name: type)),
+      condition: condition,
+      image_url: image_url,
+      user: user
+    )
+  end
 end
 
 if Pickup.count == 0
