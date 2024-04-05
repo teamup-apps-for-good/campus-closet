@@ -11,47 +11,43 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :color_id, style: "display: block" %>
-    <%= form.collection_select :color_id, Color.all, :id, :name, prompt: true %>
+  <div class="form-group">
+    <%= form.label :color_id %>
+    <%= form.collection_select :color_id, Color.all, :id, :name, { prompt: "Select Color" }, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :type_id, style: "display: block" %>
-    <%= form.collection_select :type_id, Type.all, :id, :name, prompt: true %>
+  <div class="form-group">
+    <%= form.label :type_id %>
+    <%= form.collection_select :type_id, Type.all, :id, :name, { prompt: "Select Type" }, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :gender_id, style: "display: block" %>
-    <%= form.collection_select :gender_id, Gender.all, :id, :name, prompt: true %>
+  <div class="form-group">
+    <%= form.label :gender_id %>
+    <%= form.collection_select :gender_id, Gender.all, :id, :name, { prompt: "Select Gender" }, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :status_id, style: "display: block" %>
-    <%= form.collection_select :status_id, Status.all, :id, :name, prompt: true %>
+  <div class="form-group">
+    <%= form.label :size_id %>
+    <%= form.collection_select :size_id, Size.all, :id, :name, { prompt: "Select Size" }, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :size_id, style: "display: block" %>
-    <%= form.collection_select :size_id, Size.all, :id, :name, prompt: true %>
+  <div class="form-group">
+    <%= form.label :condition_id %>
+    <%= form.collection_select :condition_id, Condition.all, :id, :name, { prompt: "Select Condition" }, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :condition_id, style: "display: block" %>
-    <%= form.collection_select :condition_id, Condition.all, :id, :name, prompt: true %>
+  <div class="form-group">
+    <%= form.label :image %>
+    <%= form.file_field :image, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :image, style: "display: block" %>
-    <%= form.file_field :image %>
+  <div class = "form-group">
+    <%= form.submit "Save", class: "btn btn-primary" %>
   </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>
