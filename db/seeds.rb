@@ -162,7 +162,7 @@ if Request.count == 0
 end
 
 # after you log in with your tamu account and then your gmail this will seed a pickup, request, and timeslots
-if User.count == 3 && Item.last.status == Status.first
+if User.count == 3 && Request.count == 1
   student = User.second
   donor = User.third
 
