@@ -41,12 +41,14 @@ if Color.count == 0
   colors.each do |color|
     Color.create(name: color)
   end
+  puts "Colors seeded"
 end
 
 if Type.count == 0
   clothing_types.each do |type|
     Type.create(name: type)
   end
+  puts "Types seeded"
 end
 
 if Size.count == 0
@@ -55,27 +57,31 @@ if Size.count == 0
       Size.create(name: size_name, type: Type.find_by(name: type_name))
     end
   end
+  puts "Sizes seeded"
 end
 
 if Gender.count == 0
   Gender.create(name: 'Male')
   Gender.create(name: 'Female')
   Gender.create(name: 'Unisex')
+  puts "Genders seeded"
 end
 
 if Status.count == 0
   Status.create(name: 'Available')
-  # Status.create(name: 'Unavailable')
+  Status.create(name: 'Unavailable')
+  puts "Statuses seeded"
 end
 
 if Condition.count == 0
   Condition.create(name: 'Used')
   Condition.create(name: 'Unused')
+  puts "Conditions seeded"
 end
 
 if User.count == 0
   User.create(first: "Test", last: "Donor", email: "testdonor@gmail.com", phone: "1234567890", address: "125 Spence St, College Station, TX 77840", student: false,  latitude: 30.62137515, longitude: -96.34020207698293)
-  User.create(first: "Test", last: "Receiver", email: "testreceiver@tamu.edu", phone: "0987654321", address: "907 Cross St, College Station, TX 77840", student: true, latitude: 30.62427312244898, longitude: -96.3443647755102)
+  puts "Test Donor user seeded"
 end
 
 if Item.count == 0
@@ -84,13 +90,13 @@ if Item.count == 0
     type = clothing_types.sample
     gender = ['Male', 'Female', 'Unisex'].sample
     size = sizes[type].sample
-    description = 'Sample description'
+    description = "#{color} #{type}"
     status = Status.first
     condition = Condition.first
-    image_url = 'https://campuscloset.s3.amazonaws.com/redpants.jpg'
+    image_url = nil
     user = User.find_by(email: 'testdonor@gmail.com')
   
-    Item.create(
+    item = Item.create(
       color: Color.find_by(name: color),
       type: Type.find_by(name: type),
       gender: Gender.find_by(name: gender),
@@ -101,70 +107,92 @@ if Item.count == 0
       image_url: image_url,
       user: user
     )
+
+    # create a new chatroom for every item created
+    item.create_chatroom
+  end
+  if Item.count == 50
+    puts "50 items seeded"
   end
 end
 
-if Pickup.count == 0
-  # replace with your own email
-  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
-  user3 = User.find_by(email: 'testdonor@gmail.com')
-  user4 = User.find_by(email: 'teststudent@tamu.edu')
-  item1 = Item.find_by(description: 'Sample description 3')
-  item2 = Item.find_by(description: 'Sample description')
-  Pickup.create(donor:user1, receiver:user2, item: item1)
-  Pickup.create(donor:user3, receiver:user4, item: item2)
+if TimeSlot.count == 0
+  5.times do
+    start = DateTime.now.beginning_of_hour + rand(1..10).day
+    TimeSlot.create(
+        donor: User.first,
+        start_time: start,
+        end_time: start + 1.hours,
+        status: 'available'
+    )
+  end
+  puts "Timeslots seeded"
 end
 
+# after adding your tamu account reseed to get this pickup
+if Pickup.count == 0
+  user1 = User.find_by(email: 'testdonor@gmail.com')
+  user2 = User.second
+  item1 = Item.first
+  Pickup.create(donor:user1, receiver:user2, item: item1)
+  if Pickup.count != 0
+    item1.update(status: Status.second)
+    puts "Pickup seeded"
+  end
+end
+
+# after adding your tamu account reseed to get this request
 if Request.count == 0
   # replace with your own email
-  user1 = User.find_by(email: 'nitin.pendekanti@gmail.com')
-  user2 = User.find_by(email: 'nitinpendekanti@tamu.edu')
-  user3 = User.find_by(email: 'testdonor@gmail.com')
-  user4 = User.find_by(email: 'teststudent@tamu.edu')
-  item1 = Item.find_by(description: 'Sample description 3')
-  item2 = Item.find_by(description: 'Sample description')
-  Request.create(donor:user1, receiver:user2, item: item1)
-  Request.create(donor:user3, receiver:user4, item: item2)
+  user1 = User.find_by(email: 'testdonor@gmail.com')
+  user2 = User.second
+  item1 = Item.second
+  start = DateTime.now.beginning_of_hour + 10.day
+  time_slot = TimeSlot.create(
+        donor: User.first,
+        start_time: start,
+        end_time: start + 1.hours,
+        status: 'available'
+    )
+  Request.create(donor:user1, receiver:user2, item: item1, time_slot: time_slot)
+  if Request.count != 0
+    item1.update(status: Status.second)
+    puts "Request seeded"
+  end
 end
 
-# chat seeding
-# 50.times do
-#   Message.create(
-#   body: Faker::Lorem.sentence(word_count: 10),
-#   user_id: rand(1..3))
-# end
-if TimeSlot.count == 0
-  donor_user = User.find_by(email: 'testdonor@gmail.com')
+# after you log in with your tamu account and then your gmail this will seed a pickup, request, and timeslots
+if User.count == 3 && Item.last.status == Status.first
+  student = User.second
+  donor = User.third
 
-  TimeSlot.create([
-    {
-      donor: donor_user,
-      start_time: DateTime.now.beginning_of_hour + 1.day,
-      end_time: DateTime.now.beginning_of_hour + 25.hours,
-      status: 'available'
-    },
-    {
-      donor: donor_user,
-      start_time: DateTime.now.beginning_of_hour + 2.days,
-      end_time: DateTime.now.beginning_of_hour + 49.hours,
-      status: 'available'
-    }
-  ])
+  # get the last item
+  item1 = Item.last
+  item1.update(donor: donor)
+  # get the second to last item
+  item2 = Item.order(id: :desc).offset(1).limit(1).first
+  item2.update(donor: donor)
+
+  start = DateTime.now.beginning_of_hour + rand(1..10).day
+  time_slot = TimeSlot.create(
+    donor: donor,
+    start_time: start,
+    end_time: start + 1.hours,
+    status: 'available'
+  )
+
+  start = start + 1.day
+  TimeSlot.create(
+    donor: donor,
+    start_time: start,
+    end_time: start + 1.hours,
+    status: 'available'
+  )
+
+  Pickup.create(donor: donor, receiver: student, item: item1)
+  item1.update(status: Status.second)
+
+  Request.create(donor: donor, receiver: student, item: item2, time_slot: time_slot)
+  time_slot.update(status: 'unavailable')
+  item2.update(status: Status.second)
 end
-
-Item.all.each do |item|
-  # Create a chatroom associated with the current listing
-  item.create_chatroom
-end
-
-# more_items = [
-#   {:color => Color, :type => '',
-#     :gender => '', :description => 'Nice shirt',
-#     :status => '', :size => '', :condition => ''},
-
-# ]
-
-# more_items.each do |item|
-#   Item.create!(item)
-# end
