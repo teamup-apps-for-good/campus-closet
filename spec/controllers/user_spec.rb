@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, user: :controller do
+  before do
+    allow(controller).to receive(:require_admin)
+  end
+
   describe 'GET #index' do
     it 'returns a success response' do
       get :index

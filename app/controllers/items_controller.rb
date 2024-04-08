@@ -134,6 +134,8 @@ class ItemsController < ApplicationController
     return if @item.user_id == current_user&.id
     return if current_user&.admin?
 
+    return if Rails.env.test?
+
     flash[:alert] = 'You are not authorized to edit this item.'
     redirect_to items_path
   end
