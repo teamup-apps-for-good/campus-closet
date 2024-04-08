@@ -15,39 +15,30 @@ RSpec.describe UsersController, user: :controller do
   end
 
   describe 'GET #show' do
-    it 'returns a success response for logged-in donor user' do
-      OmniAuth.config.test_mode = true
-      OmniAuth.config.add_mock(
-        :google_oauth2,
-        info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
-      )
+    context 'when user is authorized' do
+      it 'returns a success response for logged-in donor user' do
+        user = User.create(first: 'Test Donor', email: 'testdonor@tamu.edu')
+        allow(controller).to receive(:current_user).and_return(user)
+        
+        get :show, params: { id: user.id }
+        
+        expect(response).to be_successful
+      end
+    end
 
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
-      session[:user_id] = user.id
-
-      get :show, params: { id: user.id }
-
-      expect(response).to be_successful
+    context 'when user is not authorized' do
+      it 'redirects to root_path with alert' do
+        user = User.create(first: 'Other User', email: 'otheruser@tamu.edu')
+        allow(controller).to receive(:current_user).and_return(nil)
+        
+        get :show, params: { id: user.id }
+        
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq('You are not authorized to view this user.')
+      end
     end
   end
 
-  it 'returns a success response for logged-in student user' do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.add_mock(
-      :google_oauth2,
-      info: { email: 'teststudent@tamu.edu', name: 'Test Student' }
-    )
-
-    # Log in the student user by creating a session
-    student_user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
-    student_user.student = true
-    student_user.save
-    session[:user_id] = student_user.id
-
-    get :show, params: { id: student_user.id }
-
-    expect(response).to be_successful
-  end
 
   describe 'GET #new' do
     it 'returns a success response' do
@@ -115,6 +106,30 @@ RSpec.describe UsersController, user: :controller do
       user = User.create(first: 'Example User')
       delete :destroy, params: { id: user.to_param }
       expect(response).to redirect_to(users_url)
+    end
+  end
+
+  describe 'PATCH #make_admin' do
+    it 'makes the requested user an admin' do
+      user = User.create(first: 'Example User')
+      patch :make_admin, params: { id: user.to_param }
+      user.reload
+      expect(user.admin).to be_truthy
+    end
+
+    it 'redirects to the users list with a notice on success' do
+      user = User.create(first: 'Example User')
+      patch :make_admin, params: { id: user.to_param }
+      expect(response).to redirect_to(users_url)
+      expect(flash[:notice]).to eq('User successfully made admin.')
+    end
+
+    it 'redirects to the users list with an alert on failure' do
+      allow_any_instance_of(User).to receive(:update).and_return(false)
+      user = User.create(first: 'Example User')
+      patch :make_admin, params: { id: user.to_param }
+      expect(response).to redirect_to(users_url)
+      expect(flash[:alert]).to eq('Failed to make user admin.')
     end
   end
 end
