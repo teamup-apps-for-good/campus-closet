@@ -19,9 +19,9 @@ RSpec.describe UsersController, user: :controller do
       it 'returns a success response for logged-in donor user' do
         user = User.create(first: 'Test Donor', email: 'testdonor@tamu.edu')
         allow(controller).to receive(:current_user).and_return(user)
-        
+
         get :show, params: { id: user.id }
-        
+
         expect(response).to be_successful
       end
     end
@@ -30,15 +30,14 @@ RSpec.describe UsersController, user: :controller do
       it 'redirects to root_path with alert' do
         user = User.create(first: 'Other User', email: 'otheruser@tamu.edu')
         allow(controller).to receive(:current_user).and_return(nil)
-        
+
         get :show, params: { id: user.id }
-        
+
         expect(response).to redirect_to(root_path)
         expect(flash[:alert]).to eq('You are not authorized to view this user.')
       end
     end
   end
-
 
   describe 'GET #new' do
     it 'returns a success response' do
