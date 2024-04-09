@@ -1,5 +1,7 @@
 
-
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
 <div class="container">
 <h1 class="mt-4">Clothing Type:</h1>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

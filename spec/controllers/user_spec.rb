@@ -131,4 +131,36 @@ RSpec.describe UsersController, user: :controller do
       expect(flash[:alert]).to eq('Failed to make user admin.')
     end
   end
+
+  describe '#require_admin' do
+    context 'when user is not an admin' do
+      let(:basic_user) { User.create(first: 'Example User', admin: false) }
+
+      before do
+        allow(controller).to receive(:current_user).and_return(basic_user)
+      end
+
+      it 'redirects to root path with a flash message' do
+        allow(controller).to receive(:require_admin).and_call_original
+        get :index
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq('You don\'t have permission to view this page.')
+      end
+    end
+
+    context 'when user is an admin' do
+      let(:admin) { User.create(first: 'Example User', admin: true) }
+
+      before do
+        allow(controller).to receive(:current_user).and_return(admin)
+      end
+
+      it 'does not redirect and allows the action to proceed' do
+        get :index
+
+        expect(response).to have_http_status(:success)
+        expect(flash[:alert]).to be_nil
+      end
+    end
+  end
 end

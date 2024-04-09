@@ -131,6 +131,7 @@ class ItemsController < ApplicationController
   end
 
   def authorize_item_edit
+    @item = Item.find(params[:id])
     return if @item.user_id == current_user&.id
     return if current_user&.admin?
 
