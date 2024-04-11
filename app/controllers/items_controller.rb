@@ -35,6 +35,7 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     @item = current_user.items.build(item_params)
+    @item.status = Status.find_by(name: 'Available')
 
     image_param = params[:item][:image]
 
@@ -86,7 +87,7 @@ class ItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def item_params
-    params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :status_id, :size_id,
+    params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :size_id,
                                  :condition_id, :image_url, :user_id)
   end
 
