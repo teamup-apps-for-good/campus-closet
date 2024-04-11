@@ -47,7 +47,29 @@
   </div>
 
   <div class = "form-group">
-    <%= form.submit "Save", class: "btn btn-primary" %>
+    <%= form.submit "Create Item", class: "btn btn-primary" %>
   </div>
-
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const typeSelect = document.getElementById('item_type_id');
+    const sizeSelect = document.getElementById('item_size_id');
+
+    typeSelect.addEventListener('change', function() {
+      const selectedTypeId = this.value;
+      fetch(`/sizes?type_id=${selectedTypeId}`)
+        .then(response => response.json())
+        .then(data => {
+          sizeSelect.innerHTML = '<option value="">Select Size</option>';
+          data.forEach(size => {
+            const option = document.createElement('option');
+            option.value = size.id;
+            option.text = size.name;
+            sizeSelect.appendChild(option);
+          });
+        })
+        .catch(error => console.error('Error fetching sizes:', error));
+    });
+  });
+</script>

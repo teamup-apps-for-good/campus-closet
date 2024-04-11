@@ -6,7 +6,13 @@ class SizesController < ApplicationController
 
   # GET /sizes or /sizes.json
   def index
-    @sizes = Size.all
+    sizes = if params[:type_id]
+              Size.where(type_id: params[:type_id])
+            else
+              Size.all
+            end
+
+    render json: sizes
   end
 
   # GET /sizes/1 or /sizes/1.json

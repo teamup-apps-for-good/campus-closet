@@ -35,7 +35,7 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     @item = current_user.items.build(item_params)
-    @item.status = Status.find_by(name: "Available")
+    @item.status = Status.find_by(name: 'Available')
 
     image_param = params[:item][:image]
 

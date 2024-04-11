@@ -24,7 +24,6 @@ Scenario: upload new item with all categories
     And I fill in "gender" with "Male"
     And I fill in "size" with "M"
     And I fill in "condition" with "Used"
-    And I fill in "status" with "Available"
     And I include a picture
     And I click on "Create Item"
     Then there should be a new item in the items page, 6
@@ -47,7 +46,6 @@ Scenario: upload new item without image
     And I fill in "gender" with "Male"
     And I fill in "size" with "M"
     And I fill in "condition" with "Used"
-    And I fill in "status" with "Available"
     And I click on "Create Item"
     Then there should be a new item in the items page, 6
     But there should not be a picture
