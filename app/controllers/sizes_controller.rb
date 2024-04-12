@@ -7,7 +7,13 @@ class SizesController < ApplicationController
 
   # GET /sizes or /sizes.json
   def index
-    @sizes = Size.all
+    sizes = if params[:type_id]
+              Size.where(type_id: params[:type_id])
+            else
+              Size.all
+            end
+
+    render json: sizes
   end
 
   # GET /sizes/1 or /sizes/1.json
@@ -45,6 +51,6 @@ class SizesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def size_params
-    params.require(:size).permit(:name)
+    params.require(:size).permit(:name, :type_id)
   end
 end

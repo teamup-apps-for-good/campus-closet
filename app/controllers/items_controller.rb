@@ -7,15 +7,17 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
   skip_before_action :set_item, only: [:by_type]
   before_action :authorize_item_edit, only: %i[edit update]
+  before_action :set_conds, only: %i[index by_type]
 
   # GET /items or /items.json
   def index
-    process_cookie_params
-
     @items = Item.all
-    filter_items_by_cookies
+    @sizes = Size.all
 
-    @cookies = cookies
+    return unless params[:size] || params[:color] || params[:condition] || params[:gender]
+
+    filter_items(params[:size], params[:color], params[:condition],
+                 params[:gender])
   end
 
   # GET /items/1 or /items/1.json
@@ -36,6 +38,7 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     @item = current_user.items.build(item_params)
+    @item.status = Status.find_by(name: 'Available')
 
     image_param = params[:item][:image]
 
@@ -76,6 +79,10 @@ class ItemsController < ApplicationController
   def by_type
     @type = Type.find_by(name: params[:type])
     @items = Item.where(type_id: @type.id)
+
+    @sizes = Size.where(type_id: @type.id)
+
+    apply_filters if any_filters_present?
   end
 
   private
@@ -85,9 +92,15 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def set_conds
+    @colors = Color.all
+    @conditions = Condition.all
+    @genders = Gender.all
+  end
+
   # Only allow a list of trusted parameters through.
   def item_params
-    params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :status_id, :size_id,
+    params.require(:item).permit(:color_id, :type_id, :gender_id, :description, :size_id,
                                  :condition_id, :image_url, :user_id)
   end
 
@@ -102,32 +115,19 @@ class ItemsController < ApplicationController
     @item.image_url = obj.public_url
   end
 
-  def process_params_with_prefix(params, prefix, model_class)
-    items_list = []
-
-    params.each_key do |key|
-      next unless key.start_with?(prefix)
-
-      start = prefix.length
-      id = params[key][start..].to_i
-      item = model_class.find(id)
-      items_list.append(item)
-    end
-
-    items_list
+  def filter_items(size_id, color_id, condition_id, gender_id)
+    @items = @items.where(size_id:) if size_id.present?
+    @items = @items.where(color_id:) if color_id.present?
+    @items = @items.where(condition_id:) if condition_id.present?
+    @items = @items.where(gender_id:) if gender_id.present?
   end
 
-  def process_cookie_params
-    %w[color type gender status size condition].each do |prefix|
-      cookie_list = process_params_with_prefix(params, "#{prefix}_", prefix.capitalize.constantize)
-      cookies[prefix.to_sym] = cookie_list.empty? ? nil : cookie_list
-    end
+  def any_filters_present?
+    params[:size].present? || params[:color].present? || params[:condition].present? || params[:gender].present?
   end
 
-  def filter_items_by_cookies
-    %i[color type gender status size condition].each do |cookie_name|
-      @items = @items.where(cookie_name => cookies[cookie_name]) unless cookies[cookie_name].nil?
-    end
+  def apply_filters
+    filter_items(params[:size], params[:color], params[:condition], params[:gender])
   end
 
   def authorize_item_edit

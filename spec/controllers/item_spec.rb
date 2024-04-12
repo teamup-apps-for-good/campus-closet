@@ -19,26 +19,6 @@ RSpec.describe ItemsController, type: :controller do
         end
       end
     end
-
-    it 'returns a list of items based on the given prefix' do
-      params = { 'item_1' => '1', 'item_2' => '2', 'item_3' => '3' }
-      prefix = 'item_'
-
-      items_list = controller.send(:process_params_with_prefix, params, prefix, dummy_class)
-
-      expect(items_list).to be_an(Array)
-      expect(items_list.length).to eq(3)
-    end
-
-    it 'returns an empty list for params without the specified prefix' do
-      params = { 'other_key' => 'other_value', 'another_key' => 'yet_another_value' }
-      prefix = 'item_'
-
-      items_list = controller.send(:process_params_with_prefix, params, prefix, dummy_class)
-
-      expect(items_list).to be_an(Array)
-      expect(items_list).to be_empty
-    end
   end
 
   describe '#mark_unavailable' do

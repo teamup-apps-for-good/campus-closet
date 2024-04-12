@@ -9,5 +9,5 @@ Then('my name should be assigned') do
 end
 
 Then('I should return back to the homepage') do
-  expect(page).to have_current_path('/items')
+  expect(page).to have_current_path('/')
 end

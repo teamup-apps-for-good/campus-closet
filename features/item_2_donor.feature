@@ -28,7 +28,6 @@ Scenario: Donor creates a shirt item
     And I fill in "gender" with "Male"
     And I fill in "size" with "M"
     And I fill in "condition" with "Used"
-    And I fill in "status" with "Available"
     And I include a picture
     And I click on "Create Item"
     Then I should be on a new item page
@@ -44,7 +43,6 @@ Scenario: Donor creates a pants item
     And I fill in "gender" with "Male"
     And I fill in "size" with "M"
     And I fill in "condition" with "Used"
-    And I fill in "status" with "Available"
     And I include a picture
     And I fill in "type" with "pants"
     And I click on "Create Item"
@@ -57,5 +55,5 @@ Scenario: Donor cancel's item creation
     When I click on "New item"
     And I am on the new item page
     And I fill in "type" with "shirt"
-    And I click on "Back to items"
+    And I click on "Home"
     Then I should return back to the homepage
