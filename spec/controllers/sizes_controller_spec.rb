@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.feature 'Size Selection', type: :feature do
-
   scenario 'Visiting the sizes page with a type_id parameter' do
-    #login as admin to view index page
+    # login as admin to view index page
     User.create(first: 'Test', last: 'Admin', email: 'testadmin@gmail.com', student: false, donor: true, admin: true)
     visit('/')
     OmniAuth.config.test_mode = true
