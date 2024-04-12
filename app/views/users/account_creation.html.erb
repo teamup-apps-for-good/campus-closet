@@ -19,6 +19,11 @@
   <div>
     <%= f.label :address %>
     <%= f.text_field :address %>
+    <% if @user.errors[:address].any? %>
+      <div style="color: red;">
+        <%= @user.errors[:address].first %>
+      </div>
+    <% end %>
   </div>
 
   <% if @user.email.include?('tamu.edu') %>
