@@ -2,6 +2,5 @@
   <%= select_tag :color, options_from_collection_for_select(@colors, :id, :name, params[:color]), prompt: 'Select Color' %>
   <%= select_tag :gender, options_from_collection_for_select(@genders, :id, :name, params[:gender]), prompt: 'Select Gender' %>
   <%= select_tag :condition, options_from_collection_for_select(@conditions, :id, :name, params[:condition]), prompt: 'Select Condition' %>
-  <%= select_tag :size, options_from_collection_for_select(@sizes, :id, :name, params[:size]), prompt: 'Select Size' %>
   <%= submit_tag "Filter", class: "btn btn-primary" %>
 <% end %>
