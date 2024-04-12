@@ -128,5 +128,4 @@ class ItemsController < ApplicationController
   def apply_filters
     filter_items(params[:size], params[:color], params[:condition], params[:gender])
   end
-  
 end
