@@ -2,7 +2,9 @@
     <% if item.image_url.present? %>
       <%= image_tag item.image_url, class: "card-img-top img-fluid", alt: "Item Image", style: "object-fit: scale-down; height: 250px;" %>
     <% else %>
-      <img src="placeholder_image_url" class="card-img-top img-fluid" alt="No image available" style="object-fit: contain; height: 250px;">
+      <div>
+        No Image Available
+      </div>
     <% end %>
 
     <strong>Color:</strong>

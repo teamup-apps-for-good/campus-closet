@@ -1,32 +1,7 @@
-<%= form_with url: "/items", method: :get do |form| %>   
-  <% Color.all.each do |color| %>
-    <%= form.radio_button("color_", "color_" + color.id.to_s) %>
-    <%= form.label("color_" + color.id.to_s, color.name) %>
-  <% end %>
-  <br>
-  <% Gender.all.each do |gender| %>
-    <%= form.radio_button("gender_", "gender_" + gender.id.to_s) %>
-    <%= form.label("gender_" + gender.id.to_s, gender.name) %>
-  <% end %>
-  <br>
-  <% if @type %>
-    <% Size.where(type_id: @type.id).each do |size| %>
-      <%= form.radio_button("size_", "size_" + size.id.to_s) %>
-      <%= form.label("size_" + size.id.to_s, size.name) %>
-    <% end %>
-  <% else %>
-    <% Size.all.each do |size| %>
-      <%= form.radio_button("size_", "size_" + size.id.to_s) %>
-      <%= form.label("size_" + size.id.to_s, size.name) %>
-    <% end %>
-  <% end %>
-  
-  <br>
-  <% Condition.all.each do |condition| %>
-    <%= form.radio_button("condition_", "condition_" + condition.id.to_s) %>
-    <%= form.label("condition_" + condition.id.to_s, condition.name) %>
-  <% end %>
-  <br>
-  <%= form.submit "Search", class: "btn btn-success" %>
+<%= form_tag(items_path, method: :get) do %>
+  <%= select_tag :color, options_from_collection_for_select(@colors, :id, :name, params[:color]), prompt: 'Select Color' %>
+  <%= select_tag :gender, options_from_collection_for_select(@genders, :id, :name, params[:gender]), prompt: 'Select Gender' %>
+  <%= select_tag :condition, options_from_collection_for_select(@conditions, :id, :name, params[:condition]), prompt: 'Select Condition' %>
+  <%= select_tag :size, options_from_collection_for_select(@sizes, :id, :name, params[:size]), prompt: 'Select Size' %>
+  <%= submit_tag "Filter", class: "btn btn-primary" %>
 <% end %>
-
