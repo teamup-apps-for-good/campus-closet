@@ -40,7 +40,7 @@ Then('type should still be {string}') do |type|
 end
 
 But('there should not be a picture') do
-  expect(page).to have_css('.card-img-top[alt="No image available"]')
+  expect(page).to have_content('No Image Available')
 end
 
 When('I fill in description with {string}') do |desc|

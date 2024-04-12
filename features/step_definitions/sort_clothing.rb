@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-When('I press {string}') do |string|
-  find('label', text: string).click(wait: 10)
+When('I select {string} from {string}') do |value, type|
+  select(value, from: type.to_s)
 end
