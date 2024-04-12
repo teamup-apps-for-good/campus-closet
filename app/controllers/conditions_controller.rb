@@ -3,7 +3,8 @@
 # controller for the conditions
 class ConditionsController < ApplicationController
   before_action :set_condition, only: %i[show edit update destroy]
-
+  before_action :require_admin, only: %i[index]
+  
   # GET /conditions or /conditions.json
   def index
     @conditions = Condition.all

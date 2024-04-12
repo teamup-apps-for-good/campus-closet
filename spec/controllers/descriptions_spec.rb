@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 shared_examples 'a CRUD controller' do |model, controller_name, index_path|
+  before do
+    allow(controller).to receive(:require_admin)
+  end
   describe 'GET #index' do
     it 'returns a success response' do
       get :index
