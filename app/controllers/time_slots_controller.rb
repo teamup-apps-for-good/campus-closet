@@ -3,6 +3,7 @@
 # app/controllers/time_slots_controller.rb
 class TimeSlotsController < ApplicationController
   before_action :set_time_slot, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   # GET /time_slots or /time_slots.json
   def index
