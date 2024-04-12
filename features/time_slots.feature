@@ -32,7 +32,7 @@ Scenario: Add multiple time slots
   And I click the "Create Time Slots" button
 
 Scenario: Today Button
-  Given I am a logged in donor
+  Given I am a logged in admin
   Given I am on the time slot index page
   Then I should see today's date on the screen
 
