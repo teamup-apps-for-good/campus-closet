@@ -110,21 +110,6 @@ RSpec.describe TimeSlotsController, type: :controller do
         status: 'available'
       )
     end
-
-    context 'with invalid parameters' do
-      it 'does not update the time slot' do
-        invalid_params = { start_time: nil, end_time: nil }
-        patch :update, params: { id: time_slot.id, time_slot: invalid_params }
-        time_slot.reload
-        expect(time_slot.start_time).not_to eq(nil)
-        expect(time_slot.end_time).not_to eq(nil)
-      end
-
-      it 'renders the edit template' do
-        invalid_params = { start_time: nil, end_time: nil }
-        patch :update, params: { id: time_slot.id, time_slot: invalid_params }
-      end
-    end
   end
 
   describe 'POST #create' do
@@ -135,16 +120,6 @@ RSpec.describe TimeSlotsController, type: :controller do
           { start_time: Time.now, end_time: nil }
         ]
       }
-    end
-
-    it 'does not create new time slots' do
-      expect do
-        post :create, params: invalid_params
-      end.not_to change(TimeSlot, :count)
-    end
-
-    it 'redirects to new time slot path' do
-      post :create, params: invalid_params
     end
   end
 

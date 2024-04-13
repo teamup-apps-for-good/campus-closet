@@ -4,59 +4,52 @@
 class TimeSlotsController < ApplicationController
   before_action :set_time_slot, only: %i[show edit update destroy]
 
-  # GET /time_slots or /time_slots.json
+  # GET /time_slots
   def index
     @time_slots = current_user ? current_user.time_slots : []
-    @slots = @time_slots
   end
 
-  def show
-    @time_slot = TimeSlot.find(params[:id])
-  end
+  # GET /time_slots/:id
+  def show; end
 
   # GET /time_slots/new
   def new
     @time_slot = TimeSlot.new
   end
 
-  # GET /time_slots/1/edit
-  def edit
-    @time_slot = TimeSlot.find(params[:id])
-  end
+  # GET /time_slots/:id/edit
+  def edit; end
 
-  # POST /time_slots or /time_slots.json
+  # POST /time_slots
   def create
-    time_slot_params[:time_slots].each do |time_slot_param|
-      @time_slot = build_time_slot(time_slot_param)
+    @time_slots = []
 
-      return redirect_to time_slots_path, notice: 'Time slots were not saved.' unless @time_slot.save
-
-      if time_slot_param[:start_time].blank? || time_slot_param[:end_time].blank?
-        return redirect_to new_time_slot_path, alert: 'Start and end times cannot be empty.'
-      end
+    time_slot_params.each do |time_slot_param|
+      @time_slot = current_user.time_slots.new(time_slot_param.merge(status: 'available'))
+      @time_slots << @time_slot unless @time_slot.save
     end
 
-    redirect_to time_slots_path, notice: 'Time slots were successfully created.'
+    if @time_slots.empty?
+      redirect_to user_donor_path(current_user), notice: 'Time slots were successfully created.'
+    else
+      @time_slot = @time_slots.first
+      render :new
+    end
   end
 
-  # PATCH/PUT /time_slots/1 or /time_slots/1.json
+  # PATCH/PUT /time_slots/:id
   def update
-    respond_to do |format|
-      if @time_slot.update(time_slot_params)
-        format.html { redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.' }
-        format.json { render :show, status: :ok, location: @time_slot }
-      end
+    if @time_slot.update(time_slot_params)
+      redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /time_slots/1 or /time_slots/1.json
+  # DELETE /time_slots/:id
   def destroy
-    @time_slot.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to time_slots_url, notice: 'Time slot was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @time_slot.destroy
+    redirect_to time_slots_url, notice: 'Time slot was successfully destroyed.'
   end
 
   def mark_unavailable
@@ -72,19 +65,19 @@ class TimeSlotsController < ApplicationController
   private
 
   def build_time_slot(time_slot_param)
-    time_slot = TimeSlot.new(time_slot_param)
-    time_slot.status = 'available'
-    time_slot.donor_id = current_user.id if current_user
-    time_slot
+    current_user.time_slots.new(time_slot_param.merge(status: 'available'))
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_time_slot
     @time_slot = TimeSlot.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def time_slot_params
-    params.permit(time_slots: %i[start_time end_time])
+    params.require(:time_slots).map do |time_slot|
+      start_time = Time.zone.parse(time_slot['start_time'])
+
+      end_time = start_time + 30.minutes
+      time_slot.permit(:start_time, :end_time).merge(start_time:, end_time:)
+    end
   end
 end
