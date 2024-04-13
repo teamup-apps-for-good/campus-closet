@@ -3,6 +3,7 @@
 # controller for the pickups
 class PickupsController < ApplicationController
   before_action :set_pickup, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   # GET /pickups or /pickups.json
   def index

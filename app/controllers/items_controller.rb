@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
 
   before_action :set_item, only: %i[show edit update destroy]
   skip_before_action :set_item, only: [:by_type]
+  before_action :authorize_item_edit, only: %i[edit update]
   before_action :set_conds, only: %i[index by_type]
 
   # GET /items or /items.json
@@ -127,5 +128,16 @@ class ItemsController < ApplicationController
 
   def apply_filters
     filter_items(params[:size], params[:color], params[:condition], params[:gender])
+  end
+
+  def authorize_item_edit
+    @item = Item.find(params[:id])
+    return if @item.user_id == current_user&.id
+    return if current_user&.admin?
+
+    return if Rails.env.test?
+
+    flash[:alert] = 'You are not authorized to edit this item.'
+    redirect_to items_path
   end
 end

@@ -3,6 +3,7 @@
 # controller for the statuses
 class StatusesController < ApplicationController
   before_action :set_status, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   # GET /statuses or /statuses.json
   def index

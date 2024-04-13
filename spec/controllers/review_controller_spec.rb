@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe ReviewsController, type: :controller do
+  before do
+    allow(controller).to receive(:require_admin)
+  end
   let(:donor) { User.create!(first: 'Example User1', donor: true, student: false) }
   let(:receiver) { User.create!(first: 'Example User2', student: true, donor: false) }
   let(:item) { create_item(donor) }

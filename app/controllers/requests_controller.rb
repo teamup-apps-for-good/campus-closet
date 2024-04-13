@@ -3,6 +3,7 @@
 # controller for the requests
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   # GET /requests or /requests.json
   def index
