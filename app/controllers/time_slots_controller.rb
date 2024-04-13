@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# app/controllers/time_slots_controller.rb
 class TimeSlotsController < ApplicationController
   before_action :set_time_slot, only: %i[show edit update destroy]
 
@@ -9,8 +10,7 @@ class TimeSlotsController < ApplicationController
   end
 
   # GET /time_slots/:id
-  def show
-  end
+  def show; end
 
   # GET /time_slots/new
   def new
@@ -18,18 +18,17 @@ class TimeSlotsController < ApplicationController
   end
 
   # GET /time_slots/:id/edit
-  def edit
-  end
+  def edit; end
 
   # POST /time_slots
   def create
     @time_slots = []
-  
+
     time_slot_params.each do |time_slot_param|
       @time_slot = current_user.time_slots.new(time_slot_param.merge(status: 'available'))
       @time_slots << @time_slot unless @time_slot.save
     end
-  
+
     if @time_slots.empty?
       redirect_to user_donor_path(current_user), notice: 'Time slots were successfully created.'
     else
@@ -66,12 +65,9 @@ class TimeSlotsController < ApplicationController
   def time_slot_params
     params.require(:time_slots).map do |time_slot|
       start_time = Time.zone.parse(time_slot['start_time'])
-      if start_time.is_a?(NilClass)
-        []
-        return
-      end
+
       end_time = start_time + 30.minutes
-      time_slot.permit(:start_time, :end_time).merge(start_time: start_time, end_time: end_time)
+      time_slot.permit(:start_time, :end_time).merge(start_time:, end_time:)
     end
   end
 end
