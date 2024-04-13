@@ -52,6 +52,16 @@ class TimeSlotsController < ApplicationController
     redirect_to time_slots_url, notice: 'Time slot was successfully destroyed.'
   end
 
+  def mark_unavailable
+    @time_slot = TimeSlot.find(params[:id])
+    if @time_slot.update(status: 'unavailable')
+      render json: { message: 'Time slot marked as unavailable.' }, status: :ok
+    else
+      render json: { error: 'Failed to mark time slot as unavailable. Please try again.' },
+             status: :unprocessable_entity
+    end
+  end
+
   private
 
   def build_time_slot(time_slot_param)
