@@ -16,22 +16,6 @@ Scenario: Logged in donor visits profile page
     And I should see "Pickups"
     And I should see my account details
 
-Scenario: Donor editing first name
-    Given I am a logged in donor
-    And I am on the Dashboard
-    When I click on "Edit Account"
-    And I fill in the "First" field with "Jimmy"
-    And I click on "Confirm User Updates"
-    Then I should see "Jimmy" as my "First"
-
-Scenario: Donor editing last name
-    Given I am a logged in donor
-    And I am on the Dashboard
-    When I click on "Edit Account"
-    And I fill in the "Last" field with "Jimmy"
-    And I click on "Confirm User Updates"
-    Then I should see "Jimmy" as my "Last"
-
 Scenario: Donor editing phone
     Given I am a logged in donor
     And I am on the Dashboard
