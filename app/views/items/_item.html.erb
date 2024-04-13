@@ -34,7 +34,7 @@
     <% if item.user.present? %>
       <p>
         <strong>Donor:</strong>
-        <%= link_to "#{item.user.first} #{item.user.last}", user_donor_path(item.user) %>
+        <%= link_to "#{item.user.first} #{item.user.last}", user_donor_path(item.user), class: "btn btn-outline-primary btn-sm" %>
       </p>
     <% end %>
 </div>

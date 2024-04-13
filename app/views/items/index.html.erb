@@ -21,11 +21,4 @@
       <% end %>
     <% end %>
   </div>
-
 </div>
-
-<% unless session[:user_id].nil? %>
-  <% if current_user.donor %>
-    <%= link_to "New item", new_item_path, class: "btn btn-primary" %>
-  <% end %>
-<% end %>

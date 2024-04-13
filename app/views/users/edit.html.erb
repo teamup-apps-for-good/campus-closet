@@ -1,41 +1,41 @@
-<br>
+<h1 style="text-align: center;">Editing Profile Information</h1>
 
-<h1>Editing Profile Information</h1>
+<div style="display: flex; justify-content: center; align-items: center;">
+  <div style="width: 50%; max-width: 500px; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
 
-<br>
+    <br>
+    
+    <%= form_with(model: @user) do |form| %>
 
-<%= form_with(model: @user) do |form| %>
+      Name:
+      <%= @user.first %>
+      <%= @user.last %>
 
-  <%= form.label :first %>
-  <%= form.text_field :first %>
+      <br><br>
 
-  <%= form.label :last %>
-  <%= form.text_field :last %>
+      Email:
+      <%= @user.email %>
 
-  <%= form.label :email %>
-  <%= form.text_field :email, readonly: true %>
-  
-  <br> <br>
+      <br><br>
+    
+      <%= form.label :phone %>:
+      <%= form.text_field :phone %>
 
-  <%= form.label :phone %>
-  <%= form.text_field :phone %>
+      <br> <br>
+    
+      <%= form.label :address %>:
+      <%= form.text_field :address %>
 
-  <%= form.label :address %>
-  <%= form.text_field :address %>
-
-  <% if @user.student %>
-    <%= form.label :donor %>
-    <%= form.check_box :donor %>
-  <% end %>
-
-  <br> <br>
-
-  <%= form.submit 'Confirm User Updates' %>
-<% end %>
-
-<br>
-
-<div>
-  <%= link_to "Show this user", @user %> |
-  <%= link_to "Back to users", users_path %>
+      <br> <br>
+    
+      <% if @user.student %>
+        <%= form.label :donor %>:
+        <%= form.check_box :donor %>
+        <br>
+        <br>
+      <% end %>
+    
+      <%= form.submit 'Confirm User Updates', class: "btn btn-primary"  %>
+    <% end %>
+  </div>
 </div>
