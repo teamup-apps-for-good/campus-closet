@@ -3,6 +3,7 @@
 # controller for review
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   # GET /reviews or /reviews.json
   def index

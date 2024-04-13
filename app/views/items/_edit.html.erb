@@ -1,0 +1,76 @@
+<%= form_with(model: @item, local: true, multipart: true) do |form| %>
+    <% if item.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+  
+        <ul>
+          <% item.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div class="form-group">
+      <%= form.label :color_id %>
+      <%= form.collection_select :color_id, Color.all, :id, :name, { prompt: "Select Color" }, class: "form-control" %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :type_id %>
+      <%= form.collection_select :type_id, Type.all, :id, :name, { prompt: "Select Type" }, class: "form-control" %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :gender_id %>
+      <%= form.collection_select :gender_id, Gender.all, :id, :name, { prompt: "Select Gender" }, class: "form-control" %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :description %>
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :size_id %>
+      <%= form.collection_select :size_id, Size.all, :id, :name, { prompt: "Select Size" }, class: "form-control" %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :condition_id %>
+      <%= form.collection_select :condition_id, Condition.all, :id, :name, { prompt: "Select Condition" }, class: "form-control" %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :image %>
+      <%= form.file_field :image, class: "form-control" %>
+    </div>
+  
+    <div class = "form-group">
+      <%= form.submit "Edit Item", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const typeSelect = document.getElementById('item_type_id');
+      const sizeSelect = document.getElementById('item_size_id');
+  
+      typeSelect.addEventListener('change', function() {
+        const selectedTypeId = this.value;
+        fetch(`/sizes?type_id=${selectedTypeId}`)
+          .then(response => response.json())
+          .then(data => {
+            sizeSelect.innerHTML = '<option value="">Select Size</option>';
+            data.forEach(size => {
+              const option = document.createElement('option');
+              option.value = size.id;
+              option.text = size.name;
+              sizeSelect.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error fetching sizes:', error));
+      });
+    });
+  </script>
+  

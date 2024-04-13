@@ -14,11 +14,9 @@
       <div class="card">
         <div class="card-body">
           <%= render @item %>
-            <p class="card-text">
-              <%= link_to "Edit this item", edit_item_path(@item) %>
-            </p>
-            <div>
-              <%= button_to "Destroy this item", @item, method: :delete %>
+            <div class="card-text">
+              <%= link_to "Edit this item", edit_item_path(@item), class: "btn btn-outline-primary" %>
+              <%= button_to "Destroy this item", @item, method: :delete, class: "btn btn-danger btn-sm" %>
             </div>
       </div>
     </div>

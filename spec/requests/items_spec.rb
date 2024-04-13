@@ -24,7 +24,7 @@ RSpec.describe '/items', type: :request do
   # let(:status) { FactoryGirl.create(:hospital) }
   # let(:size) { FactoryGirl.create(:hospital) }
   # let(:condition) { FactoryGirl.create(:condition) }
-  let(:user) { User.create(first: 'Example User', donor: true) }
+  let(:user) { User.create(first: 'Example User', donor: true, admin: true) }
   let(:valid_attributes) do
     { color: Color.create(name: 'temp_color'), type: Type.create(name: 'temp_type'),
       gender: Gender.create(name: 'temp_gender'), status: Status.create(name: 'temp_status'),

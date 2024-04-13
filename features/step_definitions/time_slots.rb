@@ -11,6 +11,17 @@ Given('I am on the time slot index page') do
   visit time_slots_path
 end
 
+Given('I am a logged in admin') do
+  User.create(first: 'Test', last: 'Admin', email: 'testadmin@gmail.com', student: false, donor: true, admin: true)
+  visit('/')
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.add_mock(
+    :google_oauth2,
+    info: { email: 'testadmin@gmail.com' }
+  )
+  click_on 'Login with Google'
+end
+
 When('I fill in the start time with {string}') do |start_time|
   fill_in 'time_slot_start_time', with: start_time
 end
