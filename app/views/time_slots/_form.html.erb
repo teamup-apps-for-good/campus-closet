@@ -4,8 +4,7 @@
     <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
     <% if @time_slot.errors.any? %>
       <div style="color: red">
-        <h2><%= pluralize(@time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
-
+        <h2><%= pluralize(@time_slot.errors.count, "error") %> prohibited this time slot from being saved:</h2>
         <ul>
           <% @time_slot.errors.each do |error| %>
             <li><%= error.full_message %></li>
@@ -14,56 +13,61 @@
       </div>
     <% end %>
 
-    <!-- This is where you'll dynamically add multiple time slot fields -->
     <div id="time-slots-fields">
-      <!-- Initially, you may have one set of fields -->
-      <div class="time-slot">
-        <%= form.label :start_time, style: "display: block" %>
-        <%= form.datetime_field :start_time, name: 'time_slots[][start_time]' %>
-        
-        <%= form.label :end_time, style: "display: block" %>
-        <%= form.datetime_field :end_time, name: 'time_slots[][end_time]' %>
-      </div>
+      <div class="time-slot" id="time-slot-template">
+        <%= form.label :start_time, "Start Time", style: "display: block" %>
+        <%= form.datetime_field :start_time, name: 'time_slots[][start_time]', class: 'start-time', onchange: 'updateEndTime(this)' %>
+        <%= form.label :end_time, "End Time", style: "display: block" %>
+        <span class="display-end-time"></span>
+        <%= form.hidden_field :end_time, name: 'time_slots[][end_time]', class: 'end-time' %>
+        </div>
     </div>
 
-    <!-- Button to add another time slot -->
-    <button type="button" id="add-time-slot">Add Another Time Slot</button>
-
-    <!-- Button to submit all time slots -->
+    <button type="button" id="add-time-slot" onclick="addTimeSlot()">Add Another Time Slot</button>
     <%= form.submit 'Create Time Slots', id: 'submit-time-slots' %>
   <% end %>
 </div>
 
+
 <script>
-document.getElementById('submit-time-slots').addEventListener('click', function(event) {
-  var form = document.querySelector('#form-container form');
-  var timeSlotInputs = form.querySelectorAll('.time-slot input');
+function updateEndTime(element) {
+  var startTimeInput = element;
+  var timeSlot = startTimeInput.closest('.time-slot');
+  var endTimeInput = timeSlot.querySelector('.end-time');
+  var endTimeDisplay = timeSlot.querySelector('.display-end-time');
 
-  // Check for empty time slots
-  for (var i = 0; i < timeSlotInputs.length; i += 2) {
-    var startTimeInput = timeSlotInputs[i];
-    var endTimeInput = timeSlotInputs[i + 1];
-
-    if (!startTimeInput.value || !endTimeInput.value) {
-      alert('Start and end times cannot be empty.');
-      event.preventDefault(); // Prevent form submission
-      return;
-    }
-  }
-
-  // Validate start and end times
-  for (var i = 0; i < timeSlotInputs.length; i += 2) {
-    var startTimeInput = timeSlotInputs[i];
-    var endTimeInput = timeSlotInputs[i + 1];
+  if (startTimeInput.value) {
     var startTime = new Date(startTimeInput.value);
-    var endTime = new Date(endTimeInput.value);
-
-    if (startTime >= endTime) {
-      alert('Start and end times do not match.');
-      event.preventDefault(); // Prevent form submission
-      return;
-    }
+    startTime.setMinutes(startTime.getMinutes() + 30);
+    endTimeInput.value = startTime.toISOString();
+    endTimeDisplay.textContent = startTime.toLocaleString();
+  } else {
+    endTimeInput.value = '';
+    endTimeDisplay.textContent = '';
   }
-});
+}
+
+function addTimeSlot() {
+  var container = document.getElementById('time-slots-fields');
+  var original = container.querySelector('.time-slot:last-child');
+  var clone = original.cloneNode(true);
+  var index = container.querySelectorAll('.time-slot').length;
+
+  var clonedStartTime = clone.querySelector('.start-time');
+  clonedStartTime.name = `time_slots[${index}][start_time]`;
+  clonedStartTime.value = '';
+
+  clonedStartTime.removeEventListener('change', updateEndTime);
+  clonedStartTime.addEventListener('change', function() {
+    updateEndTime(this);
+  });
+
+  var clonedEndTimeDisplay = clone.querySelector('.display-end-time');
+  clonedEndTimeDisplay.textContent = '';
+
+  container.appendChild(clone);
+}
+
+
 
 </script>
