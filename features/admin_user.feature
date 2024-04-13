@@ -19,19 +19,18 @@ Scenario: Donor tries to view users page
     Given I am a logged in donor
     And I try to go to the users index page
     Then I should be redirected to the index page
-    And I should seen an alert
-    And it should say 'You don't have permission to view this page.'
+    And there should be an alert that says 'You don't have permission to view this page.'
 
 Scenario: Admin tries to view users page
     Given I am a logged in admin
     And I try to go to the users index page
     Then I should still be on the users page
     And I should see a list of users
+    Then I show the first user
     And I should see a 'Make Admin' button
 
 Scenario: Student tries to view reviews page
     Given I am a logged in student
     And I try to go to the reviews index page
     Then I should be redirected to the index page
-    And I should see an alert
-    And it should say 'You don't have permission to view this page.'
+    And there should be an alert that says 'You don't have permission to view this page.'
