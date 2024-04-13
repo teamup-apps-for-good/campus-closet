@@ -136,7 +136,7 @@
           <div class="btn btn-primary btn-lg">
             <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
           </div>
-          <% if request.receiver %>
+          <% if request.receiver && request.receiver.latitude %>
             <div class="btn btn-primary btn-lg">
               <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
             </div>
