@@ -3,6 +3,7 @@
 # controller for colors
 class ColorsController < ApplicationController
   before_action :set_color, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   # GET /colors or /colors.json
   def index

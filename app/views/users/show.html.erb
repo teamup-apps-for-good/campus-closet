@@ -5,6 +5,9 @@
   <%= render @user %>
   <div>
     <%= link_to "Edit Account", edit_user_path(@user) %>
+    <% unless @user.admin? %>
+      <%= button_to "Make Admin", make_admin_user_path(@user), method: :patch, data: { confirm: "Are you sure?" } %>
+    <% end %>
     <%= button_to "Delete Account", @user, method: :delete %>
   </div>
 </div>

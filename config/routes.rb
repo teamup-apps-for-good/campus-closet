@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     patch 'update_user', on: :member
     member do
       get 'account_creation', to: 'users#account_creation'
+      patch 'make_admin'
     end
   end
 

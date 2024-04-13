@@ -31,7 +31,7 @@ class TimeSlotsController < ApplicationController
     end
   
     if @time_slots.empty?
-      redirect_to time_slots_path, notice: 'Time slots were successfully created.'
+      redirect_to user_donor_path(current_user), notice: 'Time slots were successfully created.'
     else
       @time_slot = @time_slots.first
       render :new
@@ -66,6 +66,10 @@ class TimeSlotsController < ApplicationController
   def time_slot_params
     params.require(:time_slots).map do |time_slot|
       start_time = Time.zone.parse(time_slot['start_time'])
+      if start_time.is_a?(NilClass)
+        []
+        return
+      end
       end_time = start_time + 30.minutes
       time_slot.permit(:start_time, :end_time).merge(start_time: start_time, end_time: end_time)
     end

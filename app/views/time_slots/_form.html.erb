@@ -16,14 +16,13 @@
     <div id="time-slots-fields">
       <div class="time-slot" id="time-slot-template">
         <%= form.label :start_time, "Start Time", style: "display: block" %>
-        <%= form.datetime_field :start_time, name: 'time_slots[][start_time]', class: 'start-time', onchange: 'updateEndTime(this)' %>
+        <%= form.datetime_field :start_time, name: 'time_slots[][start_time]', class: 'start-time', onchange: 'updateEndTime(this)', required: 'required' %>
         <%= form.label :end_time, "End Time", style: "display: block" %>
         <span class="display-end-time"></span>
         <%= form.hidden_field :end_time, name: 'time_slots[][end_time]', class: 'end-time' %>
         </div>
     </div>
 
-    <button type="button" id="add-time-slot" onclick="addTimeSlot()">Add Another Time Slot</button>
     <%= form.submit 'Create Time Slots', id: 'submit-time-slots' %>
   <% end %>
 </div>
@@ -46,28 +45,4 @@ function updateEndTime(element) {
     endTimeDisplay.textContent = '';
   }
 }
-
-function addTimeSlot() {
-  var container = document.getElementById('time-slots-fields');
-  var original = container.querySelector('.time-slot:last-child');
-  var clone = original.cloneNode(true);
-  var index = container.querySelectorAll('.time-slot').length;
-
-  var clonedStartTime = clone.querySelector('.start-time');
-  clonedStartTime.name = `time_slots[${index}][start_time]`;
-  clonedStartTime.value = '';
-
-  clonedStartTime.removeEventListener('change', updateEndTime);
-  clonedStartTime.addEventListener('change', function() {
-    updateEndTime(this);
-  });
-
-  var clonedEndTimeDisplay = clone.querySelector('.display-end-time');
-  clonedEndTimeDisplay.textContent = '';
-
-  container.appendChild(clone);
-}
-
-
-
 </script>

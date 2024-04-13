@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 shared_examples 'another CRUD controller' do |model_class, _controller_class|
+  before do
+    allow(controller).to receive(:require_admin)
+  end
   let(:user) { User.create(first: 'Example User', donor: true) }
   let(:user1) { User.create(first: 'Example User1', donor: true) }
   let(:user2) { User.create(first: 'Example User2') }

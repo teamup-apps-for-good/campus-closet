@@ -3,6 +3,7 @@
 # controller for the genders
 class GendersController < ApplicationController
   before_action :set_gender, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   # GET /genders or /genders.json
   def index
