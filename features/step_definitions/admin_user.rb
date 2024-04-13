@@ -16,7 +16,7 @@ Given('I try to go to the users index page') do
 end
 
 Then('I should be redirected to the index page') do
-  expect(page).to have_content('Clothing Type:')
+  expect(page).to have_content('Size:')
 end
 
 Then("there should be an alert that says 'You don't have permission to view this page.'") do

@@ -15,6 +15,13 @@ Background:
     | email                 |
     | test_admin@gmail.com  |
 
+    Given the following items exist:
+    | color     | type       | Description         | Gender       | Size  | Condition  | Status     | 
+    | black     | shirt      | black shirt         | Male         | M     | Used       | Available  | 
+    | red       | pants      | red pants           | Female       | L     | Unused     | Available  |
+    | blue      | sweater    | blue sweater        | Male         | S     | Used       | Available  |
+    | brown     | belt       | brown belt          | Female       | M     | Unused     | Available  |
+
 Scenario: Donor tries to view users page
     Given I am a logged in donor
     And I try to go to the users index page

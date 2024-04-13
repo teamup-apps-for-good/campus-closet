@@ -39,12 +39,11 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    if @user.update(user_params)
+    return unless @user.update(user_params)
 
-      redirect_to @user, notice: 'Profile updated successfully.'
-    else
-      render :edit
-    end
+    redirect_to @user, notice: 'Profile updated successfully.'
+    # else
+    #   render :edit
   end
 
   # DELETE /users/1 or /users/1.json
