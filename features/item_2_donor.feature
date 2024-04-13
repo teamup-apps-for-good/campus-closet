@@ -20,7 +20,8 @@ Background: students exist in database
 Scenario: Donor creates a shirt item
     Given I am a logged in donor
     And I am on the items page
-    When I click on "New item"
+    And I am on the donor dashboard
+    When I click on "Add New Item"
     And I am on the new item page
     And I fill in "color" with "blue"
     And I fill in "type" with "shirt"
@@ -36,7 +37,8 @@ Scenario: Donor creates a shirt item
 Scenario: Donor creates a pants item
     Given I am a logged in donor
     And I am on the homepage
-    When I click on "New item"
+    And I am on the donor dashboard
+    When I click on "Add New Item"
     And I fill in "color" with "blue"
     And I fill in "type" with "pants"
     And I fill in description with "blue pants"
@@ -52,7 +54,8 @@ Scenario: Donor creates a pants item
 Scenario: Donor cancel's item creation
     Given I am a logged in donor
     And I am on the homepage
-    When I click on "New item"
+    And I am on the donor dashboard
+    When I click on "Add New Item"
     And I am on the new item page
     And I fill in "type" with "shirt"
     And I click on "Home"
