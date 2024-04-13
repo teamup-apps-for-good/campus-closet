@@ -13,8 +13,8 @@
         <p>No reviews yet.</p>
     <% end %>
     <div>
-      <%= link_to "Edit Account", edit_user_path(@user) %>
-      <%= button_to "Delete Account", @user, method: :delete %>
+      <%= link_to "Edit Account", edit_user_path(@user), class: "btn btn-outline-primary" %>
+      <%= button_to "Delete Account", @user, method: :delete, class: "btn btn-danger btn-sm" %>
     </div>
     <br>
     
@@ -39,8 +39,8 @@
     </div>
     <% end %>
     <div>
-      <%= link_to "New time slot", new_time_slot_path %>
-      <%= link_to "View Time Slots", time_slots_path %>
+      <%= link_to "New time slot", new_time_slot_path, class: "btn btn-outline-primary" %>
+      <%= link_to "View Time Slots", time_slots_path, class: "btn btn-outline-primary" %>
     </div>
   </div>
 <% else %>
@@ -136,7 +136,7 @@
           <div class="btn btn-primary btn-lg">
             <%= button_tag "Confirm your item has been delivered", class: "confirm_pickup_button", data: {donor_id: request.donor_id, receiver_id: request.receiver_id, item_id: request.item.id, request_id: request.id}%>
           </div>
-          <% if request.receiver %>
+          <% if request.receiver && request.receiver.latitude %>
             <div class="btn btn-primary btn-lg">
               <%= button_tag "Show Map", class: "show-map-button", onclick: "showMap('map-container-#{request.id}')" %>
             </div>

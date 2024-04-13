@@ -1,7 +1,7 @@
 <div id="<%= dom_id request %>">
   <p>
   <strong>Donor:</strong>
-  <%= link_to "#{request.item.user.first} #{request.item.user.last}", user_donor_path(request.item.user) %>
+  <%= link_to "#{request.item.user.first} #{request.item.user.last}", user_donor_path(request.item.user), class: "btn btn-outline-primary btn-sm" %>
   <br>
 
   <strong>Item Description:</strong>
