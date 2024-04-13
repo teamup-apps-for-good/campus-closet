@@ -4,9 +4,9 @@ Given('the following emails have an account associated with them:') do |table|
   table.hashes.each do |row|
     email = row['email']
     if email.ends_with?('.com')
-      User.create(first: 'Test', last: 'Donor', email:, student: false, donor: true)
+      User.create(first: 'Test', last: 'Donor', email:, student: false, donor: true, address: '125 Spence St, College Station, TX 77843')
     else
-      User.create(first: 'Test', last: 'Student', email:, student: true, donor: false)
+      User.create(first: 'Test', last: 'Student', email:, student: true, donor: false, address: '907 Cross St, College Station, TX 77840')
     end
   end
 end
