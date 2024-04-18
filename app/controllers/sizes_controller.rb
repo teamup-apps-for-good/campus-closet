@@ -3,7 +3,6 @@
 # controller for the sizes
 class SizesController < ApplicationController
   before_action :set_size, only: %i[show edit update destroy]
-  before_action :require_admin, only: %i[index]
 
   # GET /sizes or /sizes.json
   def index
