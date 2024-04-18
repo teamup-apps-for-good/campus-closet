@@ -168,10 +168,10 @@ RSpec.describe TimeSlotsController, type: :controller do
   end
   describe '#build_time_slot' do
     OmniAuth.config.test_mode = true
-      OmniAuth.config.add_mock(
-        :google_oauth2,
-        info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
-      )
+    OmniAuth.config.add_mock(
+      :google_oauth2,
+      info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
+    )
 
     user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
     it 'builds a new time slot for the current user with status "available"' do
