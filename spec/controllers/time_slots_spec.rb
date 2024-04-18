@@ -191,7 +191,7 @@ RSpec.describe TimeSlotsController, type: :controller do
         let(:valid_params) do
           { id: time_slot.id, time_slot: { start_time: (Time.now + 2.hours).to_s } }
         end
-      
+
         it 'updates the TimeSlot' do
           put :update, params: valid_params
           time_slot.reload

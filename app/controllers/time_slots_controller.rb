@@ -29,20 +29,19 @@ class TimeSlotsController < ApplicationController
       render :new
       return
     end
-  
-    if @time_slot.save
-      redirect_to user_donor_path(current_user), notice: 'Time slot was successfully created.'
-    end
+
+    return unless @time_slot.save
+
+    redirect_to user_donor_path(current_user), notice: 'Time slot was successfully created.'
   end
-  
 
   # PATCH/PUT /time_slots/:id
   def update
     start_time = Time.zone.parse(time_slot_params[:start_time])
-    if @time_slot.update(time_slot_params.merge(start_time: start_time))
-      redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.'
-    end
-  end  
+    return unless @time_slot.update(time_slot_params.merge(start_time:))
+
+    redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.'
+  end
 
   # DELETE /time_slots/:id
   def destroy
@@ -77,6 +76,6 @@ class TimeSlotsController < ApplicationController
     return permitted_params if start_time.nil?
 
     end_time = start_time + 30.minutes
-    permitted_params.merge(end_time: end_time)
+    permitted_params.merge(end_time:)
   end
 end
