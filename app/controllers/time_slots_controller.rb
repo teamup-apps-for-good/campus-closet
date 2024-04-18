@@ -22,29 +22,27 @@ class TimeSlotsController < ApplicationController
 
   # POST /time_slots
   def create
-    @time_slots = []
+    @time_slot = current_user.time_slots.build(time_slot_params)
 
-    time_slot_params.each do |time_slot_param|
-      @time_slot = current_user.time_slots.new(time_slot_param.merge(status: 'available'))
-      @time_slots << @time_slot unless @time_slot.save
-    end
-
-    if @time_slots.empty?
-      redirect_to user_donor_path(current_user), notice: 'Time slots were successfully created.'
-    else
-      @time_slot = @time_slots.first
+    if @time_slot.start_time.nil?
+      flash.now[:error] = 'Start time cannot be blank'
       render :new
+      return
+    end
+  
+    if @time_slot.save
+      redirect_to user_donor_path(current_user), notice: 'Time slot was successfully created.'
     end
   end
+  
 
   # PATCH/PUT /time_slots/:id
   def update
-    if @time_slot.update(time_slot_params)
+    start_time = Time.zone.parse(time_slot_params[:start_time])
+    if @time_slot.update(time_slot_params.merge(start_time: start_time))
       redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.'
-    else
-      render :edit
     end
-  end
+  end  
 
   # DELETE /time_slots/:id
   def destroy
@@ -73,11 +71,12 @@ class TimeSlotsController < ApplicationController
   end
 
   def time_slot_params
-    params.require(:time_slots).map do |time_slot|
-      start_time = Time.zone.parse(time_slot['start_time'])
+    permitted_params = params.require(:time_slot).permit(:start_time)
+    start_time = Time.zone.parse(permitted_params[:start_time])
 
-      end_time = start_time + 30.minutes
-      time_slot.permit(:start_time, :end_time).merge(start_time:, end_time:)
-    end
+    return permitted_params if start_time.nil?
+
+    end_time = start_time + 30.minutes
+    permitted_params.merge(end_time: end_time)
   end
 end
