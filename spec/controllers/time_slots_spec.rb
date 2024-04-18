@@ -113,13 +113,109 @@ RSpec.describe TimeSlotsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:invalid_params) do
-      {
-        time_slots: [
-          { start_time: nil, end_time: nil },
-          { start_time: Time.now, end_time: nil }
-        ]
-      }
+    context 'when the user is authenticated' do
+      let(:user) do
+        OmniAuth.config.test_mode = true
+        OmniAuth.config.add_mock(
+          :google_oauth2,
+          info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
+        )
+        User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      end
+
+      before do
+        session[:user_id] = user.id
+      end
+
+      context 'with valid params' do
+        let(:valid_params) do
+          { time_slot: { start_time: Time.now + 1.hour } }
+        end
+
+        it 'creates a new TimeSlot' do
+          expect do
+            post :create, params: valid_params
+          end.to change(TimeSlot, :count).by(1)
+        end
+
+        it 'redirects to the user_donor_path' do
+          post :create, params: valid_params
+          expect(response).to redirect_to(user_donor_path(user))
+        end
+      end
+
+      context 'with invalid params' do
+        let(:invalid_params) do
+          { time_slot: { start_time: '' } }
+        end
+
+        it 'does not create a new TimeSlot' do
+          expect do
+            post :create, params: invalid_params
+          end.to_not change(TimeSlot, :count)
+        end
+
+        it 're-renders the new template' do
+          post :create, params: invalid_params
+          expect(response).to render_template(:new)
+        end
+      end
+    end
+  end
+
+  describe 'PATCH/PUT #update' do
+    context 'when the user is authenticated' do
+      let(:user) do
+        OmniAuth.config.test_mode = true
+        OmniAuth.config.add_mock(
+          :google_oauth2,
+          info: { email: 'testdonor@tamu.edu', name: 'Test Donor' }
+        )
+        User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      end
+
+      let(:time_slot) do
+        TimeSlot.create(
+          donor: user,
+          start_time: DateTime.now.beginning_of_hour + 1.day,
+          end_time: DateTime.now.beginning_of_hour + 25.hours,
+          status: 'available'
+        )
+      end
+
+      before do
+        session[:user_id] = user.id
+      end
+
+      context 'with valid params' do
+        let(:valid_params) do
+          { id: time_slot.id, time_slot: { start_time: (Time.now + 2.hours).to_s } }
+        end
+
+        it 'updates the TimeSlot' do
+          put :update, params: valid_params
+          time_slot.reload
+          expect(time_slot.start_time.to_i).to eq(Time.zone.parse(valid_params[:time_slot][:start_time]).to_i)
+        end
+
+        it 'redirects to the TimeSlot show path' do
+          put :update, params: valid_params
+          expect(response).to redirect_to(time_slot_url(time_slot))
+        end
+      end
+
+      context 'with invalid params' do
+        let(:invalid_params) do
+          { id: time_slot.id, time_slot: { start_time: nil } }
+        end
+
+        it 'does not update the TimeSlot' do
+          original_start_time = time_slot.start_time
+          put :update, params: invalid_params
+          time_slot.reload
+          expect(time_slot.start_time).not_to eq(original_start_time)
+        end
+      end
     end
   end
 

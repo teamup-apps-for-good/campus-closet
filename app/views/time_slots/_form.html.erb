@@ -16,10 +16,10 @@
     <div id="time-slots-fields">
       <div class="time-slot" id="time-slot-template">
         <%= form.label :start_time, "Start Time", style: "display: block" %>
-        <%= form.datetime_field :start_time, name: 'time_slots[][start_time]', class: 'start-time', onchange: 'updateEndTime(this)', required: 'required' %>
+        <%= form.datetime_field :start_time, name: 'time_slot[start_time]', class: 'start-time', onchange: 'updateEndTime(this)', required: 'required' %>
         <%= form.label :end_time, "End Time", style: "display: block" %>
         <span class="display-end-time"></span>
-        <%= form.hidden_field :end_time, name: 'time_slots[][end_time]', class: 'end-time' %>
+        <%= form.hidden_field :end_time, name: 'time_slot[end_time]', class: 'end-time' %>
         </div>
     </div>
 
